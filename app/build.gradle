@@ -44,4 +44,8 @@ dependencies {
     // Getting a "Could not find" error? Make sure that you've added
     // Google's Maven repository to your root-level build.gradle file
 
+    implementation 'com.android.volley:volley:1.1.1'
+
+    implementation 'com.google.firebase:firebase-database:19.2.1'
+
 }
