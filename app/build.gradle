@@ -39,6 +39,7 @@ dependencies {
     // Add the dependencies for any other Firebase products you want to use in your app
     // For example, to also use Firebase Authentication
     implementation 'com.google.firebase:firebase-auth:19.3.0'
+    implementation 'com.google.android.material:material:1.0.0'
 
     // Getting a "Could not find" error? Make sure that you've added
     // Google's Maven repository to your root-level build.gradle file
