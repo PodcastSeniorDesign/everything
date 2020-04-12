@@ -3,9 +3,15 @@ package me.rooshi.podcastapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DownloadManager;
+
 import android.content.Intent;
+
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,16 +28,25 @@ import com.android.volley.toolbox.Volley;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
 import java.util.Arrays;
 import java.util.List;
 
+import java.io.IOException;
+
+
 
 public class MainActivity extends AppCompatActivity {
+
+    boolean playing = false;
+    MediaPlayer mediaPlayer = new MediaPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initPlayer();
     }
 
     public void searchTerm(View view) {
@@ -75,5 +90,27 @@ public class MainActivity extends AppCompatActivity {
     public void login(View view) {
         Intent intent = new Intent(this, loginActivity.class);
         startActivity(intent);
+    }
+  
+    private void initPlayer() {
+        String podcastEpisode = "https://locator.simplecastcdn.com/e7ec86c9-5b4f-4c1c-af7b-0957921e175d/dcb5d4e2-c757-4b6b-ae0c-691b26f70e7a.mp3";
+        Uri uri = Uri.parse(podcastEpisode);
+
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            mediaPlayer.setDataSource(getApplicationContext(), uri);
+            mediaPlayer.prepare();
+        } catch (IOException e) {
+            Log.e("", "initPlayer: ", e);
+        }
+    }
+    public void playPause(View view) {
+
+        if (!playing) {
+            mediaPlayer.start();
+        } else {
+            mediaPlayer.pause();
+        }
+        playing = !playing;
     }
 }
