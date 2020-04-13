@@ -112,10 +112,11 @@
                         android:id="@+id/rooshi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:text="Rooshi"/>
+                        android:layout_weight="1"
+                        android:onClick="playPause"
+                        android:text="Rooshi" />
 
                 </TableRow>
 
@@ -129,10 +130,11 @@
                         android:id="@+id/rishab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:text="Rishab"/>
+                        android:layout_weight="1"
+                        android:onClick="login"
+                        android:text="Rishab" />
 
                     <Button
                         android:id="@+id/chris"
