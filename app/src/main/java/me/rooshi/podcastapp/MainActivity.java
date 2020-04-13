@@ -32,12 +32,18 @@ public class MainActivity extends AppCompatActivity {
         // ===== Kaila's button click =====
         final Button kailabtn = (Button) findViewById(R.id.kaila);
         kailabtn.setOnClickListener(new View.OnClickListener() { // we're passing in an instance of a new onclicklistener
+            boolean kailabtnclicked = false;
             @Override
             public void onClick(View view) {
 //                Log.i("kaila_btn", "kaila's log message!!!! :)");
 //                Toast.makeText(getApplicationContext(), "clicked the button!", Toast.LENGTH_SHORT).show();//show a toast message
                 // context is give it a context that is the UI that is being shown
-                kailabtn.setText("clicked!");
+                kailabtnclicked = !kailabtnclicked;
+                if(kailabtnclicked == true){
+                    kailabtn.setText("Kaila");
+                }else{
+                    kailabtn.setText("toggle click!");
+                }
             }
         });
 
