@@ -1,6 +1,8 @@
 package me.rooshi.podcastapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DownloadManager;
 
@@ -16,6 +18,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 
@@ -29,7 +33,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import java.io.IOException;
@@ -40,11 +51,34 @@ public class MainActivity extends AppCompatActivity {
 
     boolean playing = false;
     MediaPlayer mediaPlayer = new MediaPlayer();
+    List<String> results = new ArrayList<String>();
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    JSONObject searchResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        results.add("Hello World");
+
+        recyclerView = (RecyclerView) findViewById(R.id.podcastList);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        recyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        // specify an adapter (see also next example)
+        mAdapter = new SearchAdapter(this, results);
+        recyclerView.setAdapter(mAdapter);
 
         initPlayer();
     }
@@ -62,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         uri = uri.buildUpon().appendQueryParameter("term", toSearch).build();
         String url = uri.toString();
 
-        // Request a string response from the provided URL.
+        // Request a string response from the provided URL
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -73,6 +107,13 @@ public class MainActivity extends AppCompatActivity {
                         DatabaseReference myRef = database.getReference("search");
 
                         myRef.setValue(response);
+
+                        try {
+                            searchResponse = new JSONObject(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            System.out.println(response);
+                        }
 
                     }
                 }, new Response.ErrorListener() {
@@ -112,5 +153,22 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.pause();
         }
         playing = !playing;
+    }
+
+    public void recyclerDisplay(View view) {
+        if (results == null) return;
+        results.clear();
+        mAdapter.notifyDataSetChanged();
+        try {
+            JSONArray results = searchResponse.getJSONArray("results");
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject result = results.getJSONObject(i);
+                String trackName = result.getString("trackName");
+                this.results.add(0, trackName);
+                mAdapter.notifyItemInserted(0);
+            }
+        } catch (JSONException e) {
+            System.out.println("JSON Error on parsing search results");
+        }
     }
 }
