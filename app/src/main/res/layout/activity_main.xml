@@ -103,11 +103,12 @@
                         android:id="@+id/grace"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
+                        android:layout_weight="1"
                         android:onClick="recyclerDisplay"
                         android:text="Grace"/>
+
 
                     <Button
                         android:id="@+id/rooshi"
@@ -161,8 +162,9 @@
                         android:layout_weight="1"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
+                        android:onClick="toggletext"
                         android:text="Kaila"/>
-
+                    
                     <Button
                         android:id="@+id/hiep"
                         android:layout_width="wrap_content"
