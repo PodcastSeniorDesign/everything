@@ -42,32 +42,12 @@ public class MainActivity extends AppCompatActivity {
 
     boolean playing = false;
     MediaPlayer mediaPlayer = new MediaPlayer();
+    boolean kailabtnclicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // ===== Kaila's button click =====
-        final Button kailabtn = (Button) findViewById(R.id.kaila);
-        kailabtn.setOnClickListener(new View.OnClickListener() { // we're passing in an instance of a new onclicklistener
-            boolean kailabtnclicked = false;
-            @Override
-            public void onClick(View view) {
-//                Log.i("kaila_btn", "kaila's log message!!!! :)");
-//                Toast.makeText(getApplicationContext(), "clicked the button!", Toast.LENGTH_SHORT).show();//show a toast message
-                // context is give it a context that is the UI that is being shown
-                kailabtnclicked = !kailabtnclicked;
-                if(kailabtnclicked == true){
-                    kailabtn.setText("Kaila");
-                }else{
-                    kailabtn.setText("toggle click!");
-                }
-            }
-        });
-
-
-
         initPlayer();
 
     }
@@ -135,5 +115,15 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.pause();
         }
         playing = !playing;
+    }
+
+    public void toggletext(View view){
+        final Button kailabtn = (Button) findViewById(R.id.kaila);
+        kailabtnclicked = !kailabtnclicked;
+        if(kailabtnclicked == true){
+            kailabtn.setText("Kaila");
+        }else{
+            kailabtn.setText("toggle click!");
+        }
     }
 }
