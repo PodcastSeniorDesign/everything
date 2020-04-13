@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void recyclerDisplay(View view) {
-        if (results == null) return;
+        if (searchResponse == null) return;
         results.clear();
         mAdapter.notifyDataSetChanged();
         try {
