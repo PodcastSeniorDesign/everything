@@ -13,8 +13,9 @@
         android:theme="@style/AppTheme">
 
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_application_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_application_id" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -23,10 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".loginActivity"/>
-
-        
+        <activity android:name=".loginActivity" />
+        <activity android:name=".GoogleLoginActivity" />
     </application>
 
 </manifest>

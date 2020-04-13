@@ -6,12 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DownloadManager;
-
 import android.content.Intent;
-
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
@@ -34,14 +30,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.FirebaseFunctionsException;
 import com.google.firebase.functions.HttpsCallableResult;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,8 +49,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -145,6 +139,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void login(View view) {
         Intent intent = new Intent(this, loginActivity.class);
+        startActivity(intent);
+    }
+
+    public void loginWithGoogle(View view) {
+        Intent intent = new Intent(this, GoogleLoginActivity.class);
         startActivity(intent);
     }
   
