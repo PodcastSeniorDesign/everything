@@ -1,5 +1,6 @@
 package me.rooshi.podcastapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DownloadManager;
@@ -13,8 +14,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -25,28 +28,39 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.FirebaseFunctionsException;
+import com.google.firebase.functions.HttpsCallableResult;
 
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import java.io.IOException;
-
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    private FirebaseFunctions mFunctions;
+
     boolean playing = false;
     MediaPlayer mediaPlayer = new MediaPlayer();
+    boolean kailabtnclicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initPlayer();
+        mFunctions = FirebaseFunctions.getInstance();
     }
 
     public void searchTerm(View view) {
@@ -112,5 +126,68 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.pause();
         }
         playing = !playing;
+    }
+
+    public void toggletext(View view){
+
+        final TextView testTextView = findViewById(R.id.testTextView);
+
+        final Button kailabtn = (Button) findViewById(R.id.kaila);
+        kailabtnclicked = !kailabtnclicked;
+        if(kailabtnclicked == true){
+            kailabtn.setText("toggle click!");
+        }else{
+            kailabtn.setText("kaila");
+        }
+
+        EditText inputText = findViewById(R.id.textInput);
+        String toSearch = inputText.getText().toString();
+
+        getSearch(toSearch)
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Exception e = task.getException();
+                            if (e instanceof FirebaseFunctionsException) {
+                                FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
+                                FirebaseFunctionsException.Code code = ffe.getCode();
+                                Object details = ffe.getDetails();
+                            }
+
+                            // [START_EXCLUDE]
+                            Log.w("notsurewhatthisis", "getSearch:onFailure", e);
+//                            showSnackbar("An error occurred.");
+                            return;
+                            // [END_EXCLUDE]
+                        }// if the task is successful
+
+                        // [START_EXCLUDE]
+                        String result = task.getResult();
+                        testTextView.setText("This is the result from the firebase function: " + result);
+                        // [END_EXCLUDE]
+                    }
+                });
+    }
+
+    private Task<String> getSearch(String text) {
+        // Create the arguments to the callable function.
+        Map<String, Object> data = new HashMap<>();
+        data.put("text", text);
+        data.put("push", true);
+        return mFunctions
+                .getHttpsCallable("getSearch")
+                .call(data)
+                .continueWith(new Continuation<HttpsCallableResult, String>() {
+                    @Override
+                    public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+                        // This continuation runs on either success or failure, but if the task
+                        // has failed then getResult() will throw an Exception which will be
+                        // propagated down.
+                        String result = task.getResult().getData().toString();
+                        return result;
+                    }
+                }
+                );
     }
 }
