@@ -1,5 +1,6 @@
 package me.rooshi.podcastapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DownloadManager;
@@ -27,18 +28,25 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.HttpsCallableResult;
 
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import java.io.IOException;
-
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private FirebaseFunctions mFunctions;
 
     boolean playing = false;
     MediaPlayer mediaPlayer = new MediaPlayer();
@@ -49,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initPlayer();
+//        mFunctions = FirebaseFunctions.getInstance();
+
 
     }
 
@@ -118,12 +128,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toggletext(View view){
-        final Button kailabtn = (Button) findViewById(R.id.kaila);
-        kailabtnclicked = !kailabtnclicked;
-        if(kailabtnclicked == true){
-            kailabtn.setText("Kaila");
-        }else{
-            kailabtn.setText("toggle click!");
-        }
+//        final Button kailabtn = (Button) findViewById(R.id.kaila);
+//        kailabtnclicked = !kailabtnclicked;
+//        if(kailabtnclicked == true){
+//            kailabtn.setText("toggle click!");
+//        }else{
+//            kailabtn.setText("kaila");
+//        }
+//
+        EditText inputText = findViewById(R.id.textInput);
+        String toSearch = inputText.getText().toString();
+
+        Task<String> taskSearchResult = getSearch(toSearch);
+        String result = taskSearchResult.getResult();
+//        testTextView.setText(result);
+        Log.i("result: ", result);
+    }
+
+    private Task<String> getSearch(String text) {
+        // Create the arguments to the callable function.
+        Map<String, Object> data = new HashMap<>();
+        data.put("text", text);
+        data.put("push", true);
+
+        return mFunctions
+                .getHttpsCallable("getSearch")
+                .call(data)
+                .continueWith(new Continuation<HttpsCallableResult, String>() {
+                    @Override
+                    public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+                        // This continuation runs on either success or failure, but if the task
+                        // has failed then getResult() will throw an Exception which will be
+                        // propagated down.
+                        String result = (String) task.getResult().getData();
+                        return result;
+                    }
+                });
     }
 }
