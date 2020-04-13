@@ -12,7 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toTopOf="@id/displayName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/displayName"
@@ -21,7 +25,9 @@
         android:layout_marginBottom="76dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/email"
-        tools:layout_editor_absoluteX="15dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_button" />
 
     <TextView
         android:id="@+id/email"
@@ -29,8 +35,11 @@
         android:layout_height="81dp"
         android:layout_marginTop="76dp"
         android:text="TextView"
-        app:layout_constraintTop_toBottomOf="@+id/displayName"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintBottom_toTopOf="@id/sign_out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/displayName" />
 
     <Button
         android:id="@+id/sign_out"
@@ -39,7 +48,9 @@
         android:layout_marginBottom="48dp"
         android:onClick="signOut"
         android:text="Logout"
-        app:layout_constraintBottom_toTopOf="@+id/displayName"
-        tools:layout_editor_absoluteX="161dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
