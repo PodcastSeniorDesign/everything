@@ -29,10 +29,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.FirebaseFunctionsException;
 import com.google.firebase.functions.HttpsCallableResult;
 
 
@@ -57,9 +60,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initPlayer();
-//        mFunctions = FirebaseFunctions.getInstance();
-
-
+        mFunctions = FirebaseFunctions.getInstance();
     }
 
     public void searchTerm(View view) {
@@ -128,21 +129,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toggletext(View view){
-//        final Button kailabtn = (Button) findViewById(R.id.kaila);
-//        kailabtnclicked = !kailabtnclicked;
-//        if(kailabtnclicked == true){
-//            kailabtn.setText("toggle click!");
-//        }else{
-//            kailabtn.setText("kaila");
-//        }
-//
+
+        final TextView testTextView = findViewById(R.id.testTextView);
+
+        final Button kailabtn = (Button) findViewById(R.id.kaila);
+        kailabtnclicked = !kailabtnclicked;
+        if(kailabtnclicked == true){
+            kailabtn.setText("toggle click!");
+        }else{
+            kailabtn.setText("kaila");
+        }
+
         EditText inputText = findViewById(R.id.textInput);
         String toSearch = inputText.getText().toString();
 
-        Task<String> taskSearchResult = getSearch(toSearch);
-        String result = taskSearchResult.getResult();
-//        testTextView.setText(result);
-        Log.i("result: ", result);
+        getSearch(toSearch)
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Exception e = task.getException();
+                            if (e instanceof FirebaseFunctionsException) {
+                                FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
+                                FirebaseFunctionsException.Code code = ffe.getCode();
+                                Object details = ffe.getDetails();
+                            }
+
+                            // [START_EXCLUDE]
+                            Log.w("notsurewhatthisis", "getSearch:onFailure", e);
+//                            showSnackbar("An error occurred.");
+                            return;
+                            // [END_EXCLUDE]
+                        }// if the task is successful
+
+                        // [START_EXCLUDE]
+                        String result = task.getResult();
+                        testTextView.setText("This is the result from the firebase function: " + result);
+                        // [END_EXCLUDE]
+                    }
+                });
     }
 
     private Task<String> getSearch(String text) {
@@ -150,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> data = new HashMap<>();
         data.put("text", text);
         data.put("push", true);
-
         return mFunctions
                 .getHttpsCallable("getSearch")
                 .call(data)
@@ -160,9 +184,10 @@ public class MainActivity extends AppCompatActivity {
                         // This continuation runs on either success or failure, but if the task
                         // has failed then getResult() will throw an Exception which will be
                         // propagated down.
-                        String result = (String) task.getResult().getData();
+                        String result = task.getResult().getData().toString();
                         return result;
                     }
-                });
+                }
+                );
     }
 }
