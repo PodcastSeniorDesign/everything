@@ -41,8 +41,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.HashMap;
@@ -53,6 +56,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    TextView showValue;
+    int counter = 0;
 
     private FirebaseFunctions mFunctions;
 
@@ -89,6 +96,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
         initPlayer();
+
+
+        showValue = (TextView) findViewById(R.id.LikeCount);
+
+
+    }
+
+    public void Like(View view){
+        counter++;
+        showValue.setText(Integer.toString(counter));
         mFunctions = FirebaseFunctions.getInstance();
     }
 
