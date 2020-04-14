@@ -125,13 +125,24 @@
                         android:text="Rishab" />
 
                     <Button
-                        android:id="@+id/chris"
+                        android:id="@+id/Like"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:text="Chris"/>
+                        android:onClick="Like"
+                        android:text="Like"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text = "Like"
+                        android:id = "@+id/LikeCount"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerhorizontal="true"
+                        android:layout_marginTop="47dp" />
+
 
                 </TableRow>
 
