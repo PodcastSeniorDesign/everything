@@ -29,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
+import org.w3c.dom.Text;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,6 +39,10 @@ import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    TextView showValue;
+    int counter = 0;
+
 
     boolean playing = false;
     MediaPlayer mediaPlayer = new MediaPlayer();
@@ -47,6 +53,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initPlayer();
+
+        showValue = (TextView) findViewById(R.id.Like);
+
+
+    }
+
+    public void Like(View view){
+        counter++;
+        showValue.setText(Integer.toString(counter));
+
     }
 
     public void searchTerm(View view) {
