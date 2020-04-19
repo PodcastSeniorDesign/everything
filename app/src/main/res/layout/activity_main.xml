@@ -190,6 +190,12 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="0dp">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInput"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp" />
+
                 <Button
                     android:id="@+id/button"
                     android:layout_width="wrap_content"
@@ -199,12 +205,6 @@
                     android:layout_weight="1"
                     android:onClick="searchTerm"
                     android:text="Search" />
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInput"
-                    android:layout_width="280dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp" />
 
             </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
