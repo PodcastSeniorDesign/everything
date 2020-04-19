@@ -103,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void RR3Intent(View view) {
+        Intent intent = new Intent(this, rr3.class);
+        startActivity(intent);
+    }
+
     public void Like(View view){
         counter++;
         showValue.setText(Integer.toString(counter));
