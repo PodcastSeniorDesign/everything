@@ -36,6 +36,18 @@
                     android:layout_margin="10dp" />
             </HorizontalScrollView>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/podcastList"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:scrollbars="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/buttonPanel"
+                app:layout_constraintTop_toBottomOf="@+id/bottomPanel">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
             <TableLayout
                 android:id="@+id/buttonPanel"
                 android:layout_width="match_parent"
@@ -123,13 +135,18 @@
                         android:onClick="Like"
                         android:text="Like" />
 
+
+                </TableRow>
+
+                <TableRow>
                     <TextView
                         android:id="@+id/LikeCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text = "Like"
+                        android:layout_weight="1"
                         android:layout_alignParentTop="true"
-                        android:layout_marginTop="47dp"
-                        android:text="Like" />
+                        android:layout_centerHorizontal="true" />
 
 
                 </TableRow>
@@ -164,16 +181,6 @@
 
             </TableLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/podcastList"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scrollbars="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/buttonPanel"
-                app:layout_constraintTop_toBottomOf="@+id/bottomPanel">
-
-
-            </androidx.recyclerview.widget.RecyclerView>
 
             <com.google.android.material.circularreveal.CircularRevealLinearLayout
                 android:id="@+id/topPanel"
@@ -182,6 +189,12 @@
                 app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="0dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textInput"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp" />
 
                 <Button
                     android:id="@+id/button"
@@ -192,12 +205,6 @@
                     android:layout_weight="1"
                     android:onClick="searchTerm"
                     android:text="Search" />
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInput"
-                    android:layout_width="280dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp" />
 
             </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 

@@ -6,19 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".rr3">
 
+    <com.google.android.material.circularreveal.CircularRevealLinearLayout
+        android:id="@+id/topPanel"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInput"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:onClick="newPost"
+            android:text="Post" />
+
+    </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/feedView"
-        android:layout_width="439dp"
+        android:layout_width="match_parent"
         android:layout_height="453dp"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/topPanel" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="You can change this screen Grace but just leave a recyclerview with ID: feedView"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="546dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
