@@ -12,7 +12,7 @@ import java.util.List;
 
 public class rr3 extends AppCompatActivity {
 
-    List<String> results = new ArrayList<String>();
+    List<PostModel> results = new ArrayList<PostModel>();
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -23,8 +23,14 @@ public class rr3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rr3);
 
-        results.add("Hello World");
-        results.add("This is a post test");
+        setUpRecyclerView();
+
+        populatePostsFromDatabase();
+    }
+
+    private void setUpRecyclerView() {
+        results.add(new PostModel("localtest", "now", "this was added in the constructor"));
+        results.add(new PostModel("localtest2", "also now", "this was added in the constructor"));
 
         recyclerView = (RecyclerView) findViewById(R.id.feedView);
 
@@ -42,6 +48,10 @@ public class rr3 extends AppCompatActivity {
     }
 
     public void newPost(View view) {
+
+    }
+
+    private void populatePostsFromDatabase() {
 
     }
 }
