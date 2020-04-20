@@ -24,12 +24,18 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.FirebaseFunctionsException;
 import com.google.firebase.functions.HttpsCallableResult;
+import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage;
+import com.google.firebase.ml.naturallanguage.languageid.FirebaseLanguageIdentification;
+import com.google.firebase.ml.naturallanguage.languageid.IdentifiedLanguage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -198,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toggletext(View view){
-
+        
         final TextView testTextView = findViewById(R.id.testTextView);
 
         final Button kailabtn = (Button) findViewById(R.id.kaila);
@@ -212,31 +218,56 @@ public class MainActivity extends AppCompatActivity {
         EditText inputText = findViewById(R.id.textInput);
         String toSearch = inputText.getText().toString();
 
-        getSearch(toSearch)
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Exception e = task.getException();
-                            if (e instanceof FirebaseFunctionsException) {
-                                FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
-                                FirebaseFunctionsException.Code code = ffe.getCode();
-                                Object details = ffe.getDetails();
+
+        FirebaseLanguageIdentification languageIdentifier =
+                FirebaseNaturalLanguage.getInstance().getLanguageIdentification();
+
+        languageIdentifier.identifyPossibleLanguages(toSearch)
+                .addOnSuccessListener(
+                        new OnSuccessListener<List<IdentifiedLanguage>>() {
+                            @Override
+                            public void onSuccess(List<IdentifiedLanguage> identifiedLanguages) {
+                                for (IdentifiedLanguage identifiedLanguage : identifiedLanguages) {
+                                    String language = identifiedLanguage.getLanguageCode();
+                                    float confidence = identifiedLanguage.getConfidence();
+                                    Log.i("TAGLANGUAGE", language + " (" + confidence + ")");
+                                }
                             }
+                        })
+                .addOnFailureListener(
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Model couldn’t be loaded or other internal error.
+                                // ...
+                            }
+                        });
 
-                            // [START_EXCLUDE]
-                            Log.w("notsurewhatthisis", "getSearch:onFailure", e);
-//                            showSnackbar("An error occurred.");
-                            return;
-                            // [END_EXCLUDE]
-                        }// if the task is successful
-
-                        // [START_EXCLUDE]
-                        String result = task.getResult();
-                        testTextView.setText("This is the result from the firebase function: " + result);
-                        // [END_EXCLUDE]
-                    }
-                });
+//        getSearch(toSearch)
+//                .addOnCompleteListener(new OnCompleteListener<String>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<String> task) {
+//                        if (!task.isSuccessful()) {
+//                            Exception e = task.getException();
+//                            if (e instanceof FirebaseFunctionsException) {
+//                                FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
+//                                FirebaseFunctionsException.Code code = ffe.getCode();
+//                                Object details = ffe.getDetails();
+//                            }
+//
+//                            // [START_EXCLUDE]
+//                            Log.w("notsurewhatthisis", "getSearch:onFailure", e);
+////                            showSnackbar("An error occurred.");
+//                            return;
+//                            // [END_EXCLUDE]
+//                        }// if the task is successful
+//
+//                        // [START_EXCLUDE]
+//                        String result = task.getResult();
+//                        testTextView.setText("This is the result from the firebase function: " + result);
+//                        // [END_EXCLUDE]
+//                    }
+//                });
     }
 
     private Task<String> getSearch(String text) {
@@ -259,4 +290,5 @@ public class MainActivity extends AppCompatActivity {
                 }
                 );
     }
+
 }
