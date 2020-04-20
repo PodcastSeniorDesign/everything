@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "705821146335",
-    "firebase_url": "https://podcast-bfe8c.firebaseio.com",
-    "project_id": "podcast-bfe8c",
-    "storage_bucket": "podcast-bfe8c.appspot.com"
+    "project_number": "571233521441",
+    "firebase_url": "https://podcast-app-32d03.firebaseio.com",
+    "project_id": "podcast-app-32d03",
+    "storage_bucket": "podcast-app-32d03.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:705821146335:android:d49de4a961fe60eea47d6a",
+        "mobilesdk_app_id": "1:571233521441:android:178130b4a851ec1b3cb860",
         "android_client_info": {
           "package_name": "me.rooshi.podcastapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "705821146335-hmo0vvm171asptc233heasm3ula0o4ss.apps.googleusercontent.com",
+          "client_id": "571233521441-9srvlubgvm36ebap5cqc9la0lkj1qk58.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDtkMGtr7QhWf-JaY0yTDvafEVQUAbwmzU"
+          "current_key": "AIzaSyC5HJkR7YS5f4SBdXZze15snLxwITVYSZI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "705821146335-hmo0vvm171asptc233heasm3ula0o4ss.apps.googleusercontent.com",
+              "client_id": "571233521441-9srvlubgvm36ebap5cqc9la0lkj1qk58.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
