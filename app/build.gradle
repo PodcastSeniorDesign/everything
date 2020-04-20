@@ -56,5 +56,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-functions:19.0.2'
 
+    //Image loader Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 }
