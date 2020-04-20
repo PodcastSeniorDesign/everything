@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         initPlayer();
 
 
-        showValue = (TextView) findViewById(R.id.likeCount);
+        showValue = (TextView) findViewById(R.id.likeCountView);
 
 
     }

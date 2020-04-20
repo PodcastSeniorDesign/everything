@@ -17,9 +17,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ResultHolder> 
 
     public static class ResultHolder extends RecyclerView.ViewHolder {
 
+        public PostModel post;
         public TextView postText;
         public TextView userText;
-        public TextView likeCount;
+        public TextView likeCountView;
         public TextView dateText;
         public ImageButton likeButton;
 
@@ -27,16 +28,22 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ResultHolder> 
             super(view);
             this.postText = view.findViewById(R.id.postText);
             this.userText = view.findViewById(R.id.userText);
-            this.likeCount = view.findViewById(R.id.likeCount);
+            this.likeCountView = view.findViewById(R.id.likeCountView);
             this.dateText = view.findViewById(R.id.dateText);
             this.likeButton = view.findViewById(R.id.likeButton);
+
+
 
             likeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    post.likeCount++;
+                    likeCountView.setText(String.valueOf(post.likeCount));
                 }
             });
+        }
+        public void setPostModelReference(PostModel post) {
+            this.post = post;
         }
     }
 
@@ -54,7 +61,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ResultHolder> 
     @Override
     public void onBindViewHolder(ResultHolder holder, int position) {
         PostModel post = posts.get(position);
-        holder.postText.setText(String.format("%s has made a post", post.username));
+        holder.userText.setText(String.format("%s has made a post", post.username));
+        holder.postText.setText(post.postText);
+        holder.likeCountView.setText(String.valueOf(post.likeCount));
+        holder.dateText.setText(post.dateString);
+        holder.setPostModelReference(post);
     }
 
     @Override
