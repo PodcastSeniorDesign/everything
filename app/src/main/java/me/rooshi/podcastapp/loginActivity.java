@@ -107,7 +107,7 @@ public class loginActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(loginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                            updateUI(mAuth.getCurrentUser());
                         }
                     }
                 });
@@ -139,7 +139,7 @@ public class loginActivity extends AppCompatActivity {
         mAuth.signOut();
         LoginManager.getInstance().logOut();
 
-        updateUI(null);
+        updateUI(mAuth.getCurrentUser());
     }
 
     @Override
