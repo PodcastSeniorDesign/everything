@@ -25,7 +25,7 @@ import java.util.List;
 
 public class rr3 extends AppCompatActivity {
 
-    List<PostModel> results = new ArrayList<PostModel>();
+    List<Post> results = new ArrayList<Post>();
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -41,14 +41,10 @@ public class rr3 extends AppCompatActivity {
 
         setUpRecyclerView();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("rooshiposts");
-
         populatePostsFromDatabase();
     }
 
     private void setUpRecyclerView() {
-        results.add(new PostModel("1", "localtest", "now", "this was added in the constructor"));
-        results.add(new PostModel("2", "localtest2", "also now", "this also was added in the constructor"));
 
         recyclerView = (RecyclerView) findViewById(R.id.feedView);
 
@@ -65,39 +61,48 @@ public class rr3 extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
         mAuth = FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser() == null) {
-            mAuth.signInAnonymously();
-        }
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
     }
 
     public void newPost(View view) {
         EditText inputText = findViewById(R.id.textInput);
         String text = inputText.getText().toString();
-
-        Post post = new Post(new Date().toString(), 0, text, mAuth.getCurrentUser().getDisplayName());
+        String user;
+        if (mAuth.getCurrentUser() == null) {
+            user = "anon";
+        } else {
+            user = mAuth.getCurrentUser().getDisplayName();
+        }
+        Post post = new Post(new Date().toString(), 0, text, user);
         String key = mDatabase.child("posts").push().getKey();
+        post.setKey(key);
         mDatabase.child("posts").child(key).setValue(post);
     }
 
     private void populatePostsFromDatabase() {
 
+        DatabaseReference ref = mDatabase.child("posts");
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                Log.d("data snapshot:\n", dataSnapshot.toString());
+                results.clear();
+                //recyclerView.removeAllViews();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Post p = ds.getValue(Post.class);
+                    results.add(p);
+                }
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Getting Post failed, log a message
-                Log.w("TAG", "loadPost:onCancelled", databaseError.toException());
+                Log.w("", "loadPost:onCancelled", databaseError.toException());
                 // ...
             }
         };
-        mDatabase.addListenerForSingleValueEvent(postListener);
+        ref.addValueEventListener(postListener);
     }
 }
