@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -45,7 +47,6 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-
     TextView showValue;
     int counter = 0;
 
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     boolean playing = false;
     MediaPlayer mediaPlayer = new MediaPlayer();
-    List<String> results = new ArrayList<String>();
+    List<SearchAdapter.Podcast> results = new ArrayList<SearchAdapter.Podcast>();
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        results.add("Hello World");
+        results.add(new SearchAdapter.Podcast("Search for a podcast", "Artist", ""));
 
         recyclerView = (RecyclerView) findViewById(R.id.podcastList);
 
@@ -79,8 +80,18 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        final Context context = this;
+
         // specify an adapter (see also next example)
-        mAdapter = new SearchAdapter(this, results);
+        mAdapter = new SearchAdapter(this, results, new SearchAdapter.RecyclerViewClickListener() {
+            @Override public void onClick(View view, int position) {
+                Intent intent = new Intent(context, PodcastActivity.class);
+                intent.putExtra("trackName", results.get(position).track);
+                intent.putExtra("artistName", results.get(position).artist);
+                intent.putExtra("artworkURL", results.get(position).artwork);
+                context.startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(mAdapter);
 
         initPlayer();
@@ -107,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         String toSearch = inputText.getText().toString();
         //String toSearch = "money";
 
-        final TextView testTextView = findViewById(R.id.testTextView);
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String baseItunesUrl = "https://itunes.apple.com/search?media=podcast";
@@ -121,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        testTextView.setText("Response is: " + response);
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference("search");
 
@@ -134,11 +143,28 @@ public class MainActivity extends AppCompatActivity {
                             System.out.println(response);
                         }
 
+                        if (searchResponse == null) return;
+                        results.clear();
+                        mAdapter.notifyDataSetChanged();
+                        try {
+                            JSONArray jResults = searchResponse.getJSONArray("results");
+                            for (int i = 0; i < jResults.length(); i++) {
+                                JSONObject jResult = jResults.getJSONObject(i);
+                                String trackName = jResult.getString("trackName");
+                                String artistName = jResult.getString("artistName");
+                                String artwork = jResult.getString("artworkUrl100");
+                                results.add(0, new SearchAdapter.Podcast(trackName, artistName, artwork));
+                                mAdapter.notifyItemInserted(0);
+                            }
+                        } catch (JSONException e) {
+                            System.out.println("JSON Error on parsing search results");
+                        }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                testTextView.setText("That didn't work!");
+                error.printStackTrace();
             }
         });
 
@@ -184,11 +210,13 @@ public class MainActivity extends AppCompatActivity {
         results.clear();
         mAdapter.notifyDataSetChanged();
         try {
-            JSONArray results = searchResponse.getJSONArray("results");
-            for (int i = 0; i < results.length(); i++) {
-                JSONObject result = results.getJSONObject(i);
-                String trackName = result.getString("trackName");
-                this.results.add(0, trackName);
+            JSONArray jResults = searchResponse.getJSONArray("results");
+            for (int i = 0; i < jResults.length(); i++) {
+                JSONObject jResult = jResults.getJSONObject(i);
+                String trackName = jResult.getString("trackName");
+                String artistName = jResult.getString("artistName");
+                String artwork = jResult.getString("artworkUrl100");
+                results.add(0, new SearchAdapter.Podcast(trackName, artistName, artwork));
                 mAdapter.notifyItemInserted(0);
             }
         } catch (JSONException e) {

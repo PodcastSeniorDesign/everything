@@ -21,37 +21,22 @@
             tools:context=".MainActivity">
 
 
-            <HorizontalScrollView
-                android:id="@+id/bottomPanel"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                app:layout_constraintBottom_toTopOf="@+id/podcastList"
-                app:layout_constraintTop_toBottomOf="@+id/topPanel"
-                tools:layout_editor_absoluteX="-30dp">
-
-                <TextView
-                    android:id="@+id/testTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp" />
-            </HorizontalScrollView>
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/podcastList"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_margin="10dp"
                 android:scrollbars="vertical"
+                app:layout_constraintTop_toBottomOf="@id/topPanel"
                 app:layout_constraintBottom_toTopOf="@+id/buttonPanel"
-                app:layout_constraintTop_toBottomOf="@+id/bottomPanel">
+                tools:layout_editor_absoluteX="20dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
             <TableLayout
                 android:id="@+id/buttonPanel"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/podcastList"
 
                 >
@@ -179,6 +164,18 @@
 
                 </TableRow>
 
+                <TableRow>
+                    <TextView
+                        android:id="@+id/testTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true" />
+
+
+                </TableRow>
+
             </TableLayout>
 
 
@@ -186,7 +183,6 @@
                 android:id="@+id/topPanel"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
-                app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="0dp">
 
