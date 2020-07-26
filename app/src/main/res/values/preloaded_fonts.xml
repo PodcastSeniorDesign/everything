@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/raleway</item>
+        <item>@font/raleway_bold</item>
+        <item>@font/raleway_bold_italic</item>
+        <item>@font/raleway_extrabold</item>
+        <item>@font/raleway_extralight</item>
+        <item>@font/raleway_extralight_italic</item>
+        <item>@font/raleway_italic</item>
+        <item>@font/raleway_light</item>
+        <item>@font/raleway_light_italic</item>
+        <item>@font/raleway_medium</item>
+        <item>@font/raleway_medium_italic</item>
+        <item>@font/raleway_semibold</item>
+        <item>@font/raleway_semibold_italic</item>
+        <item>@font/raleway_thin</item>
+        <item>@font/raleway_thin_italic</item>
+    </array>
+</resources>

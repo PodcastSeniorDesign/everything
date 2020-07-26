@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">PodcastApp</string>
+    <string name="app_name">waveform</string>
+
+    <!--    Facebook    -->
     <string name="facebook_application_id">1284164711781307</string>
     <string name="fb_login_protocol_scheme">fb1284164711781307</string>
 

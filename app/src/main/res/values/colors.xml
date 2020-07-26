@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+
+    <!--    purple  -->
+    <color name="primaryColor">#7c4dff</color>
+    <color name="primaryLightColor">#b47cff</color>
+    <color name="primaryDarkColor">#3f1dcb</color>
+    <color name="primaryTextColor">#ffffff</color>
+
+    <!--    grey    -->
+    <color name="grey">#424242</color>
+    <color name="greyLight">#6d6d6d</color>
+    <color name="greyDark">#1b1b1b</color>
+
+
+    <!--    ACTIVITY SPECIFIC COLORS    -->
 
     <!--   Google Login Activity     -->
     <color name="blue_grey_500">#607D8B</color>
