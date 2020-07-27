@@ -47,6 +47,7 @@ Activity Flow:
       - [ ] move FB/Google buttons/register past bottom
       - [ ] add name box to top 
       - [ ] change "sign in" button to "register"
+      - [ ] password security requirements
 - - [ ] Onboarding
 
   - - [ ] Add favorite genres/topics or favorite podcasts
