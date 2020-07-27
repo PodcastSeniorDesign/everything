@@ -6,7 +6,7 @@
 
 Activity Flow:
 
-**Start:** Splash -> Main (-> Login (-> Register))
+**Start:** Splash -> Main (-> Login (-> Register -> Onboarding))
 
 *the activities in the parentheses are optional
 
@@ -21,21 +21,55 @@ Activity Flow:
 
 #### General
 
-- Name
-- Logo
-- Color scheme
-  - Accent?
-- Match nav bar and notification bar to background color
+- - [ ] Name
+- - [ ] Logo
+
+  - - [ ] Bigger and preferable a vector image
+- - [x] Color scheme
+
+  - - [x] Accent #FF4081
 
 #### App
 
-- Splash screen
-- Login pages and flow
-  - Login page (email/password, FB, and Google)
-  - Register page (Just email/password)
-- Onboarding
-  - Add favorite genres/topics or favorite podcasts
-  - Add friends from Facebook/Google etc.
+- - [ ] Splash screen
+    - [ ] Add text vector "waveform" to screen
+- - [ ] Login pages and flow
+
+  - - [ ] Login page (email/password, FB, and Google)
+
+    - - [ ] overlay/modal that says we recommend facebook to find friends
+      - [ ] https://developer.android.com/training/tv/playback/onboarding>
+    - - [ ] **if registering, send email and password if possible to new activity**
+    - - [ ] Move outlinedbox styling to new style
+
+  - - [ ] Register view (name, email, password, picture) not a new activity but animations to move the forms around
+      - [ ] animate changing text from "Sign in" to "Register"
+      - [ ] move FB/Google buttons/register past bottom
+      - [ ] add name box to top 
+      - [ ] change "sign in" button to "register"
+- - [ ] Onboarding
+
+  - - [ ] Add favorite genres/topics or favorite podcasts
+  - - [ ] Add friends from Facebook/Google etc.
+- - [ ] Main Activity
+
+  - - [ ] Bottom Navigation Activity
+
+    - - [ ] Social Feed
+    - - [ ] My subscriptions
+    - - [ ] Explore
+  - - [ ] Top bar
+
+    - - [ ] Page name, profile picture, cast button
+  - - [ ] Floating Action Button
+
+    - - [ ] create post
+  - - [ ] 3 dots menu
+
+    - - [ ] Preferences
+    - - [ ] About
+    - - [ ] Help
+    - - [ ] Sign out
 
 #### Firebase
 
@@ -52,9 +86,12 @@ Activity Flow:
 
 ### Development config
 
-Android Virtual Device: **Pixel 3 XL w/ Android 10.0**
+Android Virtual Device: 
 
-Android Compile Version: **28**
+* Develop with: **Pixel 3 XL w/ Android 10.0**
+* Test minSDK and lowres screens with: **Nexus 4 w/ Android 6.0 **
+
+Android Compile Version: **29**
 
 Android MinSDK: **23**
 

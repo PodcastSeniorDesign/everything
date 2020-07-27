@@ -27,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.functions.FirebaseFunctions;
@@ -47,10 +48,8 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView showValue;
-    int counter = 0;
-
-    private FirebaseFunctions mFunctions;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseFunctions firebaseFunctions;
 
     boolean playing = false;
     MediaPlayer mediaPlayer = new MediaPlayer();
@@ -68,20 +67,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //1. see if someone is logged in. If not, go to login Activity
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() == null) {
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginIntent);
+        }
+
+        //move to Intent onreturn if still no logged in start login intent again
+        Toast.makeText(this, "asdfasd", Toast.LENGTH_LONG).show();
+        setupRecyclerView();
+        initPlayer();
+    }
+
+    public void setupRecyclerView() {
         results.add(new SearchAdapter.Podcast("Search for a podcast", "Artist", ""));
-
-        recyclerView = (RecyclerView) findViewById(R.id.podcastList);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
+        recyclerView = findViewById(R.id.podcastList);
         recyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
         final Context context = this;
-
         // specify an adapter (see also next example)
         mAdapter = new SearchAdapter(this, results, new SearchAdapter.RecyclerViewClickListener() {
             @Override public void onClick(View view, int position) {
@@ -93,24 +98,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(mAdapter);
-
-        initPlayer();
-
-
-        showValue = (TextView) findViewById(R.id.likeCountView);
-
-
     }
 
     public void RR3Intent(View view) {
         Intent intent = new Intent(this, rr3.class);
         startActivity(intent);
-    }
-
-    public void Like(View view){
-        counter++;
-        showValue.setText(Integer.toString(counter));
-        mFunctions = FirebaseFunctions.getInstance();
     }
 
     public void searchTerm(View view) {
@@ -174,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        Intent intent = new Intent(this, loginActivity.class);
+        Intent intent = new Intent(this, FacebookLoginActivity.class);
         startActivity(intent);
     }
 
@@ -272,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> data = new HashMap<>();
         data.put("text", text);
         data.put("push", true);
-        return mFunctions
+        return firebaseFunctions
                 .getHttpsCallable("getSearch")
                 .call(data)
                 .continueWith(new Continuation<HttpsCallableResult, String>() {

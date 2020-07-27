@@ -3,11 +3,27 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/primaryAccent</item>
         <item name="android:navigationBarColor">@color/greyDark</item>
         <item name="android:statusBarColor">@color/greyDark</item>
+    </style>
+
+    <!--    SCREENS     -->
+
+    <!--    Splash Screen Theme -->
+    <style name="SplashScreenTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    <!--    CUSTOM WIDGETS AND VIEWS    -->
+
+    <!--    Outlined Text Input Fields  -->
+    <style name="Widget.AppTheme.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/primaryColor</item>
+        <item name="hintTextColor">@color/primaryTextColor</item>
+        <item name="fontFamily">@font/raleway_medium</item>
     </style>
 
     <!--   Google Login Activity     -->
@@ -16,5 +32,7 @@
         <item name="colorButtonNormal">@color/blue_grey_500</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+
+
 
 </resources>

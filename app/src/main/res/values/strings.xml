@@ -1,5 +1,12 @@
 <resources>
-    <string name="app_name">waveform</string>
+    <string name="app_name">Waveform</string>
+
+    <!--    General -->
+    <string name="waveform_lower">waveform</string>
+    <string name="sign_in">Sign in</string>
+    <string name="email_address">Email address</string>
+    <string name="password">Password</string>
+    <string name="or_register"><u>or Register</u></string>
 
     <!--    Facebook    -->
     <string name="facebook_application_id">1284164711781307</string>

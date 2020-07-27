@@ -1,7 +1,6 @@
 package me.rooshi.podcastapp;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,9 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -31,10 +28,9 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class loginActivity extends AppCompatActivity {
+public class FacebookLoginActivity extends AppCompatActivity {
 
     private static final int MY_REQUEST_CODE = 123;
     private CallbackManager mCallbackManager;
@@ -51,10 +47,10 @@ public class loginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_facebook_login);
 
         mAuth = FirebaseAuth.getInstance();
-        LoginButton loginButton = findViewById(R.id.login_button);
+        LoginButton loginButton = findViewById(R.id.fb_login_button);
         mUserView = findViewById(R.id.displayName);
         mEmailView = findViewById(R.id.email);
 
@@ -105,7 +101,7 @@ public class loginActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(loginActivity.this, "Authentication failed.",
+                            Toast.makeText(FacebookLoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(mAuth.getCurrentUser());
                         }
@@ -118,13 +114,13 @@ public class loginActivity extends AppCompatActivity {
             mUserView.setText(user.getDisplayName());
             mEmailView.setText(user.getEmail());
 
-            findViewById(R.id.login_button).setVisibility(View.GONE);
+            findViewById(R.id.fb_login_button).setVisibility(View.GONE);
             findViewById(R.id.sign_out).setVisibility(View.VISIBLE);
         } else {
             mUserView.setText(null);
             mEmailView.setText(null);
 
-            findViewById(R.id.login_button).setVisibility(View.VISIBLE);
+            findViewById(R.id.fb_login_button).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out).setVisibility(View.GONE);
         }
     }
