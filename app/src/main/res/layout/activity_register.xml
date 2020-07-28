@@ -23,8 +23,10 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_marginTop="32dp"
-        android:src="@android:drawable/ic_menu_add"
-        app:civ_border_color="@color/white_alpha"
+        android:backgroundTint="#9C27B0"
+        android:onClick="onProfilePictureClicked"
+        android:src="@drawable/add_profile_picture"
+        app:civ_border_color="@color/primaryColor"
         app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,6 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
+            android:inputType="textWebPassword"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 

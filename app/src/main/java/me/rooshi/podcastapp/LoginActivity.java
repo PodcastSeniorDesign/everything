@@ -40,28 +40,22 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onRegister(View view) {
         Intent registerIntent = new Intent(this, RegisterActivity.class);
-        //add email and password to the new activity
+        //TODO: add email and password to the new activity
+        registerIntent.putExtra("email", getStringFromTextInputLayout(emailTextInputLayout));
+        registerIntent.putExtra("password", getStringFromTextInputLayout(passwordTextInputLayout));
         startActivity(registerIntent);
     }
 
     public void onEmailSignIn(View view) {
         //TODO: check for email format
-        EditText emailEditText = emailTextInputLayout.getEditText();
-        String email = null;
-        if (emailEditText != null) {
-            email = emailEditText.getText().toString();
-        }
+        String email = getStringFromTextInputLayout(emailTextInputLayout);
 
-        EditText passwordEditText = passwordTextInputLayout.getEditText();
-        String password = null;
-        if (passwordEditText != null) {
-            password = passwordEditText.getText().toString();
-        }
+        String password = getStringFromTextInputLayout(passwordTextInputLayout);
 
-        if (emailEditText == null || TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(email)) {
             //TODO: replace toast with something better looking
             Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
-        } else if (passwordEditText == null || TextUtils.isEmpty(password)) {
+        } else if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
         } else {
             firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -75,6 +69,19 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                     });
+        }
+    }
+
+    public String getStringFromTextInputLayout(TextInputLayout textInputLayout) {
+        EditText editText = textInputLayout.getEditText();
+        String s = null;
+        if (editText != null) {
+            s = editText.getText().toString();
+        }
+        if (s == null) {
+            return "";
+        } else {
+            return s;
         }
     }
 }

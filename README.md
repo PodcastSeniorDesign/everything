@@ -41,15 +41,17 @@ Activity Flow:
     - - [ ] overlay/modal that says we recommend facebook to find friends
 
         https://developer.android.com/training/tv/playback/onboarding>
-    - - [ ] **if registering, send email and password if possible to new activity**
-    - - [ ] Move outlinedbox styling to new style
-
+    - - [x] **if registering, send email and password if possible to new activity**
+    - - [x] Move outlinedbox styling to new style
+    - [ ] add forgot password option
+  
   - - [ ] Register view (name, email, password, picture) not a new activity but animations to move the forms around
       - [ ] animate changing text from "Sign in" to "Register"
       - [ ] move FB/Google buttons/register past bottom
-      - [ ] add name box to top 
-      - [ ] change "sign in" button to "register"
+      - [x] add name box to top 
+      - [ ] animate change "sign in" button to "register"
       - [ ] password security requirements
+      - [ ] create random picture for users without a profile picture eg. github
 - - [ ] Onboarding
 
   - - [ ] Add favorite genres/topics or favorite podcasts

@@ -10,6 +10,14 @@
     <string name="register">Register</string>
     <string name="or_register"><u>or Register</u></string>
 
+
+    <!--    Components  -->
+
+    <!--    PhotoChooserDialogFragment  -->
+    <string name="title">Choose profile photo</string>
+    <string name="take_photo">Take a photo</string>
+    <string name="choose_from_gallery">Choose from gallery</string>
+
     <!--    Facebook    -->
     <string name="facebook_application_id">1284164711781307</string>
     <string name="fb_login_protocol_scheme">fb1284164711781307</string>
@@ -21,5 +29,7 @@
     <string name="sign_out">Sign Out</string>
     <string name="disconnect">Disconnect</string>
     <string name="signed_in_fmt">Signed in as: %s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
