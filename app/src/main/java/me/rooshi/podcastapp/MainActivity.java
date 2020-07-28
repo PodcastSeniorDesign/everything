@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //move to Intent onreturn if still no logged in start login intent again
-        Toast.makeText(this, "asdfasd", Toast.LENGTH_LONG).show();
         setupRecyclerView();
         initPlayer();
     }

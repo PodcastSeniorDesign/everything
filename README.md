@@ -28,6 +28,7 @@ Activity Flow:
 - - [x] Color scheme
 
   - - [x] Accent #FF4081
+- - [ ] Layout transitions and animations <https://developer.android.com/training/transitions>
 
 #### App
 
@@ -38,7 +39,8 @@ Activity Flow:
   - - [ ] Login page (email/password, FB, and Google)
 
     - - [ ] overlay/modal that says we recommend facebook to find friends
-      - [ ] https://developer.android.com/training/tv/playback/onboarding>
+
+        https://developer.android.com/training/tv/playback/onboarding>
     - - [ ] **if registering, send email and password if possible to new activity**
     - - [ ] Move outlinedbox styling to new style
 

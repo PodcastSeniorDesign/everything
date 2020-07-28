@@ -3,6 +3,7 @@ package me.rooshi.podcastapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -38,7 +39,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onRegister(View view) {
-
+        Intent registerIntent = new Intent(this, RegisterActivity.class);
+        //add email and password to the new activity
+        startActivity(registerIntent);
     }
 
     public void onEmailSignIn(View view) {
@@ -48,8 +51,6 @@ public class LoginActivity extends AppCompatActivity {
         if (emailEditText != null) {
             email = emailEditText.getText().toString();
         }
-
-        Log.i("asdfasdf", email);
 
         EditText passwordEditText = passwordTextInputLayout.getEditText();
         String password = null;

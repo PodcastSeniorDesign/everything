@@ -5,22 +5,9 @@
     <item android:drawable="@color/greyDark"/>
 
     <item
-        android:width="511px"
-        android:height="372px"
-        android:drawable="@drawable/waveform"
-        android:gravity="center"/>
-
-    <!--TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:fontFamily="@font/raleway_bold"
-        android:text="@string/app_name"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" /-->
+        android:width="700px"
+        android:height="1682px"
+        android:drawable="@drawable/waveform_text"
+        android:gravity="center"
+        />
 </layer-list>
