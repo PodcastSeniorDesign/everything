@@ -1,5 +1,6 @@
 package me.rooshi.podcastapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -13,7 +14,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
@@ -23,7 +30,10 @@ public class RegisterActivity extends AppCompatActivity implements PhotoChooserD
     private static final int TAKE_PICTURE_CODE = 1;
     private static final int GALLERY_CODE = 2;
 
+    private FirebaseAuth firebaseAuth;
+
     ImageView profilePicture;
+    TextInputLayout nameTextInputLayout;
     TextInputLayout emailTextInputLayout;
     TextInputLayout passwordTextInputLayout;
 
@@ -32,14 +42,51 @@ public class RegisterActivity extends AppCompatActivity implements PhotoChooserD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
         profilePicture = findViewById(R.id.profile_image);
+        nameTextInputLayout = findViewById(R.id.nameTextInputLayout);
         emailTextInputLayout = findViewById(R.id.emailTextInputLayout);
         passwordTextInputLayout = findViewById(R.id.passwordTextInputLayout);
 
-        setEmailValueFromLogin();
+        setEmailValueFromLoginActivity();
     }
 
-    private void setEmailValueFromLogin() {
+    public void registerUser(View view) {
+        String email = WaveformUtils.getStringFromTextInputLayout(emailTextInputLayout);
+        String password = WaveformUtils.getStringFromTextInputLayout(passwordTextInputLayout);
+        boolean valid = validateFields(email, password);
+        if (valid) {
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                //user created
+
+                                //TODO: upload photo to firebase
+
+                                //TODO: link name and profile pic with the new account
+                                FirebaseUser user = firebaseAuth.getCurrentUser();
+                                user.updateProfile(new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(WaveformUtils.getStringFromTextInputLayout(nameTextInputLayout))
+                                        .setPhotoUri()
+                                        .build());
+                                //exit activity
+
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "Registration failed. Please try again", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+    }
+
+    private boolean validateFields(String email, String password) {
+        return WaveformUtils.isValidEmailAddress(email) && WaveformUtils.isValidPassword(password);
+    }
+
+    private void setEmailValueFromLoginActivity() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String email = extras.getString("email");

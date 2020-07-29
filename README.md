@@ -4,13 +4,13 @@
 
 *coming soon*
 
-Activity Flow:
+### General info
+
+#### Activity Flow:
 
 **Start:** Splash -> Main (-> Login (-> Register -> Onboarding))
 
 *the activities in the parentheses are optional
-
-### General info
 
 - Font
   - Raleway
@@ -29,6 +29,8 @@ Activity Flow:
 
   - - [x] Accent #FF4081
 - - [ ] Layout transitions and animations <https://developer.android.com/training/transitions>
+- - [ ] Password security. It's in plaintext in the app right now and being passed around to different methods
+  - [ ] Code compile obfuscation
 
 #### App
 

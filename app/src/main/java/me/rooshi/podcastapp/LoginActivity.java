@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
+import static me.rooshi.podcastapp.WaveformUtils.getStringFromTextInputLayout;
+
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
@@ -72,16 +74,5 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public String getStringFromTextInputLayout(TextInputLayout textInputLayout) {
-        EditText editText = textInputLayout.getEditText();
-        String s = null;
-        if (editText != null) {
-            s = editText.getText().toString();
-        }
-        if (s == null) {
-            return "";
-        } else {
-            return s;
-        }
-    }
+
 }
