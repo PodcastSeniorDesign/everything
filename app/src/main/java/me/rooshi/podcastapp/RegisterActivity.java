@@ -7,6 +7,8 @@ import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,9 +23,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Objects;
+
+import me.rooshi.podcastapp.model.UserModel;
 
 public class RegisterActivity extends AppCompatActivity implements PhotoChooserDialogFragment.PhotoChooserDialogListener {
 
@@ -31,8 +41,12 @@ public class RegisterActivity extends AppCompatActivity implements PhotoChooserD
     private static final int GALLERY_CODE = 2;
 
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
+    private FirebaseStorage firebaseStorage;
 
     ImageView profilePicture;
+    final Bitmap[] imageBitmap = {null};
+
     TextInputLayout nameTextInputLayout;
     TextInputLayout emailTextInputLayout;
     TextInputLayout passwordTextInputLayout;
@@ -43,6 +57,8 @@ public class RegisterActivity extends AppCompatActivity implements PhotoChooserD
         setContentView(R.layout.activity_register);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        firebaseStorage = FirebaseStorage.getInstance();
 
         profilePicture = findViewById(R.id.profile_image);
         nameTextInputLayout = findViewById(R.id.nameTextInputLayout);
@@ -53,8 +69,9 @@ public class RegisterActivity extends AppCompatActivity implements PhotoChooserD
     }
 
     public void registerUser(View view) {
-        String email = WaveformUtils.getStringFromTextInputLayout(emailTextInputLayout);
-        String password = WaveformUtils.getStringFromTextInputLayout(passwordTextInputLayout);
+        final String name = WaveformUtils.getStringFromTextInputLayout(nameTextInputLayout);
+        final String email = WaveformUtils.getStringFromTextInputLayout(emailTextInputLayout);
+        final String password = WaveformUtils.getStringFromTextInputLayout(passwordTextInputLayout);
         boolean valid = validateFields(email, password);
         if (valid) {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -64,14 +81,37 @@ public class RegisterActivity extends AppCompatActivity implements PhotoChooserD
                             if (task.isSuccessful()) {
                                 //user created
 
-                                //TODO: upload photo to firebase
+                                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                                //adding field in userInfo table for new user
+                                assert user != null;
+                                String uid = firebaseAuth.getCurrentUser().getUid();
+                                UserModel newUser = new UserModel(uid, name, email);
+                                //TODO: move hardcoded "users" and other values to a constants file
+                                databaseReference.child("users").child(uid).setValue(newUser);
+
+                                StorageReference photoRef = null;
+                                if (imageBitmap[0] != null) {
+                                    StorageReference storageReference = firebaseStorage.getReference();
+                                    //TODO: create global properties file storing "users" db entry and "profilePicture" storage name
+                                    //store in images/profilePicture or users/{uid}/profilePicture?
+                                    photoRef = storageReference.child("users/" + uid + "/profilePicture.bmp");
+
+                                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                    imageBitmap[0].compress(Bitmap.CompressFormat.PNG, 90, stream);
+                                    imageBitmap[0].recycle();
+                                    photoRef.putBytes(stream.toByteArray());
+                                    // bytes -> bmp: Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length)
+                                }
 
                                 //TODO: link name and profile pic with the new account
-                                FirebaseUser user = firebaseAuth.getCurrentUser();
-                                user.updateProfile(new UserProfileChangeRequest.Builder()
-                                        .setDisplayName(WaveformUtils.getStringFromTextInputLayout(nameTextInputLayout))
-                                        .setPhotoUri()
-                                        .build());
+                                UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
+                                        builder.setDisplayName(WaveformUtils.getStringFromTextInputLayout(nameTextInputLayout));
+                                        if (photoRef != null) {
+                                            //im not sure if this will wait for the result
+                                            builder.setPhotoUri(photoRef.getDownloadUrl().getResult());
+                                        }
+                                user.updateProfile(builder.build());
                                 //exit activity
 
                             } else {
@@ -130,15 +170,14 @@ public class RegisterActivity extends AppCompatActivity implements PhotoChooserD
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Bitmap imageBitmap;
         if (requestCode == TAKE_PICTURE_CODE) {
             if (resultCode == RESULT_OK) {
                 assert data != null;
                 Bundle extras = data.getExtras();
                 assert extras != null;
-                imageBitmap = (Bitmap) extras.get("data");
+                imageBitmap[0] = (Bitmap) extras.get("data");
                 //set thumbnail
-                profilePicture.setImageBitmap(imageBitmap);
+                profilePicture.setImageBitmap(imageBitmap[0]);
                 //TODO save to firebase
             } else {
                 Toast.makeText(this, "Unable to take picture", Toast.LENGTH_SHORT).show();
@@ -148,8 +187,15 @@ public class RegisterActivity extends AppCompatActivity implements PhotoChooserD
             if (resultCode == RESULT_OK) {
                 assert data != null;
                 Uri selectedImageUri = data.getData();
-                Picasso.get().load(selectedImageUri).into(profilePicture);
-                //TODO store into firebase
+                Picasso.get().load(selectedImageUri).into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        imageBitmap[0] = bitmap;
+                        profilePicture.setImageBitmap(bitmap);
+                    }
+                    @Override public void onBitmapFailed(Exception e, Drawable errorDrawable) {}
+                    @Override public void onPrepareLoad(Drawable placeHolderDrawable) {}
+                });
             } else {
                 Toast.makeText(this, "Unable to obtain picture from gallery", Toast.LENGTH_SHORT).show();
             }
