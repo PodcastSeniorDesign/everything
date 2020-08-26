@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -113,9 +114,10 @@ public class RegisterActivity extends AppCompatActivity implements PhotoChooserD
                                         }
                                 user.updateProfile(builder.build());
                                 //exit activity
+                                finish();
 
                             } else {
-                                Toast.makeText(RegisterActivity.this, "Registration failed. Please try again", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "Registration failed. " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -154,6 +156,7 @@ public class RegisterActivity extends AppCompatActivity implements PhotoChooserD
     }
 
     public void takePictureAndSave() {
+        //TODO fix incorrect intent
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, TAKE_PICTURE_CODE);
@@ -163,7 +166,7 @@ public class RegisterActivity extends AppCompatActivity implements PhotoChooserD
     public void chooseFromGalleryAndSave() {
         Intent galleryIntent = new Intent();
         galleryIntent.setType("image/*");
-        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setAction(Intent.ACTION_PICK);
         startActivityForResult(Intent.createChooser(galleryIntent, "Choose profile picture"), GALLERY_CODE);
     }
 
@@ -193,7 +196,7 @@ public class RegisterActivity extends AppCompatActivity implements PhotoChooserD
                         imageBitmap[0] = bitmap;
                         profilePicture.setImageBitmap(bitmap);
                     }
-                    @Override public void onBitmapFailed(Exception e, Drawable errorDrawable) {}
+                    @Override public void onBitmapFailed(Exception e, Drawable errorDrawable) { Log.w("Gallery Load", "FAILED" + e.getMessage()); }
                     @Override public void onPrepareLoad(Drawable placeHolderDrawable) {}
                 });
             } else {
