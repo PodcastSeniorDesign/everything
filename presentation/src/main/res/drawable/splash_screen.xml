@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+
+    <!--Background color-->
+    <item android:drawable="@color/greyDark"/>
+
+    <item
+        android:width="700px"
+        android:height="1682px"
+        android:drawable="@drawable/waveform_text"
+        android:gravity="center"
+        />
+</layer-list>

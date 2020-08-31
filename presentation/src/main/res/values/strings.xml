@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Waveform</string>
+
+    <!--    General -->
+    <string name="waveform_lower">waveform</string>
+    <string name="sign_in">Sign in</string>
+    <string name="name">Name</string>
+    <string name="email_address">Email address</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="or_register"><u>or Register</u></string>
+
+
+    <!--    Components  -->
+
+    <!--    PhotoChooserDialogFragment  -->
+    <string name="title">Choose profile photo</string>
+    <string name="take_photo">Take a photo</string>
+    <string name="choose_from_gallery">Choose from gallery</string>
+
+    <!--    Facebook    -->
+    <string name="facebook_application_id">1284164711781307</string>
+    <string name="fb_login_protocol_scheme">fb1284164711781307</string>
+
+    <!--   Google Login Activity     -->
+    <string name="desc_google_icon">Google Logo</string>
+    <string name="signed_out">Signed out</string>
+    <string name="title_text">Google Sign-In\nQuickstart</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="signed_in_fmt">Signed in as: %s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

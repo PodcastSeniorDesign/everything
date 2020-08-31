@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="photo_dialog_options">
+        <item>@string/take_photo</item>
+        <item>@string/choose_from_gallery</item>
+    </array>
+</resources>

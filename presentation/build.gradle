@@ -1,0 +1,83 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'  // Google Services plugin
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
+android {
+    compileSdkVersion 29
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "me.rooshi.podcastapp"
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
+    implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version"
+    implementation "androidx.annotation:annotation:$androidx_annotation_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$androidx_lifecycle_version"
+    implementation "androidx.legacy:legacy-support-v4:$androidx_legacy_version"
+
+
+    implementation 'com.google.android.material:material:1.2.0'
+
+    //Hilt/Dagger
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    //reactiveX
+    implementation "io.reactivex.rxjava3:rxandroid:$reactivex_android_version"
+    implementation "io.reactivex.rxjava3:rxjava:$reactivex_java_version"
+    implementation "com.jakewharton.rxbinding4:rxbinding:$reactivex_binding_version"
+
+    //firebase
+    implementation "com.google.firebase:firebase-auth:$firebase_auth_version"
+    implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
+    implementation "com.google.firebase:firebase-database:$firebase_database_version"
+    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
+    implementation "com.google.firebase:firebase-functions:$firebase_functions_version"
+    implementation "com.google.firebase:firebase-storage:$firebase_storage_version"
+
+    //facebook
+    implementation 'com.facebook.android:facebook-login:5.15.3'
+
+    //volley for networking
+    implementation 'com.android.volley:volley:1.1.1'
+
+    //Picasso for image loading
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //circular imageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //Custom Google Sign In Button
+    implementation 'com.shobhitpuri.custombuttons:google-signin:1.1.0'
+
+
+    //TESTING
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test.ext:junit:$androidx_junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidx_expresso_version"
+}

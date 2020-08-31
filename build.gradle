@@ -1,7 +1,23 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+    ext.androidx_appcompat_version = "1.2.0"
+    ext.androidx_constraintlayout_version = "2.0.1"
+    ext.androidx_annotation_version = "1.1.0"
+    ext.androidx_lifecycle_version = "2.2.0"
+    ext.androidx_legacy_version = "1.0.0"
+    ext.junit_version = "4.13"
+    ext.androidx_junit_version = "1.1.2"
+    ext.androidx_expresso_version = "3.3.0"
+    ext.hilt_version = '2.28.1-alpha'
+    ext.reactivex_android_version = "3.0.0"
+    ext.reactivex_java_version = "3.0.3"
+    ext.reactivex_binding_version = "4.0.0"
+    ext.firebase_auth_version = "19.3.2"
+    ext.firebase_analytics_version = "17.5.0"
+    ext.firebase_database_version = "19.4.0"
+    ext.firebase_functions_version = "19.1.0"
+    ext.firebase_storage_version = "19.2.0"
     repositories {
         google()
         jcenter()
@@ -9,8 +25,11 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.3'
+        classpath 'com.android.tools.build:gradle:4.0.1'
         classpath 'com.google.gms:google-services:4.3.3'  // Google Services plugin
+
+        //Hilt Dependency Injection library
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

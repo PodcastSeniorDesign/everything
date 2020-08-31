@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--    main/purple  -->
+    <color name="primaryColor">#7c4dff</color>
+    <color name="primaryLightColor">#b47cff</color>
+    <color name="primaryDarkColor">#3f1dcb</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="primaryAccent">#FF4081</color>
+
+    <!--    white   -->
+    <color name="white">#ffffff</color>
+    <color name="white_alpha">#CCFFFFFF</color>
+
+    <!--    grey    -->
+    <color name="grey">#424242</color>
+    <color name="greyLight">#6d6d6d</color>
+    <color name="greyDark">#1b1b1b</color>
+
+
+    <!--    ACTIVITY SPECIFIC COLORS    -->
+
+    <!--   Google Login Activity     -->
+    <color name="blue_grey_500">#607D8B</color>
+    <color name="blue_grey_700">#455A64</color>
+    <color name="blue_grey_900">#263238</color>
+</resources>
