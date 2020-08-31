@@ -101,6 +101,7 @@ public class RegisterActivity extends AppCompatActivity implements PhotoChooserD
                                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                                     imageBitmap[0].compress(Bitmap.CompressFormat.PNG, 90, stream);
                                     imageBitmap[0].recycle();
+                                    //TODO make async so it actually works
                                     photoRef.putBytes(stream.toByteArray());
                                     // bytes -> bmp: Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length)
                                 }
