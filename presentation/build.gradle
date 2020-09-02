@@ -50,6 +50,7 @@ dependencies {
     //reactiveX
     implementation "io.reactivex.rxjava3:rxandroid:$reactivex_android_version"
     implementation "io.reactivex.rxjava3:rxjava:$reactivex_java_version"
+    implementation "io.reactivex.rxjava3:rxkotlin:$reactivex_kotlin_version"
     implementation "com.jakewharton.rxbinding4:rxbinding:$reactivex_binding_version"
 
     //firebase

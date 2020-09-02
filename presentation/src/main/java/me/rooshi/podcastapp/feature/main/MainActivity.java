@@ -1,4 +1,4 @@
-package me.rooshi.podcastapp;
+package me.rooshi.podcastapp.feature.main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,7 +50,14 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import me.rooshi.podcastapp.FacebookLoginActivity;
+import me.rooshi.podcastapp.GoogleLoginActivity;
+import me.rooshi.podcastapp.LoginActivity;
+import me.rooshi.podcastapp.PodcastActivity;
+import me.rooshi.podcastapp.R;
+import me.rooshi.podcastapp.SearchAdapter;
 import me.rooshi.podcastapp.common.Navigator;
+import me.rooshi.podcastapp.rr3;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {

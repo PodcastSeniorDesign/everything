@@ -4,7 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+
+import me.rooshi.podcastapp.feature.main.MainActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
 

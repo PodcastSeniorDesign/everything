@@ -10,6 +10,8 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:$reactivex_java_version"
     implementation "io.reactivex.rxjava3:rxkotlin:$reactivex_kotlin_version"
 
+    //  DO NOT ADD ANY IMPLEMENTATION SPECIFIC CODE OR LIBRARIES IN THE DOMAIN MODULE
+    // IT'S JUST SUPPOSED TO BE THE BASIC JAVA/REACTIVE INFO ABOUT WHAT OUR APP CAN DO
 
 }
 

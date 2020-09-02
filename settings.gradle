@@ -1,2 +1,2 @@
 rootProject.name='PodcastApp'
-include ':presentation'
+include ':presentation', ":domain"
