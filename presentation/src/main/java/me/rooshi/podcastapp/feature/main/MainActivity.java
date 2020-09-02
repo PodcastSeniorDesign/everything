@@ -47,7 +47,15 @@ import java.util.List;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import me.rooshi.podcastapp.common.Navigator;
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
+
+    @Inject Navigator navigator;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFunctions firebaseFunctions;
