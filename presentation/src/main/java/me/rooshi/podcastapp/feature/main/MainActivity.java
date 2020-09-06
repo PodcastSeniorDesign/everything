@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -62,7 +61,8 @@ import me.rooshi.podcastapp.rr3;
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
-    @Inject Navigator navigator;
+    @Inject
+    Navigator navigator;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFunctions firebaseFunctions;
@@ -86,10 +86,10 @@ public class MainActivity extends AppCompatActivity {
         //1. see if someone is logged in. If not, go to login Activity
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        if (currentUser == null) {
+        //if (currentUser == null) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
-        }
+        //}
 
         //move to Intent onreturn if still no logged in start login intent again
         setupRecyclerView();

@@ -6,12 +6,12 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //Reactive
-    implementation "io.reactivex.rxjava3:rxandroid:$reactivex_android_version"
+    //implementation "io.reactivex.rxjava3:rxandroid:$reactivex_android_version"
     implementation "io.reactivex.rxjava3:rxjava:$reactivex_java_version"
     implementation "io.reactivex.rxjava3:rxkotlin:$reactivex_kotlin_version"
 
     //  DO NOT ADD ANY IMPLEMENTATION SPECIFIC CODE OR LIBRARIES IN THE DOMAIN MODULE
-    // IT'S JUST SUPPOSED TO BE THE BASIC JAVA/REACTIVE INFO ABOUT WHAT OUR APP CAN DO
+    // IT'S JUST SUPPOSED TO BE THE BASIC JAVA/KOTLIN REACTIVE INFO ABOUT WHAT OUR APP CAN DO
 
 }
 

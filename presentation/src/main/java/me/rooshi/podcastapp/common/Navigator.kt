@@ -2,6 +2,8 @@ package me.rooshi.podcastapp.common
 
 import android.content.Context
 import android.content.Intent
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,7 +14,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class Navigator @Inject constructor(
-        private val context: Context
+        @ApplicationContext private val context: Context
 ) {
 
     private fun startActivityNewTask(intent: Intent) {

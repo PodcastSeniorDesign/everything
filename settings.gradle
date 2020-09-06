@@ -1,2 +1,3 @@
+include ':core'
 rootProject.name='PodcastApp'
-include ':presentation', ":domain"
+include ':presentation', ":domain", "core"
