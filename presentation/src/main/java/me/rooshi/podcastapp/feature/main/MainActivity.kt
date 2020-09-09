@@ -1,4 +1,4 @@
-package me.rooshi.podcastapp;
+package me.rooshi.podcastapp.feature.main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,12 +11,13 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+import androidx.lifecycle.ViewModelProvider
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -47,8 +48,37 @@ import java.util.List;
 import java.io.IOException;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+import kotlinx.android.synthetic.main.post_row.view.*
+import me.rooshi.podcastapp.FacebookLoginActivity;
+import me.rooshi.podcastapp.GoogleLoginActivity;
+import me.rooshi.podcastapp.LoginActivity;
+import me.rooshi.podcastapp.PodcastActivity;
+import me.rooshi.podcastapp.R;
+import me.rooshi.podcastapp.SearchAdapter;
+import me.rooshi.podcastapp.common.Navigator;
+import me.rooshi.podcastapp.common.util.extensions.viewBinding
+import me.rooshi.podcastapp.databinding.MainActivityBinding
+import me.rooshi.podcastapp.rr3;
+
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
+
+    //@Inject lateinit var navigator : Navigator
+
+    private val binding by viewBinding(MainActivityBinding::inflate)
+    private val viewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java)}
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        super.setContentView(binding.root)
+        //viewModel.bindView(this)
+
+    }
+
+    /*
     private FirebaseAuth firebaseAuth;
     private FirebaseFunctions firebaseFunctions;
 
@@ -63,22 +93,25 @@ public class MainActivity extends AppCompatActivity {
     JSONObject searchResponse;
     boolean kailabtnclicked = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
 
+        /*
         //1. see if someone is logged in. If not, go to login Activity
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        if (currentUser == null) {
+        //if (currentUser == null) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
-        }
+        //}
 
         //move to Intent onreturn if still no logged in start login intent again
         setupRecyclerView();
         initPlayer();
+         */
     }
 
     public void setupRecyclerView() {
@@ -280,4 +313,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 );
     }
+
+     */
 }

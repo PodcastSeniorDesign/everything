@@ -22,6 +22,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        viewBinding true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -34,14 +38,21 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation "androidx.core:core-ktx:$androidx_core_version"
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
     implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version"
     implementation "androidx.annotation:annotation:$androidx_annotation_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$androidx_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$androidx_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime:$androidx_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$androidx_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$androidx_lifecycle_version"
+
     implementation "androidx.legacy:legacy-support-v4:$androidx_legacy_version"
 
 
-    implementation 'com.google.android.material:material:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
 
     //Hilt/Dagger
     implementation "com.google.dagger:hilt-android:$hilt_version"
@@ -50,7 +61,9 @@ dependencies {
     //reactiveX
     implementation "io.reactivex.rxjava3:rxandroid:$reactivex_android_version"
     implementation "io.reactivex.rxjava3:rxjava:$reactivex_java_version"
+    implementation "io.reactivex.rxjava3:rxkotlin:$reactivex_kotlin_version"
     implementation "com.jakewharton.rxbinding4:rxbinding:$reactivex_binding_version"
+    implementation "com.jakewharton.rxbinding4:rxbinding-core:$reactivex_binding_version"
 
     //firebase
     implementation "com.google.firebase:firebase-auth:$firebase_auth_version"
