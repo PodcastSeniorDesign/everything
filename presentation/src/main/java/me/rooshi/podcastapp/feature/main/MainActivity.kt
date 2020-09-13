@@ -59,12 +59,13 @@ import me.rooshi.podcastapp.PodcastActivity;
 import me.rooshi.podcastapp.R;
 import me.rooshi.podcastapp.SearchAdapter;
 import me.rooshi.podcastapp.common.Navigator;
+import me.rooshi.podcastapp.common.base.MyThemedActivity
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.MainActivityBinding
 import me.rooshi.podcastapp.rr3;
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : MyThemedActivity(), MainView {
 
     //@Inject lateinit var navigator : Navigator
 
@@ -76,6 +77,18 @@ class MainActivity : AppCompatActivity() {
         super.setContentView(binding.root)
         //viewModel.bindView(this)
 
+    }
+
+    override fun render(state: MainState) {
+        if (state.hasError) {
+            finish()
+            return
+        }
+
+        //this is where all the binding visibility sets go, based on the MainState
+        //binding.toolbarTitle.setVisible(state.whatever)
+
+        //then set the actual values for the views
     }
 
     /*
