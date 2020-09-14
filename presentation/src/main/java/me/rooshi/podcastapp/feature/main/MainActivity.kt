@@ -75,7 +75,7 @@ class MainActivity : MyThemedActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         super.setContentView(binding.root)
-        //viewModel.bindView(this)
+        viewModel.bindView(this)
 
     }
 
