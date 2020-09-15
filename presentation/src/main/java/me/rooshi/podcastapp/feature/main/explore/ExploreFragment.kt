@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.base.MyFragment
 
+//dont need @AndroidEntryPoint since MainActivity already does
 class ExploreFragment constructor(
     //private val someObject: Object
 ) : MyFragment(R.layout.explore_fragment) {

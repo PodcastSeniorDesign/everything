@@ -69,13 +69,16 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxkotlin:$reactivex_kotlin_version"
     implementation "com.jakewharton.rxbinding4:rxbinding:$reactivex_binding_version"
     implementation "com.jakewharton.rxbinding4:rxbinding-core:$reactivex_binding_version"
+    implementation "com.jakewharton.rxbinding4:rxbinding-appcompat:$reactivex_binding_version"
+    implementation "com.jakewharton.rxbinding4:rxbinding-material:$reactivex_binding_version"
 
     // autodispose
-    implementation "com.uber.autodispose:autodispose-android-archcomponents:$autodispose_version"
-    implementation "com.uber.autodispose:autodispose-android-archcomponents-test:$autodispose_version"
-    implementation "com.uber.autodispose:autodispose-android:$autodispose_version"
-    implementation "com.uber.autodispose:autodispose:$autodispose_version"
-    implementation "com.uber.autodispose:autodispose-lifecycle:$autodispose_version"
+    //implementation "com.uber.autodispose2:autodispose-android-archcomponents:$autodispose_version"
+    //implementation "com.uber.autodispose2:autodispose-android-archcomponents-test:$autodispose_version"
+    implementation "com.uber.autodispose2:autodispose-android:$autodispose_version"
+    implementation "com.uber.autodispose2:autodispose-androidx-lifecycle:$autodispose_version"
+    implementation "com.uber.autodispose2:autodispose:$autodispose_version"
+    implementation "com.uber.autodispose2:autodispose-lifecycle:$autodispose_version"
 
     //firebase
     implementation "com.google.firebase:firebase-auth:$firebase_auth_version"

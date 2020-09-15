@@ -1,13 +1,19 @@
 package me.rooshi.podcastapp.feature.main;
 
-import android.os.Bundle;
+import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
+import com.jakewharton.rxbinding4.material.itemSelections
+import com.jakewharton.rxbinding4.view.clicks
 
-import javax.inject.Inject;
+import javax.inject.Inject
 
 import dagger.hilt.android.AndroidEntryPoint;
-import me.rooshi.podcastapp.R;
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
+import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.base.MyThemedActivity
 import me.rooshi.podcastapp.common.util.extensions.dismissKeyboard
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
@@ -21,8 +27,13 @@ class MainActivity : MyThemedActivity(), MainView {
 
     //@Inject lateinit var navigator : Navigator
 
-    //need to inject these
-    @Inject lateinit var exploreFragment : ExploreFragment
+    @Inject lateinit var myFragmentFactory: MyFragmentFactory
+    //need to inject these. on second thought if i use fragmentfactory I can't
+    val exploreFragment = ExploreFragment()
+
+    override val castIntent by lazy { binding.cast.clicks() }
+    override val profileIntent by lazy { binding.profileImage.clicks() }
+    override val bottomNavigationIntent by lazy { binding.bottomNavigationView.itemSelections() }
 
     private val binding by viewBinding(MainActivityBinding::inflate)
     private val viewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java)}
@@ -34,10 +45,12 @@ class MainActivity : MyThemedActivity(), MainView {
 
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        supportFragmentManager.fragmentFactory = myFragmentFactory
         //move this to a observable thing based on click of BNB
         supportFragmentManager.beginTransaction()
-                .add(R.id.fragmentContainerView, exploreFragment)
+                .add(R.id.fragmentContainerView, exploreFragment, "explore")
                 .commit()
+        //add other fragments
 
         binding.toolbar.setNavigationOnClickListener {
             dismissKeyboard()
@@ -54,7 +67,7 @@ class MainActivity : MyThemedActivity(), MainView {
 
         //this is where all the binding visibility sets go, based on the MainState
         //binding.toolbarTitle.setVisible(state.whatever)
-        binding.toolbar.menu.findItem(R.id.unconnected_cast)?.isVisible = true
+        binding.toolbar.menu.findItem(R.id.cast)?.isVisible = true
         binding.toolbar.menu.findItem(R.id.profile_image)?.isVisible = true
 
         //then set the actual values for the views

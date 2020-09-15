@@ -18,7 +18,7 @@ buildscript {
     ext.reactivex_java_version = "3.0.3"
     ext.reactivex_kotlin_version = "3.0.0"
     ext.reactivex_binding_version = "4.0.0"
-    ext.autodispose_version = '1.3.0'
+    ext.autodispose_version = '2.0.0'
     ext.firebase_auth_version = "19.3.2"
     ext.firebase_analytics_version = "17.5.0"
     ext.firebase_database_version = "19.4.0"
