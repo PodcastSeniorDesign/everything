@@ -3,7 +3,7 @@ package me.rooshi.podcastapp.feature.main
 import me.rooshi.podcastapp.common.base.MyViewModel
 import javax.inject.Inject
 
-//The purpose of view models is to save
+//THE VIEWMODEL ACTUALLY HAS THE LOGIC FOR EVERYTHING YOU NEED TO DO WHEN YOU WANT TO CONNECT TO THE BACKEND
 class MainViewModel @Inject constructor(
 
 ) : MyViewModel<MainView, MainState>(MainState()) {
