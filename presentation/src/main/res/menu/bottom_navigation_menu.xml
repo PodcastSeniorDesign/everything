@@ -11,8 +11,8 @@
         android:icon="@drawable/ic_envelope_open_text"
         android:title="@string/subscription_tab_title"/>
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/page_3"
         android:enabled="true"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/ic_compass"
         android:title="@string/explore_tab_title"/>
 </menu>

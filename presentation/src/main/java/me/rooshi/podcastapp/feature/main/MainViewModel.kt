@@ -6,4 +6,9 @@ import javax.inject.Inject
 //The purpose of view models is to save
 class MainViewModel @Inject constructor(
 
-) : MyViewModel<MainView, MainState>(MainState())
+) : MyViewModel<MainView, MainState>(MainState()) {
+
+    override fun bindView(view: MainView) {
+        super.bindView(view)
+    }
+}

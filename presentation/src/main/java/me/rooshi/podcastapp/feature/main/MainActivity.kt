@@ -1,5 +1,6 @@
 package me.rooshi.podcastapp.feature.main;
 
+import android.app.ActionBar
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle
 import android.util.Log;
+import android.view.Menu
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,6 +62,7 @@ import me.rooshi.podcastapp.R;
 import me.rooshi.podcastapp.SearchAdapter;
 import me.rooshi.podcastapp.common.Navigator;
 import me.rooshi.podcastapp.common.base.MyThemedActivity
+import me.rooshi.podcastapp.common.util.extensions.dismissKeyboard
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.MainActivityBinding
 import me.rooshi.podcastapp.rr3;
@@ -75,7 +78,14 @@ class MainActivity : MyThemedActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         super.setContentView(binding.root)
-        //viewModel.bindView(this)
+        viewModel.bindView(this)
+
+        setSupportActionBar(findViewById(R.id.toolbar))
+
+        binding.toolbar.setNavigationOnClickListener {
+            dismissKeyboard()
+            //homeIntent.onNext(Unit)
+        }
 
     }
 
@@ -87,8 +97,15 @@ class MainActivity : MyThemedActivity(), MainView {
 
         //this is where all the binding visibility sets go, based on the MainState
         //binding.toolbarTitle.setVisible(state.whatever)
+        binding.toolbar.menu.findItem(R.id.unconnected_cast)?.isVisible = true
+        binding.toolbar.menu.findItem(R.id.profile_image)?.isVisible = true
 
         //then set the actual values for the views
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        //menuInflater.inflate(R.menu.main, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     /*
