@@ -10,7 +10,7 @@ interface MainView : MyView<MainState> {
 
     val castIntent: Observable<Unit>
     val profileIntent: Observable<Unit>
-    val bottomNavigationIntent: Observable<MenuItem>
+    //val bottomNavigationIntent: Observable<MenuItem>
 }
 
-enum class BottomNavItem { SOCIAL, SUBSCRIPTIONS, EXPLORE }
+//enum class BottomNavItem { SOCIAL, SUBSCRIPTIONS, EXPLORE }

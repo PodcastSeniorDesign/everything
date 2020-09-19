@@ -20,5 +20,9 @@ class MainViewModel @Inject constructor(
         view.castIntent
                 .autoDispose(view.scope())
                 .subscribe { Log.w("CAST INTENT", "AYYYYYYYYY") }
+
+        view.profileIntent
+                .autoDispose(view.scope())
+                .subscribe { Log.w("Profile INTENT", "replace with settings intent") }
     }
 }

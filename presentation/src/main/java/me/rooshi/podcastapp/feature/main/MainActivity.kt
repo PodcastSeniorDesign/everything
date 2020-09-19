@@ -14,26 +14,32 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import me.rooshi.podcastapp.R
+import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyThemedActivity
 import me.rooshi.podcastapp.common.util.extensions.dismissKeyboard
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.MainActivityBinding
 import me.rooshi.podcastapp.feature.main.explore.ExploreFragment
+import me.rooshi.podcastapp.feature.main.social.SocialFragment
+import me.rooshi.podcastapp.feature.main.subscriptions.SubscriptionsFragment
 
 //ACTIVITY JUST DOES THE UI PARTS AND SETTING UP THE INTENTS
 // THE ACTUAL LOGIC IS IN THE VIEWMODEL CLASS
 @AndroidEntryPoint
 class MainActivity : MyThemedActivity(), MainView {
 
-    //@Inject lateinit var navigator : Navigator
+    @Inject lateinit var navigator : Navigator
 
     @Inject lateinit var myFragmentFactory: MyFragmentFactory
-    //need to inject these. on second thought if i use fragmentfactory I can't
+
+    //need to inject these. on second thought if i use fragmentfactory I might not be able to
     val exploreFragment = ExploreFragment()
+    val subscriptionsFragment = SubscriptionsFragment()
+    val socialFragment = SocialFragment()
 
     override val castIntent by lazy { binding.cast.clicks() }
     override val profileIntent by lazy { binding.profileImage.clicks() }
-    override val bottomNavigationIntent by lazy { binding.bottomNavigationView.itemSelections() }
+    //override val bottomNavigationIntent by lazy { binding.bottomNavigationView.itemSelections() }
 
     private val binding by viewBinding(MainActivityBinding::inflate)
     private val viewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java)}
@@ -46,18 +52,33 @@ class MainActivity : MyThemedActivity(), MainView {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         supportFragmentManager.fragmentFactory = myFragmentFactory
-        //move this to a observable thing based on click of BNB
-        supportFragmentManager.beginTransaction()
-                .add(R.id.fragmentContainerView, exploreFragment, "explore")
-                .commit()
-        //add other fragments
 
-        binding.toolbar.setNavigationOnClickListener {
-            dismissKeyboard()
-            //homeIntent.onNext(Unit)
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            setFragmentContainer(item)
         }
 
+        //move to if logged in on app start
+        navigator.startLoginActivity()
     }
+
+    private fun setFragmentContainer(item: MenuItem) : Boolean {
+        when (item.itemId) {
+            R.id.bottom_nav_social -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView, socialFragment, "social")
+                    .commit()
+
+            R.id.bottom_nav_subscriptions -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView, subscriptionsFragment, "subscriptions")
+                    .commit()
+
+            R.id.bottom_nav_explore -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView, exploreFragment, "explore")
+                    .commit()
+            else -> return false
+        }
+        return true
+    }
+
 
     override fun render(state: MainState) {
         if (state.hasError) {
@@ -67,8 +88,6 @@ class MainActivity : MyThemedActivity(), MainView {
 
         //this is where all the binding visibility sets go, based on the MainState
         //binding.toolbarTitle.setVisible(state.whatever)
-        binding.toolbar.menu.findItem(R.id.cast)?.isVisible = true
-        binding.toolbar.menu.findItem(R.id.profile_image)?.isVisible = true
 
         //then set the actual values for the views
     }

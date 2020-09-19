@@ -1,19 +1,39 @@
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+//I couldn't find a solution to get around the AndroidSchedulers.mainThread() prolem
+//  Pure Java modules can't take anything from Android modules so I couldn't pass them in
+//  Therefore this is now an android module but I'm not happy about it >:(
+android {
+    compileSdkVersion 29
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    //Dagger/Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+
     //Reactive
     //implementation "io.reactivex.rxjava3:rxandroid:$reactivex_android_version"
     implementation "io.reactivex.rxjava3:rxjava:$reactivex_java_version"
     implementation "io.reactivex.rxjava3:rxkotlin:$reactivex_kotlin_version"
+    implementation "io.reactivex.rxjava3:rxkotlin:$reactivex_android_version"
 
     //  DO NOT ADD ANY IMPLEMENTATION SPECIFIC CODE OR LIBRARIES IN THE DOMAIN MODULE
     // IT'S JUST SUPPOSED TO BE THE BASIC JAVA/KOTLIN REACTIVE INFO ABOUT WHAT OUR APP CAN DO
+    implementation project(path: ':core', configuration: 'default')
 
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"

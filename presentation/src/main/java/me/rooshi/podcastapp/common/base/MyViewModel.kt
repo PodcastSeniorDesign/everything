@@ -7,11 +7,14 @@ import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 
 abstract class MyViewModel<in View: MyView<State>, State>(initialState: State) : ViewModel() {
 
     protected val state: Subject<State> = BehaviorSubject.createDefault(initialState)
+
+    private val stateReducer: Subject<State.() -> State> = PublishSubject.create()
 
     @CallSuper
     open fun bindView(view: View) {
@@ -20,4 +23,6 @@ abstract class MyViewModel<in View: MyView<State>, State>(initialState: State) :
                 .autoDispose(view.scope())
                 .subscribe(view::render)
     }
+
+    protected fun newState(reducer: State.() -> State) = stateReducer.onNext(reducer)
 }

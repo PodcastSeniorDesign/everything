@@ -3,6 +3,8 @@ package me.rooshi.podcastapp.feature.main
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import me.rooshi.podcastapp.feature.main.explore.ExploreFragment
+import me.rooshi.podcastapp.feature.main.social.SocialFragment
+import me.rooshi.podcastapp.feature.main.subscriptions.SubscriptionsFragment
 import javax.inject.Inject
 
 class MyFragmentFactory
@@ -17,7 +19,14 @@ class MyFragmentFactory
             ExploreFragment::class.java.name -> {
                 ExploreFragment(/*someObject*/)
             }
-            //for each of the 3 fragments, add above
+
+            SubscriptionsFragment::class.java.name -> {
+                SubscriptionsFragment()
+            }
+
+            SocialFragment::class.java.name -> {
+                SocialFragment()
+            }
 
             else -> super.instantiate(classLoader, className)
         }

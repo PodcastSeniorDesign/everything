@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
-            android:text="Search Podcasts" />
+            android:text="Explore fragment" />
 
         <HorizontalScrollView
             android:id="@+id/hor_scroll"

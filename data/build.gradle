@@ -39,6 +39,14 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:$reactivex_java_version"
     implementation "io.reactivex.rxjava3:rxkotlin:$reactivex_kotlin_version"
 
+    //firebase
+    implementation "com.google.firebase:firebase-auth:$firebase_auth_version"
+    implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
+    implementation "com.google.firebase:firebase-database:$firebase_database_version"
+    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
+    implementation "com.google.firebase:firebase-functions:$firebase_functions_version"
+    implementation "com.google.firebase:firebase-storage:$firebase_storage_version"
+
     implementation project(':core')
     implementation project(':domain')
 
