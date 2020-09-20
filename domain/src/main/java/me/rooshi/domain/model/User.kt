@@ -5,6 +5,7 @@ package me.rooshi.domain.model
 //      A METHOD IN A REPOSITORY OR CREATE A NEW REPOSITORY
 data class User(
         val id: String,
+        val username: String,
         val following: List<User>,
         val followers: List<User>,
         val posts: List<Post>,

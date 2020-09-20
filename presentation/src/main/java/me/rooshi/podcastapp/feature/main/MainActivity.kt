@@ -1,72 +1,45 @@
 package me.rooshi.podcastapp.feature.main;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
-import android.content.Intent;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.PersistableBundle
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
+import com.jakewharton.rxbinding4.material.itemSelections
+import com.jakewharton.rxbinding4.view.clicks
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.functions.FirebaseFunctions;
-import com.google.firebase.functions.FirebaseFunctionsException;
-import com.google.firebase.functions.HttpsCallableResult;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import java.util.HashMap;
-import java.util.List;
-
-import java.io.IOException;
-import java.util.Map;
-
-import javax.inject.Inject;
+import javax.inject.Inject
 
 import dagger.hilt.android.AndroidEntryPoint;
-import kotlinx.android.synthetic.main.post_row.view.*
-import me.rooshi.podcastapp.FacebookLoginActivity;
-import me.rooshi.podcastapp.GoogleLoginActivity;
-import me.rooshi.podcastapp.LoginActivity;
-import me.rooshi.podcastapp.PodcastActivity;
-import me.rooshi.podcastapp.R;
-import me.rooshi.podcastapp.SearchAdapter;
-import me.rooshi.podcastapp.common.Navigator;
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
+import me.rooshi.podcastapp.R
+import me.rooshi.podcastapp.common.Navigator
+import me.rooshi.podcastapp.common.base.MyThemedActivity
+import me.rooshi.podcastapp.common.util.extensions.dismissKeyboard
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.MainActivityBinding
-import me.rooshi.podcastapp.rr3;
+import me.rooshi.podcastapp.feature.main.explore.ExploreFragment
+import me.rooshi.podcastapp.feature.main.social.SocialFragment
+import me.rooshi.podcastapp.feature.main.subscriptions.SubscriptionsFragment
 
+//ACTIVITY JUST DOES THE UI PARTS AND SETTING UP THE INTENTS
+// THE ACTUAL LOGIC IS IN THE VIEWMODEL CLASS
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : MyThemedActivity(), MainView {
 
-    //@Inject lateinit var navigator : Navigator
+    @Inject lateinit var navigator : Navigator
+
+    @Inject lateinit var myFragmentFactory: MyFragmentFactory
+
+    //need to inject these. on second thought if i use fragmentfactory I might not be able to
+    val exploreFragment = ExploreFragment()
+    val subscriptionsFragment = SubscriptionsFragment()
+    val socialFragment = SocialFragment()
+
+    override val castIntent by lazy { binding.cast.clicks() }
+    override val profileIntent by lazy { binding.profileImage.clicks() }
+    //override val bottomNavigationIntent by lazy { binding.bottomNavigationView.itemSelections() }
 
     private val binding by viewBinding(MainActivityBinding::inflate)
     private val viewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java)}
@@ -74,8 +47,54 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         super.setContentView(binding.root)
-        //viewModel.bindView(this)
+        viewModel.bindView(this)
 
+        setSupportActionBar(findViewById(R.id.toolbar))
+
+        supportFragmentManager.fragmentFactory = myFragmentFactory
+
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            setFragmentContainer(item)
+        }
+
+        //move to if logged in on app start
+        navigator.startLoginActivity()
+    }
+
+    private fun setFragmentContainer(item: MenuItem) : Boolean {
+        when (item.itemId) {
+            R.id.bottom_nav_social -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView, socialFragment, "social")
+                    .commit()
+
+            R.id.bottom_nav_subscriptions -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView, subscriptionsFragment, "subscriptions")
+                    .commit()
+
+            R.id.bottom_nav_explore -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView, exploreFragment, "explore")
+                    .commit()
+            else -> return false
+        }
+        return true
+    }
+
+
+    override fun render(state: MainState) {
+        if (state.hasError) {
+            finish()
+            return
+        }
+
+        //this is where all the binding visibility sets go, based on the MainState
+        //binding.toolbarTitle.setVisible(state.whatever)
+
+        //then set the actual values for the views
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        //menuInflater.inflate(R.menu.main, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     /*

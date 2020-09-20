@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottom_nav_social"
+        android:enabled="true"
+        android:icon="@drawable/ic_comment_dots"
+        android:title="@string/social_tab_title"/>
+    <item
+        android:id="@+id/bottom_nav_subscriptions"
+        android:enabled="true"
+        android:icon="@drawable/ic_envelope_open_text"
+        android:title="@string/subscription_tab_title"/>
+    <item
+        android:id="@+id/bottom_nav_explore"
+        android:enabled="true"
+        android:icon="@drawable/ic_compass"
+        android:title="@string/explore_tab_title"/>
+</menu>

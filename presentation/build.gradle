@@ -18,6 +18,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -31,6 +32,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 
 }
@@ -51,7 +56,6 @@ dependencies {
 
     implementation "androidx.legacy:legacy-support-v4:$androidx_legacy_version"
 
-
     implementation 'com.google.android.material:material:1.2.1'
 
     //Hilt/Dagger
@@ -64,15 +68,26 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxkotlin:$reactivex_kotlin_version"
     implementation "com.jakewharton.rxbinding4:rxbinding:$reactivex_binding_version"
     implementation "com.jakewharton.rxbinding4:rxbinding-core:$reactivex_binding_version"
+    implementation "com.jakewharton.rxbinding4:rxbinding-appcompat:$reactivex_binding_version"
+    implementation "com.jakewharton.rxbinding4:rxbinding-material:$reactivex_binding_version"
+
+    // autodispose
+    //implementation "com.uber.autodispose2:autodispose-android-archcomponents:$autodispose_version"
+    //implementation "com.uber.autodispose2:autodispose-android-archcomponents-test:$autodispose_version"
+    implementation "com.uber.autodispose2:autodispose-android:$autodispose_version"
+    implementation "com.uber.autodispose2:autodispose-androidx-lifecycle:$autodispose_version"
+    implementation "com.uber.autodispose2:autodispose:$autodispose_version"
+    implementation "com.uber.autodispose2:autodispose-lifecycle:$autodispose_version"
 
     //firebase
+    /*
     implementation "com.google.firebase:firebase-auth:$firebase_auth_version"
     implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
     implementation "com.google.firebase:firebase-database:$firebase_database_version"
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
     implementation "com.google.firebase:firebase-functions:$firebase_functions_version"
     implementation "com.google.firebase:firebase-storage:$firebase_storage_version"
-
+     */
     //facebook
     implementation 'com.facebook.android:facebook-login:5.15.3'
 
@@ -88,6 +103,8 @@ dependencies {
     //Custom Google Sign In Button
     implementation 'com.shobhitpuri.custombuttons:google-signin:1.1.0'
 
+    implementation project(':domain')
+    implementation project(':data')
 
     //TESTING
     testImplementation "junit:junit:$junit_version"

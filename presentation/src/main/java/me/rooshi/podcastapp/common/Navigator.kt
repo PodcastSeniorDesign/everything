@@ -50,5 +50,6 @@ class Navigator @Inject constructor(
         //startActivitySingleInstance()
     }
 
+    //asking for permissions should also be done here
 
 }
