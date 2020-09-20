@@ -1,3 +1,4 @@
+/*
 package me.rooshi.podcastapp;
 
 import androidx.annotation.NonNull;
@@ -34,14 +35,14 @@ public class FacebookLoginActivity extends AppCompatActivity {
 
     private static final int MY_REQUEST_CODE = 123;
     private CallbackManager mCallbackManager;
-    private FirebaseAuth mAuth;
+    //private FirebaseAuth mAuth;
     private static final String TAG = "FacebookLogin";
 
     private TextView mEmailView;
     private TextView mUserView;
 
 
-    List<AuthUI.IdpConfig> providers;
+    //List<AuthUI.IdpConfig> providers;
     Button btn_sign_out;
 
     @Override
@@ -49,7 +50,7 @@ public class FacebookLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facebook_login);
 
-        mAuth = FirebaseAuth.getInstance();
+        //mAuth = FirebaseAuth.getInstance();
         LoginButton loginButton = findViewById(R.id.fb_login_button);
         mUserView = findViewById(R.id.displayName);
         mEmailView = findViewById(R.id.email);
@@ -82,13 +83,13 @@ public class FacebookLoginActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        //FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        //AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -147,3 +148,4 @@ public class FacebookLoginActivity extends AppCompatActivity {
     }
 
 }
+*/

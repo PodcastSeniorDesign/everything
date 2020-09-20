@@ -1,3 +1,4 @@
+/*
 package me.rooshi.podcastapp;
 
 import android.content.Context;
@@ -96,3 +97,4 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ResultHolder> 
     }
 
 }
+*/

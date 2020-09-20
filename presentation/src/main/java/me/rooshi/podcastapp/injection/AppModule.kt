@@ -1,5 +1,7 @@
 package me.rooshi.podcastapp.injection
 
+import androidx.lifecycle.ViewModelProvider
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

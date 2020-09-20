@@ -1,5 +1,8 @@
 package me.rooshi.podcastapp.feature.login
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.SavedStateHandle
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -8,8 +11,9 @@ import me.rooshi.domain.interactor.LogInUserEmail
 import me.rooshi.podcastapp.common.base.MyViewModel
 import javax.inject.Inject
 
-class LoginViewModel  @Inject constructor(
-    private val logInUserEmail: LogInUserEmail
+class LoginViewModel @ViewModelInject constructor(
+    private val logInUserEmail: LogInUserEmail,
+        @Assisted private val savedStateHandle: SavedStateHandle
 ) : MyViewModel<LoginView, LoginState>(LoginState()) {
 
     override fun bindView(view: LoginView) {

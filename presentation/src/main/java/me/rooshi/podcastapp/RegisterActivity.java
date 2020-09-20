@@ -1,3 +1,4 @@
+/*
 package me.rooshi.podcastapp;
 
 import androidx.annotation.NonNull;
@@ -204,4 +205,4 @@ public class RegisterActivity extends AppCompatActivity implements PhotoChooserD
             }
         }
     }
-}
+}*/

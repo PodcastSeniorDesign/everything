@@ -1,12 +1,9 @@
 package me.rooshi.podcastapp;
 
-import com.google.firebase.database.Exclude;
-import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@IgnoreExtraProperties
 public class Post {
     public String date;
     public int likes;
@@ -29,7 +26,6 @@ public class Post {
         this.key = key;
     }
 
-    @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("date", date);
