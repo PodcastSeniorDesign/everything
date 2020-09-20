@@ -12,7 +12,6 @@ import javax.inject.Singleton
 
 @Singleton
 class UserRepositoryImpl @Inject constructor(
-        private var firebaseUser: FirebaseUser,
         private val firebaseAuth: FirebaseAuth
 ) : UserRepository {
 
@@ -25,7 +24,7 @@ class UserRepositoryImpl @Inject constructor(
             firebaseAuth.signInWithEmailAndPassword(credentials[0], credentials[1])
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            firebaseUser = firebaseAuth.currentUser!!
+                            //firebaseUser = firebaseAuth.currentUser!!
                         }
                         emitter.onSuccess(task.result.toString())
                     }
