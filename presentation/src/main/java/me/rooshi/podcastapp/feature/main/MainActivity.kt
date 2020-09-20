@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
-import com.jakewharton.rxbinding4.material.itemSelections
+//import com.jakewharton.rxbinding4.material.itemSelections
 import com.jakewharton.rxbinding4.view.clicks
 
 import javax.inject.Inject
@@ -58,7 +58,7 @@ class MainActivity : MyThemedActivity(), MainView {
         }
 
         //move to if logged in on app start
-        navigator.startLoginActivity()
+        //navigator.startLoginActivity()
     }
 
     private fun setFragmentContainer(item: MenuItem) : Boolean {

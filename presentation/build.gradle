@@ -60,6 +60,7 @@ dependencies {
 
     //Hilt/Dagger
     implementation "com.google.dagger:hilt-android:$hilt_version"
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     //reactiveX
@@ -80,14 +81,14 @@ dependencies {
     implementation "com.uber.autodispose2:autodispose-lifecycle:$autodispose_version"
 
     //firebase
-    /*
+
     implementation "com.google.firebase:firebase-auth:$firebase_auth_version"
     implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
     implementation "com.google.firebase:firebase-database:$firebase_database_version"
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
     implementation "com.google.firebase:firebase-functions:$firebase_functions_version"
     implementation "com.google.firebase:firebase-storage:$firebase_storage_version"
-     */
+
     //facebook
     implementation 'com.facebook.android:facebook-login:5.15.3'
 
