@@ -1,5 +1,6 @@
 package me.rooshi.data.repository
 
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -15,8 +16,9 @@ class UserRepositoryImpl @Inject constructor(
         private val firebaseAuth: FirebaseAuth
 ) : UserRepository {
 
-    override fun isUserLoggedIn() {
-        TODO("Not yet implemented")
+    override fun isUserLoggedIn() : Boolean {
+        Log.w("UserRepoImpl", firebaseAuth.currentUser?.email ?: "no user logged in")
+        return firebaseAuth.currentUser != null
     }
 
     override fun logInUserEmail(credentials: List<String>) : Single<String> {
@@ -35,8 +37,15 @@ class UserRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override fun logOutUser() {
+        firebaseAuth.signOut()
+    }
+
+    //somehow convert a firebase user to waveform user
+    //need to save the info too
     override fun getUser(): User? {
-        TODO("Not yet implemented")
+        //return firebaseAuth.currentUser
+        TODO()
     }
 
 }

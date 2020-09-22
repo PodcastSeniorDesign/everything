@@ -3,25 +3,18 @@ package me.rooshi.podcastapp.feature.main;
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.lifecycle.ViewModelProvider
-import com.jakewharton.rxbinding4.material.itemSelections
+import androidx.activity.viewModels
 import com.jakewharton.rxbinding4.view.clicks
-
-import javax.inject.Inject
-
-import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.subjects.PublishSubject
-import io.reactivex.rxjava3.subjects.Subject
+import dagger.hilt.android.AndroidEntryPoint
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyThemedActivity
-import me.rooshi.podcastapp.common.util.extensions.dismissKeyboard
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.MainActivityBinding
 import me.rooshi.podcastapp.feature.main.explore.ExploreFragment
 import me.rooshi.podcastapp.feature.main.social.SocialFragment
 import me.rooshi.podcastapp.feature.main.subscriptions.SubscriptionsFragment
+import javax.inject.Inject
 
 //ACTIVITY JUST DOES THE UI PARTS AND SETTING UP THE INTENTS
 // THE ACTUAL LOGIC IS IN THE VIEWMODEL CLASS
@@ -30,7 +23,7 @@ class MainActivity : MyThemedActivity(), MainView {
 
     @Inject lateinit var navigator : Navigator
 
-    @Inject lateinit var myFragmentFactory: MyFragmentFactory
+    //@Inject lateinit var myFragmentFactory: MyFragmentFactory
 
     //need to inject these. on second thought if i use fragmentfactory I might not be able to
     val exploreFragment = ExploreFragment()
@@ -39,26 +32,23 @@ class MainActivity : MyThemedActivity(), MainView {
 
     override val castIntent by lazy { binding.cast.clicks() }
     override val profileIntent by lazy { binding.profileImage.clicks() }
-    //override val bottomNavigationIntent by lazy { binding.bottomNavigationView.itemSelections() }
 
     private val binding by viewBinding(MainActivityBinding::inflate)
-    private val viewModel by lazy { ViewModelProvider(this).get(MainViewModel::class.java)}
+    private val viewModel : MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        super.setContentView(binding.root)
+
+        setContentView(binding.root)
         viewModel.bindView(this)
 
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        supportFragmentManager.fragmentFactory = myFragmentFactory
+        //supportFragmentManager.fragmentFactory = myFragmentFactory
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             setFragmentContainer(item)
         }
-
-        //move to if logged in on app start
-        navigator.startLoginActivity()
     }
 
     private fun setFragmentContainer(item: MenuItem) : Boolean {

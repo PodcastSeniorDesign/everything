@@ -76,6 +76,8 @@ dependencies {
     implementation "com.jakewharton.rxbinding4:rxbinding-appcompat:$reactivex_binding_version"
     implementation "com.jakewharton.rxbinding4:rxbinding-material:$reactivex_binding_version"
 
+    implementation "com.jakewharton.timber:timber:4.5.1"
+
     // autodispose
     //implementation "com.uber.autodispose2:autodispose-android-archcomponents:$autodispose_version"
     //implementation "com.uber.autodispose2:autodispose-android-archcomponents-test:$autodispose_version"
@@ -85,7 +87,6 @@ dependencies {
     implementation "com.uber.autodispose2:autodispose-lifecycle:$autodispose_version"
 
     //firebase
-
     implementation "com.google.firebase:firebase-auth:$firebase_auth_version"
     implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
     implementation "com.google.firebase:firebase-database:$firebase_database_version"

@@ -5,11 +5,13 @@ import me.rooshi.domain.model.User
 
 interface UserRepository {
 
-    fun isUserLoggedIn()
+    fun isUserLoggedIn() : Boolean
 
     fun logInUserEmail(credentials: List<String>) : Single<String>
 
     fun registerUser()
+
+    fun logOutUser()
 
     fun getUser() : User?
 }

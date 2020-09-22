@@ -32,6 +32,7 @@ class LoginActivity : MyThemedActivity(), LoginView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(binding.root)
         viewModel.bindView(this)
 
