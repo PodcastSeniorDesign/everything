@@ -8,8 +8,11 @@ import androidx.lifecycle.SavedStateHandle
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.withLatestFrom
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 import me.rooshi.domain.interactor.LogInUserEmail
 import me.rooshi.domain.repository.UserRepository
 import me.rooshi.podcastapp.common.base.MyViewModel
@@ -24,6 +27,7 @@ class LoginViewModel @ViewModelInject constructor(
     override fun bindView(view: LoginView) {
         super.bindView(view)
 
+
         view.emailChangedIntent
                 .observeOn(AndroidSchedulers.mainThread())
                 .autoDispose(view.scope())
@@ -34,14 +38,37 @@ class LoginViewModel @ViewModelInject constructor(
                 .autoDispose(view.scope())
                 .subscribe { text -> newState { copy(passwordFilled = text.isNotEmpty()) } }
 
-        view.signInClickedIntent
-                .withLatestFrom(view.emailChangedIntent, view.passwordChangedIntent) {
-                    _, email, password->
-                    val params = listOf<String>(email.toString(), password.toString())
-                    logInUserEmail.execute(params)
-                }
-                .map { _ ->  }
+        view.registerClickedIntent
+                .autoDispose(view.scope())
+                .subscribe { newState { copy(registering = true) }}
 
+        //interactor version
+        /* view.signInClickedIntent
+                 .withLatestFrom(view.emailChangedIntent, view.passwordChangedIntent) {
+                     _, email, password->
+                     val params = listOf<String>(email.toString(), password.toString())
+                     logInUserEmail.execute(params)
+                 }
+                 .autoDispose(view.scope())
+                 .subscribe()*/
+
+        //normal call
+        /*
+        view.signInClickedIntent
+                .withLatestFrom(view.emailChangedIntent, view.passwordChangedIntent) { _, email, password ->
+                    userRepository.logInUserEmail(listOf(email.toString(), password.toString()))
+                    //newState { copy(loginMessage = "withLatestFrom") }
+                }
+                .autoDispose(view.scope())
+                .subscribe { it.doOnSuccess {s ->
+                    Log.w("in single onsuccess", s)
+                    newState { copy(loginMessage = s+"asdfasdf") }
+                }
+                    it.doOnError {error ->
+                        Log.w("in single onerror", error.message)
+                        newState { copy(loginMessage = error.message+"asdfasdf") }
+                    }}
+         */
     }
 
 }

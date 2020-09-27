@@ -25,9 +25,7 @@ class UserRepositoryImpl @Inject constructor(
         return Single.create { emitter ->
             firebaseAuth.signInWithEmailAndPassword(credentials[0], credentials[1])
                     .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            //firebaseUser = firebaseAuth.currentUser!!
-                        }
+                        Log.w("logInUserEmail", "complete")
                         emitter.onSuccess(task.result.toString())
                     }
         }

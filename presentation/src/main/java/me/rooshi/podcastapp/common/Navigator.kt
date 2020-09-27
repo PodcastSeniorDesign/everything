@@ -47,8 +47,9 @@ class Navigator @Inject constructor(
     }
 
     fun startRegisterActivity() {
-        TODO()
-        //startActivitySingleInstance()
+        TODO("need to make all register classes")
+        //val intent = Intent(context, RegisterActivity)
+        //startActivitySingleInstance(intent)
     }
 
     //asking for permissions should also be done here

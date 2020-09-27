@@ -15,6 +15,7 @@
         android:fontFamily="@font/raleway_bold"
         android:insetTop="0dp"
         android:insetBottom="0dp"
+        android:onClick="onEmailSignIn"
         android:text="@string/sign_in"
         android:textColor="@color/primaryTextColor"
         android:textSize="18sp"

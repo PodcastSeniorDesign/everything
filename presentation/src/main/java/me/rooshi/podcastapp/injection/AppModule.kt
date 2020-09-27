@@ -1,6 +1,7 @@
 package me.rooshi.podcastapp.injection
 
 import androidx.lifecycle.ViewModelProvider
+import com.facebook.CallbackManager
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Binds
 import dagger.Module
@@ -27,6 +28,12 @@ object AppModule {
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCallbackManager(): CallbackManager {
+        return CallbackManager.Factory.create()
     }
 
 }

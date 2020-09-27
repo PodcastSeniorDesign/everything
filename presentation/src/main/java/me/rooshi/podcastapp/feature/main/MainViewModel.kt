@@ -22,8 +22,9 @@ class MainViewModel @ViewModelInject constructor(
     override fun bindView(view: MainView) {
         super.bindView(view)
 
-        //check if user is logged in, if not, then
+        //TODO DELETE when done testing
         userRepository.logOutUser()
+
         if (!userRepository.isUserLoggedIn()) {
             navigator.startLoginActivity()
         }
