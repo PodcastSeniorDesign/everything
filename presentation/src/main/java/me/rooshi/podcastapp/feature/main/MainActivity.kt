@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import com.jakewharton.rxbinding4.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
+import me.rooshi.podcastapp.PlayerFragment
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyThemedActivity
@@ -29,6 +30,7 @@ class MainActivity : MyThemedActivity(), MainView {
     val exploreFragment = ExploreFragment()
     val subscriptionsFragment = SubscriptionsFragment()
     val socialFragment = SocialFragment()
+    val playerFragment = PlayerFragment()
 
     override val castIntent by lazy { binding.cast.clicks() }
     override val profileIntent by lazy { binding.profileImage.clicks() }
@@ -44,7 +46,9 @@ class MainActivity : MyThemedActivity(), MainView {
 
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        //supportFragmentManager.fragmentFactory = myFragmentFactory
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.playerContainerView, playerFragment, "player")
+                .commit()
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             setFragmentContainer(item)
@@ -80,11 +84,6 @@ class MainActivity : MyThemedActivity(), MainView {
         //binding.toolbarTitle.setVisible(state.whatever)
 
         //then set the actual values for the views
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        //menuInflater.inflate(R.menu.main, menu)
-        return super.onCreateOptionsMenu(menu)
     }
 
     /*
