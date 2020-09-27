@@ -1,12 +1,11 @@
 package me.rooshi.podcastapp.feature.main;
 
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import com.jakewharton.rxbinding4.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
-import me.rooshi.podcastapp.PlayerFragment
+import me.rooshi.podcastapp.feature.main.player.PlayerFragment
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyThemedActivity
