@@ -21,12 +21,14 @@ class UserRepositoryImpl @Inject constructor(
         return firebaseAuth.currentUser != null
     }
 
-    override fun logInUserEmail(credentials: List<String>) : Single<String> {
-        return Single.create { emitter ->
+    override fun logInUserEmail(credentials: List<String>) : Observable<String> {
+        return Observable.create { emitter ->
             firebaseAuth.signInWithEmailAndPassword(credentials[0], credentials[1])
-                    .addOnCompleteListener { task ->
-                        Log.w("logInUserEmail", "complete")
-                        emitter.onSuccess(task.result.toString())
+                    .addOnFailureListener {
+                        emitter.onNext(it.message)
+                    }
+                    .addOnSuccessListener {
+                        emitter.onNext("logged in")
                     }
         }
     }

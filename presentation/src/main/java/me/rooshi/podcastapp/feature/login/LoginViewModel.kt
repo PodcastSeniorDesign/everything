@@ -53,22 +53,18 @@ class LoginViewModel @ViewModelInject constructor(
                  .subscribe()*/
 
         //normal call
-        /*
+
         view.signInClickedIntent
                 .withLatestFrom(view.emailChangedIntent, view.passwordChangedIntent) { _, email, password ->
-                    userRepository.logInUserEmail(listOf(email.toString(), password.toString()))
+                    listOf(email.toString(), password.toString())
                     //newState { copy(loginMessage = "withLatestFrom") }
                 }
-                .autoDispose(view.scope())
-                .subscribe { it.doOnSuccess {s ->
-                    Log.w("in single onsuccess", s)
-                    newState { copy(loginMessage = s+"asdfasdf") }
+                .switchMap {
+                    userRepository.logInUserEmail(listOf(it[0], it[1]))
                 }
-                    it.doOnError {error ->
-                        Log.w("in single onerror", error.message)
-                        newState { copy(loginMessage = error.message+"asdfasdf") }
-                    }}
-         */
+                .autoDispose(view.scope())
+                .subscribe { newState { copy(loginMessage = it, loggedIn = it == "logged in") } }
+
     }
 
 }

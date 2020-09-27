@@ -96,33 +96,6 @@ class LoginActivity : MyThemedActivity(), LoginView {
     }
      */
 
-    //refactor to reactive if possible
-    fun onEmailSignIn(view: View?) {
-        //TODO: check for email format
-        val email = WaveformUtils.getStringFromTextInputLayout(emailTextInputLayout)
-        val password = WaveformUtils.getStringFromTextInputLayout(passwordTextInputLayout)
-        when {
-            TextUtils.isEmpty(email) -> {
-                //TODO: replace toast with something better looking
-                Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_SHORT).show()
-            }
-            TextUtils.isEmpty(password) -> {
-                Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show()
-            }
-
-            else -> {
-                firebaseAuth.signInWithEmailAndPassword(email, password)
-                        .addOnSuccessListener { task ->
-                            Toast.makeText(this, "Logged in!", Toast.LENGTH_LONG).show()
-                            finish()
-                        }
-                        .addOnFailureListener { e ->
-                            Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-                        }
-            }
-        }
-    }
-
     fun handleFacebookAccessToken(token : AccessToken) {
         val credential = FacebookAuthProvider.getCredential(token.token)
         firebaseAuth.signInWithCredential(credential)
