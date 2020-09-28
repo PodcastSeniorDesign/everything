@@ -1,3 +1,5 @@
+package me.rooshi.podcastapp.common.util.extensions
+
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
