@@ -39,7 +39,7 @@ class LoginActivity : MyThemedActivity(), LoginView {
     override val emailChangedIntent: @NonNull Observable<CharSequence> by lazy { binding.emailTextEdit.textChanges() }
     override val passwordChangedIntent: @NonNull Observable<CharSequence> by lazy { binding.passwordTextEdit.textChanges() }
     override val signInClickedIntent: Observable<Unit> by lazy { binding.signInButton.clicks() }
-    override val registerClickedIntent: Observable<Unit> by lazy { binding.registerTextView.clicks() }
+    override val registerClickedIntent: Observable<Unit> by lazy { binding.toRegisterButton.clicks() }
 
     private val binding by viewBinding(LoginActivityBinding::inflate)
     //private val viewModel by lazy { ViewModelProvider(this).get(LoginViewModel::class.java) }

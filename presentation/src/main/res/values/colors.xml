@@ -7,6 +7,7 @@
     <color name="primaryDarkColor">#3f1dcb</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="primaryAccent">#FF4081</color>
+    <color name="primaryOverlay">#801b1b1b</color>
 
     <!--    white   -->
     <color name="white">#ffffff</color>
