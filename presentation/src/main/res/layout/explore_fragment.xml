@@ -37,11 +37,14 @@
                 android:layout_marginHorizontal="16dp"
                 android:textAppearance="?attr/textAppearanceHeadline5"/>
 
-            <HorizontalScrollView
-                android:id="@+id/rec_scroll"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recommend_RV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp">
+                android:layout_margin="16dp"
+                android:scrollbars="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                >
 
                 <LinearLayout
                     android:id="@+id/rec_lin"
@@ -144,7 +147,7 @@
 
                 </LinearLayout>
 
-            </HorizontalScrollView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
                 android:layout_width="match_parent"
