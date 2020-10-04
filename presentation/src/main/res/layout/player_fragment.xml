@@ -11,6 +11,15 @@
     app:layout_behavior="@string/bottom_sheet_behavior"
 >
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:text="Swipe Up ^^^"
+        android:textAlignment="center"
+        android:textSize="14sp" />
+
     <ImageView
         android:id="@+id/coverArtImageView"
         android:layout_width="376dp"

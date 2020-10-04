@@ -49,6 +49,10 @@ class MainActivity : MyThemedActivity(), MainView {
                 .replace(R.id.playerContainerView, playerFragment, "player")
                 .commit()
 
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView, socialFragment, "social")
+                .commit()
+
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             setFragmentContainer(item)
         }
