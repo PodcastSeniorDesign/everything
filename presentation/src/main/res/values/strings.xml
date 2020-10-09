@@ -15,7 +15,7 @@
     <!--   Explore   -->
     <string name="podcast_title">Podcast Title</string>
     <string name="podcast_channel">Channel</string>
-    <string name="explore">Explore</string>
+    <string name="search">Search Podcasts</string>
     <string name="recommended">Recommended for You</string>
     <string name="new_releases">New Releases</string>
     <string name="rec_channels">Recommended Channels</string>
