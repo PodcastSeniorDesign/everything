@@ -2,6 +2,7 @@ package me.rooshi.podcastapp.feature.main
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
+import me.rooshi.podcastapp.feature.main.player.PlayerFragment
 import me.rooshi.podcastapp.feature.main.explore.ExploreFragment
 import me.rooshi.podcastapp.feature.main.social.SocialFragment
 import me.rooshi.podcastapp.feature.main.subscriptions.SubscriptionsFragment
@@ -26,6 +27,10 @@ class MyFragmentFactory
 
             SocialFragment::class.java.name -> {
                 SocialFragment()
+            }
+
+            PlayerFragment::class.java.name -> {
+                PlayerFragment()
             }
 
             else -> super.instantiate(classLoader, className)

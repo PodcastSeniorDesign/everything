@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
+import me.rooshi.podcastapp.feature.login.LoginActivity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,7 +27,7 @@ class Navigator @Inject constructor(
         // This flag will make it so that only one of the activity can be made.
         //  If it's already running, then it it brought to the front
         //  use for things like login and register
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
 
@@ -41,13 +42,14 @@ class Navigator @Inject constructor(
     }
 
     fun startLoginActivity() {
-        TODO()
-        //startActivitySingleInstance()
+        val intent = Intent(context, LoginActivity::class.java)
+        startActivitySingleInstance(intent)
     }
 
     fun startRegisterActivity() {
-        TODO()
-        //startActivitySingleInstance()
+        TODO("need to make all register classes")
+        //val intent = Intent(context, RegisterActivity)
+        //startActivitySingleInstance(intent)
     }
 
     //asking for permissions should also be done here

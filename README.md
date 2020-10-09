@@ -1,5 +1,6 @@
 # Senior Design Project (Podcast App)
-
+![Splash Screen](https://i.imgur.com/c7kzQjY.png)
+![Player/Main](https://i.imgur.com/dp8Bi9p.png)
 ### Description
 
 *coming soon*

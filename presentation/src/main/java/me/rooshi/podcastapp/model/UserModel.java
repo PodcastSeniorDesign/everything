@@ -1,12 +1,9 @@
 package me.rooshi.podcastapp.model;
 
-import com.google.firebase.database.Exclude;
-import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@IgnoreExtraProperties
 public class UserModel {
     private String uid;
     public String name;
@@ -21,7 +18,6 @@ public class UserModel {
         this.email = email;
     }
 
-    @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("uid", uid);

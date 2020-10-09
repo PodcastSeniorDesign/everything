@@ -12,6 +12,14 @@
     <string name="with_email">With Email</string>
     <string name="with_google_or_facebook">With Facebook or Google</string>
 
+    <!--   Explore   -->
+    <string name="podcast_title">Podcast Title</string>
+    <string name="podcast_channel">Channel</string>
+    <string name="search">Search Podcasts</string>
+    <string name="recommended">Recommended for You</string>
+    <string name="new_releases">New Releases</string>
+    <string name="rec_channels">Recommended Channels</string>
+
     <!--    Main Activity   -->
     <string name="social_tab_title">Social Feed</string>
     <string name="subscription_tab_title">Subscriptions</string>
@@ -39,11 +47,4 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!--   Explore   -->
-    <string name="podcast_title">Podcast Title</string>
-    <string name="podcast_channel">Channel</string>
-    <string name="explore">Explore</string>
-    <string name="recommended">Recommended for You</string>
-    <string name="new_releases">New Releases</string>
-    <string name="rec_channels">Recommended Channels</string>
 </resources>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".feature.main.player.PlayerFragment"
+    app:behavior_peekHeight="55dp"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:text="Swipe Up ^^^"
+        android:textAlignment="center"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/coverArtImageView"
+        android:layout_width="376dp"
+        android:layout_height="351dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/taz" />
+
+    <LinearLayout
+        android:id="@+id/playerFunctionsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/sleepTimer"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:scaleType="centerInside"
+            android:src="@drawable/moon"
+            android:tint="#FFFFFF"
+            tools:src="@drawable/moon" />
+
+        <ImageButton
+            android:id="@+id/rewind15"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:scaleType="centerInside"
+            android:src="@drawable/backward"
+            android:tint="#FFFFFF"
+            tools:src="@drawable/backward" />
+
+        <ImageButton
+            android:id="@+id/playPause"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center|center_horizontal|center_vertical"
+            android:layout_weight="1"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:scaleType="centerInside"
+            android:src="@drawable/play"
+            android:tint="#FFFFFF"
+            tools:src="@drawable/play" />
+
+        <ImageButton
+            android:id="@+id/forward15"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center|center_horizontal|center_vertical"
+            android:layout_weight="1"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:scaleType="centerInside"
+            android:src="@drawable/fast_forward"
+            android:tint="#FFFFFF"
+            tools:src="@drawable/fast_forward" />
+
+        <ImageButton
+            android:id="@+id/playbackSpeed"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:scaleType="centerInside"
+            android:src="@drawable/speed"
+            android:tint="#FFFFFF"
+            tools:src="@drawable/speed" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/scrubBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/currentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:text="00:00:00"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="100"
+            android:progressTint="@color/colorPrimaryDark"
+            android:secondaryProgressTint="#1F0065"
+            android:thumbTint="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/timeLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="-00:00:00"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/episodeInfoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/episodeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Here There Be Gerblins: Chapter One"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/podcastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The Adventure Zone"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/episodeDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="December 3, 2014"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/likeEpisodeButton"
+        android:layout_width="32dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.25"
+        android:background="?android:selectableItemBackgroundBorderless"
+        android:scaleType="centerInside"
+        android:src="@drawable/heart"
+        android:tint="#FFFFFF"
+        tools:src="@drawable/heart" />
+
+</LinearLayout>
