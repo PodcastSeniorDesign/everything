@@ -45,7 +45,7 @@
                 android:scrollbars="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 >
-
+                <!--
                 <LinearLayout
                     android:id="@+id/rec_lin"
                     android:layout_width="wrap_content"
@@ -146,7 +146,7 @@
                     </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
-
+            -->
             </androidx.recyclerview.widget.RecyclerView>
 
             <TextView

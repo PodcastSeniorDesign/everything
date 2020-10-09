@@ -5,6 +5,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import me.rooshi.domain.model.Episode
 import me.rooshi.podcastapp.common.util.extensions.setVisible
 
 abstract class MyAdapter<T, Binding: ViewBinding> : RecyclerView.Adapter<MyViewHolder<Binding>>() {

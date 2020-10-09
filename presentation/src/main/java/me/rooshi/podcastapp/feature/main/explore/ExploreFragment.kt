@@ -5,15 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.AndroidEntryPoint
+import me.rooshi.domain.model.Episode
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.base.MyFragment
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.ExploreFragmentBinding
 import me.rooshi.podcastapp.feature.main.explore.recommendation.RecommendAdapter
+import me.rooshi.podcastapp.feature.main.explore.recommendation.RecommendItem
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ExploreFragment constructor(
     //private val someObject: Object
 ) : MyFragment(R.layout.explore_fragment), ExploreView {
@@ -26,8 +28,6 @@ class ExploreFragment constructor(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.bindView(this)
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -38,11 +38,12 @@ class ExploreFragment constructor(
 
     override fun onStart() {
         super.onStart()
+        viewModel.bindView(this)
         binding.recommendRV.adapter = recommendAdapter
-
     }
 
     override fun render(state: ExploreState) {
-        TODO("Not yet implemented")
+        //recommendAdapter.data = state.recommendationData
+        recommendAdapter.data = listOf(RecommendItem(Episode()))
     }
 }
