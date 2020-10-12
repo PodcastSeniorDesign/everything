@@ -34,7 +34,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="32dp"
             android:backgroundTint="#9C27B0"
-            android:onClick="onProfilePictureClicked"
             android:src="@drawable/add_profile_picture"
             app:civ_border_color="@color/primaryColor"
             app:civ_border_width="2dp"/>
@@ -96,8 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:text="@string/register"
-                android:onClick="registerUser"/>
+                android:text="@string/register"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/cancel_button"
@@ -108,8 +106,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_toStartOf="@id/next_button"
                 android:layout_toLeftOf="@id/next_button"
-                android:text="@string/sign_in"
-                android:onClick="onSignIn"/>
+                android:text="@string/sign_in"/>
 
         </RelativeLayout>
 

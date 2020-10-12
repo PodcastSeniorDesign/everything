@@ -18,8 +18,6 @@
     <color name="greyLight">#6d6d6d</color>
     <color name="greyDark">#1b1b1b</color>
 
-    <color name="primaryOverlay">#801b1b1b</color>
-
     <!--    ACTIVITY SPECIFIC COLORS    -->
 
     <!--   Google Login Activity     -->
