@@ -17,14 +17,14 @@ class SearchRepositoryImpl @Inject constructor(
 
     override fun searchPodcasts(query: String): Observable<List<Podcast>> {
         val data = hashMapOf(
-                "query" to query
+                "search" to query
         )
         return Observable.create { emitter ->
             firebaseFunctions.getHttpsCallable("podcasts-search")
                     .call(query)
-                    .addOnCompleteListener { task ->
+                    .addOnSuccessListener { task ->
                         //val result = task.result?.data as String
-                        Log.e("podcasts-search", task.result?.data.toString())
+                        Log.e("podcasts-search", task.data.toString())
                         emitter.onNext(listOf(Podcast(name = "hardcoded")))
                         //emitter.onNext(parseSearchPodcastToListPodcast(result))
                     }
