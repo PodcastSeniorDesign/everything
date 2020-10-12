@@ -16,6 +16,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".RegisterActivity" />
         <activity android:name=".feature.login.LoginActivity" />
+        <activity android:name=".feature.main.explore.search.SearchActivity"/>
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@style/SplashScreenTheme">
@@ -25,10 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".rr3" />
         <activity android:name=".feature.main.MainActivity" />
-        <activity android:name=".FacebookLoginActivity" />
-        <activity android:name=".GoogleLoginActivity" />
         <activity android:name=".PodcastActivity" />
 
         <meta-data

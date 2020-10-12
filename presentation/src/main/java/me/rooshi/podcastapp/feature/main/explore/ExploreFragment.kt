@@ -9,13 +9,11 @@ import com.jakewharton.rxbinding4.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
 import me.rooshi.domain.model.Episode
 import me.rooshi.podcastapp.R
-import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyFragment
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.ExploreFragmentBinding
 import me.rooshi.podcastapp.feature.main.explore.recommendation.RecommendAdapter
 import me.rooshi.podcastapp.feature.main.explore.recommendation.RecommendItem
-import me.rooshi.podcastapp.feature.main.explore.search.SearchFragment
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -44,6 +42,6 @@ class ExploreFragment constructor(
 
     override fun render(state: ExploreState) {
         //recommendAdapter.data = state.recommendationData
-        recommendAdapter.data = listOf(RecommendItem(Episode()))
+        recommendAdapter.data = listOf(RecommendItem(Episode()), RecommendItem(Episode()))
     }
 }

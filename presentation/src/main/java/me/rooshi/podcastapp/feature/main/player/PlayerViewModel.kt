@@ -28,12 +28,13 @@ class PlayerViewModel @ViewModelInject constructor(
 
         //based on info sent from a fragment/main activity, run this again, and get rid of from here
         //don't have presentation send link, try to have repo have all data and play
-        playerController.initMediaPlayer("https://locator.simplecastcdn.com/e7ec86c9-5b4f-4c1c-af7b-0957921e175d/dcb5d4e2-c757-4b6b-ae0c-691b26f70e7a.mp3")
+        /*playerController.initMediaPlayer("https://locator.simplecastcdn.com/e7ec86c9-5b4f-4c1c-af7b-0957921e175d/dcb5d4e2-c757-4b6b-ae0c-691b26f70e7a.mp3")
+                .doOnError { Log.e("initMediaPlayer", it.localizedMessage ?: "no message") }
                 .autoDispose(view.scope())
                 .subscribe { e ->
                     newState { copy(episodeLoaded = e, episodeLength = playerController.getDuration()) }
 
-                }
+                }*/
 
         view.playPauseIntent
                 .withLatestFrom(state) { _, state ->

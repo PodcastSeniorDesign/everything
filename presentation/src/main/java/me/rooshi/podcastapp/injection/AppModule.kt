@@ -4,6 +4,7 @@ import android.media.MediaPlayer
 import androidx.lifecycle.ViewModelProvider
 import com.facebook.CallbackManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.functions.FirebaseFunctions
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -30,6 +31,11 @@ object AppModule {
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    fun provideFirebaseFunctions(): FirebaseFunctions {
+        return FirebaseFunctions.getInstance()
     }
 
     @Provides

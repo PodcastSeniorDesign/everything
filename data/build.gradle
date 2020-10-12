@@ -39,6 +39,12 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:$reactivex_java_version"
     implementation "io.reactivex.rxjava3:rxkotlin:$reactivex_kotlin_version"
 
+    //retrofit networking
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
     //firebase
     implementation "com.google.firebase:firebase-auth:$firebase_auth_version"
     implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"

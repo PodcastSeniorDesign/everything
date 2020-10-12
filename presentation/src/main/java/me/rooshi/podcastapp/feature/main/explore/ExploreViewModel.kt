@@ -15,6 +15,6 @@ class ExploreViewModel @ViewModelInject constructor(
 
         view.searchIntent
                 .autoDispose(view.scope())
-                .subscribe {  }
+                .subscribe { navigator.startSearchActivity() }
     }
 }

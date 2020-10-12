@@ -5,6 +5,7 @@ import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.rooshi.podcastapp.feature.login.LoginActivity
+import me.rooshi.podcastapp.feature.main.explore.search.SearchActivity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -50,6 +51,11 @@ class Navigator @Inject constructor(
         TODO("need to make all register classes")
         //val intent = Intent(context, RegisterActivity)
         //startActivitySingleInstance(intent)
+    }
+
+    fun startSearchActivity() {
+        val intent = Intent(context, SearchActivity::class.java)
+        startActivitySingleInstance(intent)
     }
 
     //asking for permissions should also be done here
