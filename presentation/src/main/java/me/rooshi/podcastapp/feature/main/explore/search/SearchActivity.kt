@@ -39,6 +39,6 @@ class SearchActivity constructor(
 
     override fun render(state: SearchState) {
         searchAdapter.data = state.results
-        Log.d("inside render", state.results.size.toString())
+        //Log.d("inside render", state.results.size.toString())
     }
 }

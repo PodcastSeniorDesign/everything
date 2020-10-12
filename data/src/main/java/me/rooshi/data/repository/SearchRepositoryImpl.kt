@@ -24,10 +24,12 @@ class SearchRepositoryImpl @Inject constructor(
                     .call(query)
                     .addOnCompleteListener { task ->
                         //val result = task.result?.data as String
+                        Log.e("podcasts-search", task.result?.data.toString())
                         emitter.onNext(listOf(Podcast(name = "hardcoded")))
                         //emitter.onNext(parseSearchPodcastToListPodcast(result))
                     }
                     .addOnFailureListener {
+                        Log.e("podcasts-search", it.message?: "")
                         emitter.onNext(listOf(Podcast(name = "failed")))
                     }
         }
