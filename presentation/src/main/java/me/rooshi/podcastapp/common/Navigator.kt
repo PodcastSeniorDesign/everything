@@ -6,6 +6,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.rooshi.podcastapp.feature.login.LoginActivity
 import me.rooshi.podcastapp.feature.main.explore.search.SearchActivity
+import me.rooshi.podcastapp.feature.register.RegisterActivity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -48,9 +49,8 @@ class Navigator @Inject constructor(
     }
 
     fun startRegisterActivity() {
-        TODO("need to make all register classes")
-        //val intent = Intent(context, RegisterActivity)
-        //startActivitySingleInstance(intent)
+        val intent = Intent(context, RegisterActivity::class.java)
+        startActivitySingleInstance(intent)
     }
 
     fun startSearchActivity() {

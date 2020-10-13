@@ -33,8 +33,16 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun registerUser() {
-        TODO("Not yet implemented")
+    override fun registerUserEmail(credentials: List<String>) : Observable<String> {
+        return Observable.create { emitter ->
+            firebaseAuth.createUserWithEmailAndPassword(credentials[1], credentials[2])
+                    .addOnSuccessListener {
+                        emitter.onNext("logged in")
+                    }
+                    .addOnFailureListener {
+                        emitter.onNext(it.message)
+                    }
+        }
     }
 
     override fun logOutUser() {

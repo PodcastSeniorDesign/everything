@@ -10,7 +10,7 @@ interface UserRepository {
 
     fun logInUserEmail(credentials: List<String>) : Observable<String>
 
-    fun registerUser()
+    fun registerUserEmail(credentials: List<String>) : Observable<String>
 
     fun logOutUser()
 

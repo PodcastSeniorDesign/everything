@@ -11,14 +11,7 @@ class SearchRepositoryImpl @Inject constructor(
         private val firebaseFunctions: FirebaseFunctions
 ) : SearchRepository {
 
-    companion object {
-        val searchURL = "https://us-central1-podcast-app-32d03.cloudfunctions.net/podcasts-search"
-    }
-
     override fun searchPodcasts(query: String): Observable<List<Podcast>> {
-        val data = hashMapOf(
-                "search" to query
-        )
         return Observable.create { emitter ->
             firebaseFunctions.getHttpsCallable("podcasts-search")
                     .call(query)
@@ -29,7 +22,7 @@ class SearchRepositoryImpl @Inject constructor(
                         //emitter.onNext(parseSearchPodcastToListPodcast(result))
                     }
                     .addOnFailureListener {
-                        Log.e("podcasts-search", it.message?: "")
+                        Log.e("podcasts-search error", it.message?: "")
                         emitter.onNext(listOf(Podcast(name = "failed")))
                     }
         }
