@@ -39,6 +39,7 @@
                 android:layout_margin="16dp"
                 android:scrollbars="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"
                 >
                 <!--
                 <LinearLayout

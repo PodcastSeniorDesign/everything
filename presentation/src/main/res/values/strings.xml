@@ -22,7 +22,7 @@
 
     <!--    Main Activity   -->
     <string name="social_tab_title">Social Feed</string>
-    <string name="subscription_tab_title">Subscriptions</string>
+    fi<string name="subscription_tab_title">Subscriptions</string>
     <string name="explore_tab_title">Explore</string>
 
 

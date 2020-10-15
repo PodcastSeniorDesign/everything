@@ -5,8 +5,10 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import me.rooshi.data.repository.PlayerRepositoryImpl
+import me.rooshi.data.repository.SearchRepositoryImpl
 import me.rooshi.data.repository.UserRepositoryImpl
 import me.rooshi.domain.repository.PlayerRepository
+import me.rooshi.domain.repository.SearchRepository
 import me.rooshi.domain.repository.UserRepository
 
 @InstallIn(ApplicationComponent::class)
@@ -17,4 +19,7 @@ abstract class RepositoryModule  {
 
     @Binds
     abstract fun bindPlayerRepository(playerRepositoryImpl: PlayerRepositoryImpl) : PlayerRepository
+
+    @Binds
+    abstract fun bindSearchRepository(searchRepositoryImpl: SearchRepositoryImpl) : SearchRepository
 }

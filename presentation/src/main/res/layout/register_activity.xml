@@ -49,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/name"
-                android:inputType="textWebPassword"
+                android:inputType="text"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/email_address"
-                android:inputType="textWebPassword"
+                android:inputType="textWebEmailAddress"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,7 +90,7 @@
             >
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/next_button"
+                android:id="@+id/register_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -104,11 +104,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
                 android:layout_marginRight="12dp"
-                android:layout_toStartOf="@id/next_button"
-                android:layout_toLeftOf="@id/next_button"
-                android:text="@string/sign_in"/>
+                android:layout_toStartOf="@id/register_button"
+                android:layout_toLeftOf="@id/register_button"
+                android:text="@string/sign_in"
+                />
 
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/errorMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="errorMessage"
+            android:textColor="#FF0000" />
 
     </LinearLayout>
 
