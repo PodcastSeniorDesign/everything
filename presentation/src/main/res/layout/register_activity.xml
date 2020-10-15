@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="48dp"
-    >
+    tools:context=".feature.login.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -95,8 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:text="@string/register"
-                />
+                android:text="@string/register"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/cancel_button"

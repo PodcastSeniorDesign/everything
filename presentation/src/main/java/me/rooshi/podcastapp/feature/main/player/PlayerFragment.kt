@@ -46,9 +46,9 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
 
     override fun render(state: PlayerState) {
         if (state.playing) {
-            binding.playPause.setImageResource(R.drawable.pause)
+            binding.playPause.setImageResource(R.drawable.ic_round_pause_circle_filled_24)
         } else {
-            binding.playPause.setImageResource(R.drawable.play)
+            binding.playPause.setImageResource(R.drawable.ic_round_play_circle_filled_24)
         }
 
         binding.playPause.isEnabled = state.episodeLoaded
