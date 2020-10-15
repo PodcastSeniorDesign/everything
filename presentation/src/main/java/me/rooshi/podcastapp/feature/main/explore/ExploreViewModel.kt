@@ -14,8 +14,6 @@ class ExploreViewModel @ViewModelInject constructor(
     private val searchRepository: SearchRepository
 ) : MyViewModel<ExploreView, ExploreState>(ExploreState()) {
 
-
-
     init {
         disposables += searchRepository.topPodcastsByGenre()
                 .subscribe {

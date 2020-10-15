@@ -99,6 +99,9 @@ dependencies {
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
+    //gson for serializing
+    implementation 'com.google.code.gson:gson:2.8.6'
+
     //facebook
     implementation 'com.facebook.android:facebook-login:5.15.3'
 

@@ -2,11 +2,13 @@ package me.rooshi.podcastapp.common
 
 import android.content.Context
 import android.content.Intent
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.rooshi.domain.model.Podcast
 import me.rooshi.podcastapp.feature.login.LoginActivity
 import me.rooshi.podcastapp.feature.main.explore.search.SearchActivity
+import me.rooshi.podcastapp.feature.main.podcastInfo.PodcastInfoActivity
 import me.rooshi.podcastapp.feature.register.RegisterActivity
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,7 +20,8 @@ import javax.inject.Singleton
  */
 @Singleton
 class Navigator @Inject constructor(
-        @ApplicationContext private val context: Context
+        @ApplicationContext private val context: Context,
+        private val gson: Gson
 ) {
 
     private fun startActivityNewTask(intent: Intent) {
@@ -60,7 +63,12 @@ class Navigator @Inject constructor(
     }
 
     fun showPodcast(podcast: Podcast) {
+        val serPodcast = gson.toJson(podcast)
 
+        val intent = Intent(context, PodcastInfoActivity::class.java)
+        intent.putExtra("podcast", serPodcast)
+
+        startActivitySingleInstance(intent)
     }
 
     //asking for permissions should also be done here

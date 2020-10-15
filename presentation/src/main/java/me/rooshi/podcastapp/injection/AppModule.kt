@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.facebook.CallbackManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.functions.FirebaseFunctions
+import com.google.gson.Gson
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Binds
@@ -20,14 +21,6 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 @Module
 object AppModule {
-
-    /*
-    @Singleton
-    @Provides
-    fun provideSomeObject(): Object {
-        return Object()
-    }
-    */
 
     @Provides
     @Singleton
@@ -58,6 +51,12 @@ object AppModule {
         return Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
                 .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        return Gson()
     }
 
 }
