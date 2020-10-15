@@ -54,7 +54,7 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
         binding.playPause.isEnabled = state.episodeLoaded
 
         binding.episodeName.text = state.episode?.name ?: ""
-        binding.podcastName.text = state.episode?.podcast?.name ?: ""
+        binding.podcastName.text = state.episode?.podcast?.title ?: ""
         binding.episodeDate.text = state.episode?.date ?: ""
 
         if (state.episodeLoaded) {

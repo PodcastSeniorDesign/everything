@@ -94,7 +94,11 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
     implementation "com.google.firebase:firebase-functions:$firebase_functions_version"
     implementation "com.google.firebase:firebase-storage:$firebase_storage_version"
-     
+
+    //moshi for json parsing
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+
     //facebook
     implementation 'com.facebook.android:facebook-login:5.15.3'
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
+import me.rooshi.domain.model.Podcast
 import me.rooshi.podcastapp.feature.login.LoginActivity
 import me.rooshi.podcastapp.feature.main.explore.search.SearchActivity
 import me.rooshi.podcastapp.feature.register.RegisterActivity
@@ -56,6 +57,10 @@ class Navigator @Inject constructor(
     fun startSearchActivity() {
         val intent = Intent(context, SearchActivity::class.java)
         startActivitySingleInstance(intent)
+    }
+
+    fun showPodcast(podcast: Podcast) {
+
     }
 
     //asking for permissions should also be done here

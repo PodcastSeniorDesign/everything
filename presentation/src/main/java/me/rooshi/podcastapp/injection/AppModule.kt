@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.facebook.CallbackManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.functions.FirebaseFunctions
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -48,6 +50,14 @@ object AppModule {
     @Singleton
     fun providePlayerController(): PlayerController {
         return PlayerController()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMoshi(): Moshi {
+        return Moshi.Builder()
+                .add(KotlinJsonAdapterFactory())
+                .build()
     }
 
 }

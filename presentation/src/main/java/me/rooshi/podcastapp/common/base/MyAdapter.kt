@@ -28,6 +28,10 @@ abstract class MyAdapter<T, Binding: ViewBinding> : RecyclerView.Adapter<MyViewH
         field?.isVisible = data.isEmpty()
     }
 
+    fun getItem(position: Int): T {
+        return data[position]
+    }
+
     open fun onDatasetChanged() {}
 
     private fun getDiffUtilCallback(oldData: List<T>, newData: List<T>): DiffUtil.Callback {

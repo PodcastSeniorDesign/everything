@@ -25,6 +25,7 @@ buildscript {
     ext.firebase_database_version = "19.4.0"
     ext.firebase_functions_version = "19.1.0"
     ext.firebase_storage_version = "19.2.0"
+    ext.moshi_version = "1.11.0"
     repositories {
         google()
         jcenter()
