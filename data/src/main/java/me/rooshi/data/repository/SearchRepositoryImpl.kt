@@ -46,7 +46,8 @@ class SearchRepositoryImpl @Inject constructor(
             firebaseFunctions.getHttpsCallable("podcasts-search")
                     .call(query)
                     .addOnSuccessListener { task ->
-                        val result = task.data as HashMap<*,*>
+                        Log.e("task", task.data.toString());
+                        val result = task.data as ArrayList<*>
                         val list = parseSearchPodcastToListPodcast(result)
                         emitter.onNext(list)
                     }
@@ -73,17 +74,18 @@ class SearchRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun parseSearchPodcastToListPodcast(result: HashMap<*,*>) : List<Podcast> {
-        val list = result["result"] as ArrayList<*>
+    private fun parseSearchPodcastToListPodcast(result: ArrayList<*>) : List<Podcast> {
+//        val list = result["results"] as ArrayList<*>
+        print(result)
         val outList = mutableListOf<Podcast>()
-        for (podcast in list) {
+        for (podcast in result) {
             val p = Podcast()
             val map = podcast as HashMap<*, *>
             p.imageURL = map[imageURLKey] as String
             p.thumbnailURL = map[thumbnailURLKey] as String
             p.description = map[descriptionKey] as String
             p.totalEpisodes = map[totalEpisodesKey] as Int
-            p.websiteURL = map[websiteKey] as String
+//            p.websiteURL = map[websiteKey] as String
             p.title = map[titleKey] as String
             p.publisher = map[publisherKey] as String
             p.id = map[idKey] as String
