@@ -1,13 +1,14 @@
 package me.rooshi.domain.model
 
 data class Episode(
-        val id: String = "",
-        val name: String = "",
-        val likes: Int = 0,
-        val url: String = "",
-        val length: Long = 0,
-        val date: String = "",
-        val podcast: Podcast? = null
+        var id: String = "",
+        var imageURL: String = "",
+        var thumbnailURL: String = "",
+        var title: String = "",
+        var description: String = "",
+        var likes: Int = 0,
+        var audioURL: String = "",
+        var length: Int = 0,
+        var dateMilli: Long = 0,
+        var podcast: Podcast = Podcast()
 )
-// should the episode have a link to the parent?
-//  probably but is that bad code?

@@ -53,9 +53,9 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
 
         binding.playPause.isEnabled = state.episodeLoaded
 
-        binding.episodeName.text = state.episode?.name ?: ""
+        binding.episodeName.text = state.episode?.title ?: ""
         binding.podcastName.text = state.episode?.podcast?.title ?: ""
-        binding.episodeDate.text = state.episode?.date ?: ""
+        binding.episodeDate.text = state.episode?.dateMilli.toString() ?: ""
 
         if (state.episodeLoaded) {
             binding.seekBar.max = state.episodeLength

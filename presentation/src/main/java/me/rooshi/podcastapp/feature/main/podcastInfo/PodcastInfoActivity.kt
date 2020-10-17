@@ -12,10 +12,13 @@ import io.reactivex.rxjava3.subjects.Subject
 import me.rooshi.podcastapp.common.base.MyThemedActivity
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.PodcastInfoActivityBinding
+import me.rooshi.podcastapp.feature.main.episodeList.EpisodeAdapter
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class PodcastInfoActivity constructor() : MyThemedActivity(), PodcastInfoView {
+
+    @Inject lateinit var episodeAdapter: EpisodeAdapter
 
     override val onNewIntentIntent: Subject<Intent> = PublishSubject.create()
 
@@ -29,6 +32,7 @@ class PodcastInfoActivity constructor() : MyThemedActivity(), PodcastInfoView {
 
         onNewIntentIntent.onNext(intent)
 
+        binding.episodeRV.adapter = episodeAdapter
     }
 
     override fun render(state: PodcastInfoState) {
@@ -42,6 +46,7 @@ class PodcastInfoActivity constructor() : MyThemedActivity(), PodcastInfoView {
             binding.description.text = state.podcast.description
             binding.numEpisodes.text = "${state.podcast.totalEpisodes} episodes:"
         }
+        episodeAdapter.data = state.episodes
     }
 
 }
