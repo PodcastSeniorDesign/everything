@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.widget.SeekBarChangeEvent
 import com.jakewharton.rxbinding4.widget.changeEvents
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
 import me.rooshi.domain.repository.PlayerRepository
@@ -22,10 +23,11 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
 
     @Inject lateinit var playerRepository: PlayerRepository
 
+    //override val finishedLoadingIntent: Observable<Boolean> by lazy { playerController.initMediaPlayer() }
     override val playPauseIntent: Observable<Unit> by lazy { binding.playPause.clicks() }
     override val rewindIntent: Observable<Unit> by lazy { binding.rewind15.clicks() }
     override val forwardIntent: Observable<Unit> by lazy { binding.forward15.clicks() }
-    override val timerIntent: Observable<Int> by lazy { playerController.timer }
+    override val timerIntent: Observable<Int> by lazy { playerController.timerIntent }
     override val seekIntent: Observable<SeekBarChangeEvent> by lazy { binding.seekBar.changeEvents() }
 
     @Inject lateinit var playerController: PlayerController
@@ -53,14 +55,17 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
 
         binding.playPause.isEnabled = state.episodeLoaded
 
-        binding.episodeName.text = state.episode?.title ?: ""
-        binding.podcastName.text = state.episode?.podcast?.title ?: ""
-        binding.episodeDate.text = state.episode?.dateMilli.toString() ?: ""
+        if (!state.episode.imageURL.isNullOrEmpty()) {
+            Picasso.get().load(state.episode.imageURL).into(binding.coverArtImageView)
+        }
+        binding.episodeName.text = state.episode.title
+        binding.podcastName.text = state.episode.podcast.title
+        binding.episodeDate.text = state.episode.dateMilli.toString()
 
         if (state.episodeLoaded) {
-            binding.seekBar.max = state.episodeLength
+            binding.seekBar.max = state.episode.lengthSeconds*1000
 
-            val timersTimes = changeMillisToText(state.timer, state.episodeLength)
+            val timersTimes = changeMillisToText(state.timer, state.episode.lengthSeconds*1000)
             binding.currentTime.text = timersTimes[0]
             binding.timeLeft.text = timersTimes[1]
 

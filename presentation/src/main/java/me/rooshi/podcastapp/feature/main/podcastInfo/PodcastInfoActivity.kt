@@ -40,16 +40,14 @@ class PodcastInfoActivity constructor() : MyThemedActivity(), PodcastInfoView {
     }
 
     override fun render(state: PodcastInfoState) {
-        if (state.podcast != null) {
-            //shouldn't be loading the image all the time
-            if (binding.image.drawable == null && !state.podcast.imageURL.isNullOrEmpty()) {
-                Picasso.get().load(state.podcast.imageURL).into(binding.image)
-            }
-            binding.title.text = state.podcast.title
-            binding.publisher.text = state.podcast.publisher
-            binding.description.text = state.podcast.description
-            binding.numEpisodes.text = "${state.podcast.totalEpisodes} episodes:"
+        //shouldn't be loading the image all the time
+        if (binding.image.drawable == null && !state.podcast.imageURL.isNullOrEmpty()) {
+            Picasso.get().load(state.podcast.imageURL).into(binding.image)
         }
+        binding.title.text = state.podcast.title
+        binding.publisher.text = state.podcast.publisher
+        binding.description.text = state.podcast.description
+        binding.numEpisodes.text = "${state.podcast.totalEpisodes} episodes:"
         episodeAdapter.data = state.episodes
         episodeAdapter.notifyDataSetChanged()
     }

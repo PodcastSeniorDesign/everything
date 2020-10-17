@@ -28,7 +28,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".feature.main.MainActivity" />
-        <activity android:name=".PodcastActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

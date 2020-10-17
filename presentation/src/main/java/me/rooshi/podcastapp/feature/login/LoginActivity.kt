@@ -1,12 +1,8 @@
 package me.rooshi.podcastapp.feature.login
 
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -20,15 +16,11 @@ import com.jakewharton.rxbinding4.widget.textChanges
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.subjects.PublishSubject
-import kotlinx.android.synthetic.main.login_activity.*
-import me.rooshi.podcastapp.WaveformUtils
 import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyThemedActivity
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.LoginActivityBinding
 import javax.inject.Inject
-import javax.security.auth.Subject
 
 @AndroidEntryPoint
 class LoginActivity : MyThemedActivity(), LoginView {

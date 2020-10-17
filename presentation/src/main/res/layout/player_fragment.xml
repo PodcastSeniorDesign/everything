@@ -67,8 +67,8 @@
 
             <ImageView
                 android:id="@+id/coverArtImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="360dp"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="24dp"
                 android:src="@drawable/taz" />

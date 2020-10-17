@@ -10,16 +10,21 @@ import me.rooshi.data.repository.UserRepositoryImpl
 import me.rooshi.domain.repository.PlayerRepository
 import me.rooshi.domain.repository.SearchRepository
 import me.rooshi.domain.repository.UserRepository
+import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
 @Module
 abstract class RepositoryModule  {
+
     @Binds
+    @Singleton
     abstract fun bindUserRepository(userRepositoryImpl: UserRepositoryImpl) : UserRepository
 
     @Binds
+    @Singleton
     abstract fun bindPlayerRepository(playerRepositoryImpl: PlayerRepositoryImpl) : PlayerRepository
 
     @Binds
+    @Singleton
     abstract fun bindSearchRepository(searchRepositoryImpl: SearchRepositoryImpl) : SearchRepository
 }

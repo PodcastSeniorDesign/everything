@@ -5,9 +5,11 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Handler
 import android.os.Looper
+import androidx.core.os.postDelayed
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
+import me.rooshi.domain.model.Episode
 import java.io.IOException
 
 class PlayerController constructor(
@@ -15,20 +17,22 @@ class PlayerController constructor(
 
     private val mediaPlayer = MediaPlayer()
 
-    val timer : Subject<Int> = BehaviorSubject.create()
+    val timerIntent : Subject<Int> = BehaviorSubject.create()
 
     init {
         setMediaPlayerAttributes()
+
+        //TODO turn on and off with pause and play and run faster than 1 second
         val handler = Handler(Looper.getMainLooper())
         handler.post(object : Runnable {
             override fun run() {
-                    timer.onNext(mediaPlayer.currentPosition)
+                    timerIntent.onNext(mediaPlayer.currentPosition)
                     handler.postDelayed(this, 1000)
             }
         })
     }
 
-    fun setMediaPlayerAttributes() {
+    private fun setMediaPlayerAttributes() {
         mediaPlayer.setAudioAttributes(
                 AudioAttributes.Builder()
                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -38,11 +42,14 @@ class PlayerController constructor(
     }
 
 
-    fun initMediaPlayer(url: String) : Observable<Boolean> {
+    fun loadEpisode(episode: Episode) : Observable<Boolean> {
         return Observable.create { emitter ->
             emitter.onNext(false)
             try {
-                mediaPlayer.setDataSource(url)
+                mediaPlayer.stop()
+                mediaPlayer.reset()
+
+                mediaPlayer.setDataSource(episode.audioURL)
 
                 mediaPlayer.setOnPreparedListener {
                     emitter.onNext(true)

@@ -34,5 +34,10 @@ abstract class MyViewModel<in View: MyView<State>, State>(initialState: State) :
                 .subscribe(view::render)
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        disposables.dispose()
+    }
+
     protected fun newState(reducer: State.() -> State) = stateReducer.onNext(reducer)
 }

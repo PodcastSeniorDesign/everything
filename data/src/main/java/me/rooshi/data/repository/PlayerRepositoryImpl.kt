@@ -17,13 +17,14 @@ import javax.inject.Inject
 class PlayerRepositoryImpl @Inject constructor(
 ) : PlayerRepository {
 
-    override val currentEpisode: Subject<Episode> = BehaviorSubject.create()
+    override val currentEpisode: Subject<Episode> = BehaviorSubject.createDefault(Episode())
 
     override fun loadPodcastInfo() {
         TODO("Not yet implemented")
     }
 
     override fun changeEpisode(episode: Episode) {
+        Log.e("playerrepos", episode.title)
         currentEpisode.onNext(episode)
     }
 

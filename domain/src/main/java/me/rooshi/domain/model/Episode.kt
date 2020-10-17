@@ -8,7 +8,7 @@ data class Episode(
         var description: String = "",
         var likes: Int = 0,
         var audioURL: String = "",
-        var length: Int = 0,
+        var lengthSeconds: Int = 0,
         var dateMilli: Long = 0,
         var podcast: Podcast = Podcast()
 )

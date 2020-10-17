@@ -18,23 +18,25 @@ class PlayerViewModel @ViewModelInject constructor(
 ) : MyViewModel<PlayerView, PlayerState>(PlayerState()) {
 
     init {
+        //this doesn't work
         disposables += playerRepository.currentEpisode
                 .distinctUntilChanged()
-                .subscribe { e -> newState { copy(episode = e) } }
+                .filter { e ->
+                    e.audioURL.isNotEmpty()
+                }
+                .doOnNext {e ->
+                    newState { copy(episode = e, playing = false) }
+                }
+                .switchMap { e ->
+                    playerController.loadEpisode(e)
+                }
+                .subscribe { loaded ->
+                    newState { copy(episodeLoaded = loaded) } }
+
     }
 
     override fun bindView(view: PlayerView) {
         super.bindView(view)
-
-        //based on info sent from a fragment/main activity, run this again, and get rid of from here
-        //don't have presentation send link, try to have repo have all data and play
-        /*playerController.initMediaPlayer("https://locator.simplecastcdn.com/e7ec86c9-5b4f-4c1c-af7b-0957921e175d/dcb5d4e2-c757-4b6b-ae0c-691b26f70e7a.mp3")
-                .doOnError { Log.e("initMediaPlayer", it.localizedMessage ?: "no message") }
-                .autoDispose(view.scope())
-                .subscribe { e ->
-                    newState { copy(episodeLoaded = e, episodeLength = playerController.getDuration()) }
-
-                }*/
 
         view.playPauseIntent
                 .withLatestFrom(state) { _, state ->
@@ -45,9 +47,7 @@ class PlayerViewModel @ViewModelInject constructor(
                     newState { copy(playing = !playing) }
                 }
                 .autoDispose(view.scope())
-                .subscribe {
-                    Log.w("PlayerFragment", "play pause CLICKEDY ICKED")
-                }
+                .subscribe()
 
         view.rewindIntent
                 .autoDispose(view.scope())
@@ -62,23 +62,29 @@ class PlayerViewModel @ViewModelInject constructor(
                 }
 
         view.timerIntent
+                .withLatestFrom(state)
+                .filter { !it.second.seeking }
                 .autoDispose(view.scope())
-                .subscribe {time ->
-                    newState { copy(timer = time) }
+                .subscribe {
+                    newState { copy(timer = it.first) }
                 }
 
         view.seekIntent
                 .autoDispose(view.scope())
                 .subscribe { event ->
                     when (event) {
-                        is SeekBarProgressChangeEvent -> {newState { copy(timer = event.progress) }}
+                        is SeekBarProgressChangeEvent -> {
+                            newState { copy(timer = event.progress) }
+                        }
                         is SeekBarStartChangeEvent -> {
                             playerController.pause()
-                            newState { copy(playing = false) }}
+                            newState { copy(playing = false, seeking = true) }
+                        }
                         is SeekBarStopChangeEvent -> {
                             playerController.seekTo(event.view.progress)
                             playerController.play()
-                            newState { copy(playing = true) }}
+                            newState { copy(playing = true, seeking = false) }
+                        }
                     }
                 }
     }

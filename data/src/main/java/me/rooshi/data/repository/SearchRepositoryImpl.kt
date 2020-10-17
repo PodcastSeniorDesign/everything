@@ -78,7 +78,6 @@ class SearchRepositoryImpl @Inject constructor(
 
     private fun parseSearchPodcastToList(result: ArrayList<*>) : List<Podcast> {
 //        val list = result["results"] as ArrayList<*>
-        print(result)
         val outList = mutableListOf<Podcast>()
         for (podcast in result) {
             val p = Podcast()
@@ -135,7 +134,7 @@ class SearchRepositoryImpl @Inject constructor(
 //            p.websiteURL = map[websiteKey] .toString()
             e.title = map[episodeTitleKey].toString()
             e.id = map[idKey].toString()
-            e.length = map[lengthKey] as Int
+            e.lengthSeconds = map[lengthKey] as Int
             e.audioURL = map[audioURLKey].toString()
             e.dateMilli = map[publishedDateKey] as Long
 
