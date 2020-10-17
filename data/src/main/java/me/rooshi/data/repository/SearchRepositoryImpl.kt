@@ -97,26 +97,26 @@ class SearchRepositoryImpl @Inject constructor(
         return outList
     }
 
-    override fun getListOfEpisodes(podcast: Podcast): Observable<PodcastInfoResult> {
+    override fun getListOfEpisodes(podcast: Podcast, next: Long): Observable<PodcastInfoResult> {
         return Observable.create { emitter ->
             if (podcast.id.isEmpty()) emitter.onNext(PodcastInfoResult())
 
             val params = hashMapOf(
                     "id" to podcast.id,
-                    "next" to ""
+                    "next" to next
             )
 
             firebaseFunctions.getHttpsCallable("podcasts-getEpisodes")
                     .call(params)
                     .addOnSuccessListener { task ->
                         val result = task.data as HashMap<*,*>
-                        val next = result["next"] as Long
+                        val next = result["next"] as? Long
                         val list = parseGetEpisodesToList(result["episodes"] as ArrayList<*>)
-                        val ret = PodcastInfoResult(episodeList = list, nextCallInfo = next)
+                        val ret = PodcastInfoResult(episodeList = list, nextCallInfo = next?: 0)
                         emitter.onNext(ret)
                     }
                     .addOnFailureListener{
-
+                        Log.e("podcasts-getEpisodes", it.localizedMessage.toString())
                     }
         }
     }
@@ -131,7 +131,6 @@ class SearchRepositoryImpl @Inject constructor(
 
             //need to parse for html
             e.description = map[episodeDescriptionKey].toString()
-
 
 //            p.websiteURL = map[websiteKey] .toString()
             e.title = map[episodeTitleKey].toString()

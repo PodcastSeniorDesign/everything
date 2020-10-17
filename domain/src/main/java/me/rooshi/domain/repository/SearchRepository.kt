@@ -7,5 +7,5 @@ import me.rooshi.domain.model.PodcastInfoResult
 interface SearchRepository {
     fun searchPodcasts(query: String) : Observable<List<Podcast>>
     fun topPodcastsByGenre() : Observable<List<List<Podcast>>>
-    fun getListOfEpisodes(podcast: Podcast): Observable<PodcastInfoResult>
+    fun getListOfEpisodes(podcast: Podcast, next:Long): Observable<PodcastInfoResult>
 }

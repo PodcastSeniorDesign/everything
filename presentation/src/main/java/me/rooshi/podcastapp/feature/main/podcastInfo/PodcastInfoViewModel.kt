@@ -1,8 +1,10 @@
 package me.rooshi.podcastapp.feature.main.podcastInfo
 
+import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
+import androidx.recyclerview.widget.RecyclerView
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import com.google.gson.Gson
@@ -22,13 +24,22 @@ class PodcastInfoViewModel @ViewModelInject constructor(
         super.bindView(view)
 
         view.onNewIntentIntent
-                .autoDispose(view.scope())
-                .subscribe {intent ->
+                .switchMap {intent ->
                     val podcast = gson.fromJson<Podcast>(intent.getStringExtra("podcast"), Podcast::class.java)
                     newState { copy(podcast = podcast) }
+                    searchRepository.getListOfEpisodes(podcast, 0)
+                }
+                .autoDispose(view.scope())
+                .subscribe {
+                    infoResult ->
+                    val itemList = mutableListOf<EpisodeItem>()
+                    for (e in infoResult.episodeList) {
+                        itemList.add(EpisodeItem(e))
+                    }
+                    newState { copy(episodes = itemList, nextCallInfo = infoResult.nextCallInfo) }
                 }
 
-        view.onNewIntentIntent
+        /*view.onNewIntentIntent
                 .switchMap {intent ->
                     val podcast = gson.fromJson<Podcast>(intent.getStringExtra("podcast"), Podcast::class.java)
                     searchRepository.getListOfEpisodes(podcast)
@@ -41,5 +52,29 @@ class PodcastInfoViewModel @ViewModelInject constructor(
                     }
                     newState { copy(episodes = itemList, nextCallInfo = infoResult.nextCallInfo) }
                 }
+                */
+
+        view.bottomScrollReachedIntent
+                .filter {event ->
+                    !event.view.canScrollVertically(RecyclerView.FOCUS_DOWN)
+                }
+                .withLatestFrom(state)
+                .switchMap {
+                    Log.e("asdfsdf", "reached bottom scroll")
+                    val state = it.second
+                    searchRepository.getListOfEpisodes(state.podcast, state.nextCallInfo)
+                }
+                .withLatestFrom(state)
+                .autoDispose(view.scope())
+                .subscribe {
+                    val itemList = it.second.episodes
+                    for (e in it.first.episodeList) {
+                        itemList.add(EpisodeItem(e))
+                    }
+
+                    newState { copy(episodes = itemList, nextCallInfo = it.first.nextCallInfo) }
+                }
+
+
     }
 }

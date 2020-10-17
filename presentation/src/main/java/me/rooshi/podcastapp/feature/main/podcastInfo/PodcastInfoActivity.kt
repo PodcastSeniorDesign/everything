@@ -4,8 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.activity.viewModels
+import com.jakewharton.rxbinding4.view.ViewScrollChangeEvent
+import com.jakewharton.rxbinding4.view.scrollChangeEvents
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
@@ -21,6 +24,7 @@ class PodcastInfoActivity constructor() : MyThemedActivity(), PodcastInfoView {
     @Inject lateinit var episodeAdapter: EpisodeAdapter
 
     override val onNewIntentIntent: Subject<Intent> = PublishSubject.create()
+    override val bottomScrollReachedIntent: Observable<ViewScrollChangeEvent> by lazy { binding.episodeRV.scrollChangeEvents() }
 
     private val binding by viewBinding(PodcastInfoActivityBinding::inflate)
     private val viewModel: PodcastInfoViewModel by viewModels()
@@ -38,7 +42,7 @@ class PodcastInfoActivity constructor() : MyThemedActivity(), PodcastInfoView {
     override fun render(state: PodcastInfoState) {
         if (state.podcast != null) {
             //shouldn't be loading the image all the time
-            if (binding.image.drawable == null) {
+            if (binding.image.drawable == null && !state.podcast.imageURL.isNullOrEmpty()) {
                 Picasso.get().load(state.podcast.imageURL).into(binding.image)
             }
             binding.title.text = state.podcast.title
@@ -47,6 +51,7 @@ class PodcastInfoActivity constructor() : MyThemedActivity(), PodcastInfoView {
             binding.numEpisodes.text = "${state.podcast.totalEpisodes} episodes:"
         }
         episodeAdapter.data = state.episodes
+        episodeAdapter.notifyDataSetChanged()
     }
 
 }

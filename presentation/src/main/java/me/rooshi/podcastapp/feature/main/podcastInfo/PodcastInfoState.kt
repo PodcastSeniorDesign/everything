@@ -5,7 +5,7 @@ import me.rooshi.domain.model.Podcast
 import me.rooshi.podcastapp.feature.main.episodeList.EpisodeItem
 
 data class PodcastInfoState(
-        val podcast: Podcast? = null,
-        val episodes: List<EpisodeItem> = listOf(),
-        val nextCallInfo: Long? = null
+        val podcast: Podcast = Podcast(),
+        val episodes: MutableList<EpisodeItem> = mutableListOf(),
+        val nextCallInfo: Long = 0
 )
