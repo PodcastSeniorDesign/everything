@@ -1,6 +1,7 @@
 package me.rooshi.data.repository
 
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.functions.FirebaseFunctions
 import com.squareup.moshi.Moshi
 import io.reactivex.rxjava3.core.Observable
@@ -56,22 +57,6 @@ class SearchRepositoryImpl @Inject constructor(
                     .addOnFailureListener {
                         Log.e("podcasts-search error", it.message?: "")
                         emitter.onNext(listOf(Podcast(title = "failed")))
-                    }
-        }
-    }
-
-    override fun topPodcastsByGenre(): Observable<List<List<Podcast>>> {
-        return Observable.create { emitter ->
-            firebaseFunctions.getHttpsCallable("podcasts-getTopByGenre")
-                    .call()
-                    .addOnSuccessListener { task ->
-                        val result = task.data as ArrayList<*>
-                        //val list = listOf(parseSearchPodcastToListPodcast(result))
-                        emitter.onNext(listOf(listOf(Podcast(title = "failed"))))
-                    }
-                    .addOnFailureListener {
-                        Log.e("podcasts-topByGen error", it.message?: "")
-                        emitter.onNext(listOf(listOf(Podcast(title = "failed"))))
                     }
         }
     }
@@ -143,4 +128,70 @@ class SearchRepositoryImpl @Inject constructor(
         return outList
     }
 
+    override fun getTopByGenre() : Observable<List<List<Episode>>> {
+        return Observable.create { emitter ->
+            firebaseFunctions.getHttpsCallable("podcasts-getTopByGenre")
+                    .call()
+                    .addOnSuccessListener { task ->
+                        Log.e("get top by genre", task.data as String)
+                        val result = task.data as HashMap<*,*>
+                        val next = result["next"] as? Long
+                        val list = parseGetEpisodesToList(result["episodes"] as ArrayList<*>)
+                        val ret = PodcastInfoResult(episodeList = list, nextCallInfo = next?: 0)
+                        emitter.onNext(listOf(listOf()))
+                    }
+                    .addOnFailureListener{
+                        Log.e("podcasts-topByGenre", it.localizedMessage.toString())
+                    }
+        }
+    }
+
+    override fun subscribePodcast(id: String) : Observable<String> {
+        return Observable.create {emitter ->
+            emitter.onNext("start")
+            firebaseFunctions.getHttpsCallable("podcasts-subscribe")
+                    .call(id)
+                    .addOnSuccessListener {
+                        Log.e("subscribe repo", "success")
+                        emitter.onNext("subscribed")
+                    }
+                    .addOnFailureListener {
+                        Log.e("subscribe repo", it.toString())
+                        emitter.onNext("unsubscribed")
+                    }
+        }
+    }
+
+    override fun unsubscribePodcast(id: String) : Observable<String> {
+        return Observable.create {emitter ->
+            //need for eventual loading circle
+            emitter.onNext("start")
+            firebaseFunctions.getHttpsCallable("podcasts-unsubscribe")
+                    .call(id)
+                    .addOnSuccessListener {
+                        Log.e("unsubscribe repo", "success")
+                        emitter.onNext("unsubscribed")
+                    }
+                    .addOnFailureListener {
+                        Log.e("unsubscribe repo", it.toString())
+                        //janky way to tell the frontend that it didn't work
+                        emitter.onNext("subscribed")
+                    }
+        }
+    }
+
+    override fun isSubscribed(id: String): Observable<String> {
+        return Observable.create {emitter ->
+            emitter.onNext("start")
+            firebaseFunctions.getHttpsCallable("users-isSubscribed")
+                    .call(id)
+                    .addOnSuccessListener {
+                        Log.e("isSubbed", "success")
+                        emitter.onNext(it.data.toString())
+                    }
+                    .addOnFailureListener {
+                        Log.e("isSubbed fail", it.toString())
+                        emitter.onNext("fail")
+                    }
+        }    }
 }

@@ -1,5 +1,6 @@
 package me.rooshi.podcastapp.feature.main.explore
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.jakewharton.rxbinding4.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import me.rooshi.domain.model.Episode
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.base.MyFragment
@@ -24,9 +27,16 @@ class ExploreFragment constructor(
     @Inject lateinit var recommendAdapter: RecommendAdapter
 
     override val searchIntent by lazy { binding.searchButton.clicks() }
+    override val onNewIntentIntent: Subject<Unit> = PublishSubject.create()
 
     private val binding by viewBinding(ExploreFragmentBinding::bind)
     private val viewModel : ExploreViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        onNewIntentIntent.onNext(Unit)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

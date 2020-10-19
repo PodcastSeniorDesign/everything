@@ -14,18 +14,18 @@ class ExploreViewModel @ViewModelInject constructor(
     private val searchRepository: SearchRepository
 ) : MyViewModel<ExploreView, ExploreState>(ExploreState()) {
 
-    init {
-        disposables += searchRepository.topPodcastsByGenre()
-                .subscribe {
-                    Log.e("asdf", "asdf")
-                }
-    }
-
     override fun bindView(view: ExploreView) {
         super.bindView(view)
 
         view.searchIntent
                 .autoDispose(view.scope())
                 .subscribe { navigator.startSearchActivity() }
+
+        view.onNewIntentIntent
+                .switchMap {
+                    searchRepository.getTopByGenre()
+                }
+                .autoDispose(view.scope())
+                .subscribe()
     }
 }

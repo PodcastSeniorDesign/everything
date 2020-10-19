@@ -29,8 +29,7 @@ class PodcastInfoViewModel @ViewModelInject constructor(
                     newState { copy(podcast = podcast) }
                     searchRepository.getListOfEpisodes(podcast, 0)
                 }
-                .autoDispose(view.scope())
-                .subscribe {
+                .doOnNext {
                     infoResult ->
                     val itemList = mutableListOf<EpisodeItem>()
                     for (e in infoResult.episodeList) {
@@ -38,21 +37,21 @@ class PodcastInfoViewModel @ViewModelInject constructor(
                     }
                     newState { copy(episodes = itemList, nextCallInfo = infoResult.nextCallInfo) }
                 }
-
-        /*view.onNewIntentIntent
-                .switchMap {intent ->
-                    val podcast = gson.fromJson<Podcast>(intent.getStringExtra("podcast"), Podcast::class.java)
-                    searchRepository.getListOfEpisodes(podcast)
+                .withLatestFrom(state)
+                .switchMap {
+                    Log.e("id before check", it.second.podcast.id)
+                    searchRepository.isSubscribed(it.second.podcast.id)
                 }
+                .withLatestFrom(state)
                 .autoDispose(view.scope())
-                .subscribe { infoResult ->
-                    val itemList = mutableListOf<EpisodeItem>()
-                    for (e in infoResult.episodeList) {
-                        itemList.add(EpisodeItem(e))
+                .subscribe {
+                    val podcast = it.second.podcast
+                    Log.e("result", it.first)
+                    if (it.first == "true") {
+                        podcast.subscribed = true
                     }
-                    newState { copy(episodes = itemList, nextCallInfo = infoResult.nextCallInfo) }
+                    newState { copy(podcast = podcast) }
                 }
-                */
 
         view.bottomScrollReachedIntent
                 .filter {event ->
@@ -75,6 +74,27 @@ class PodcastInfoViewModel @ViewModelInject constructor(
                     newState { copy(episodes = itemList, nextCallInfo = it.first.nextCallInfo) }
                 }
 
+        view.subscribeIntent
+                .withLatestFrom(state)
+                .switchMap {
+                    if (it.second.podcast.subscribed) {
+                        searchRepository.unsubscribePodcast(it.second.podcast.id)
+                    } else {
+                        searchRepository.subscribePodcast(it.second.podcast.id)
+                    }
+                }
+                .withLatestFrom(state)
+                .autoDispose(view.scope())
+                .subscribe {
+                    val podcast = it.second.podcast
+                    if (it.first == "unsubscribed") {
+                        podcast.subscribed = false
+                    } else if (it.first == "subscribed") {
+                        podcast.subscribed = true
+                    }
+                    newState { copy(podcast = podcast) }
+                    Log.e("sub finished", it.second.podcast.subscribed.toString())
+                }
 
     }
 }

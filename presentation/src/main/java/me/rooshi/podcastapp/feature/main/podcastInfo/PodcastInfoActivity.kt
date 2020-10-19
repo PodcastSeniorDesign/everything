@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.activity.viewModels
 import com.jakewharton.rxbinding4.view.ViewScrollChangeEvent
+import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.view.scrollChangeEvents
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +26,7 @@ class PodcastInfoActivity constructor() : MyThemedActivity(), PodcastInfoView {
 
     override val onNewIntentIntent: Subject<Intent> = PublishSubject.create()
     override val bottomScrollReachedIntent: Observable<ViewScrollChangeEvent> by lazy { binding.episodeRV.scrollChangeEvents() }
+    override val subscribeIntent: Observable<Unit> by lazy { binding.subscribeButton.clicks() }
 
     private val binding by viewBinding(PodcastInfoActivityBinding::inflate)
     private val viewModel: PodcastInfoViewModel by viewModels()
@@ -44,6 +46,12 @@ class PodcastInfoActivity constructor() : MyThemedActivity(), PodcastInfoView {
         if (binding.image.drawable == null && !state.podcast.imageURL.isNullOrEmpty()) {
             Picasso.get().load(state.podcast.imageURL).into(binding.image)
         }
+        if (state.podcast.subscribed) {
+            binding.subscribeButton.text = "Unsubscribe"
+        } else {
+            binding.subscribeButton.text = "Subscribe"
+        }
+
         binding.title.text = state.podcast.title
         binding.publisher.text = state.podcast.publisher
         binding.description.text = state.podcast.description

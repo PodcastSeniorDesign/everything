@@ -33,6 +33,10 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun logInUserFacebook() {
+
+    }
+
     override fun registerUserEmail(credentials: List<String>) : Observable<String> {
         return Observable.create { emitter ->
             firebaseAuth.createUserWithEmailAndPassword(credentials[1], credentials[2])

@@ -9,4 +9,5 @@ import me.rooshi.podcastapp.common.base.MyView
 interface PodcastInfoView : MyView<PodcastInfoState> {
     val onNewIntentIntent: Subject<Intent>
     val bottomScrollReachedIntent: Observable<ViewScrollChangeEvent>
+    val subscribeIntent: Observable<Unit>
 }

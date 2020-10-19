@@ -10,5 +10,6 @@ data class Podcast(
         var title: String = "",
         var publisher: String = "",
         var id: String = "",
-        var totalEpisodes: Int = 0
+        var totalEpisodes: Int = 0,
+        var subscribed: Boolean = false
 )
