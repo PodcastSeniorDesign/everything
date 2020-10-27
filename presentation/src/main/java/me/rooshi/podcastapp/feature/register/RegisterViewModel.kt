@@ -25,7 +25,7 @@ class RegisterViewModel @ViewModelInject constructor(
                 .autoDispose(view.scope())
                 .subscribe { text -> newState { copy(passwordFilled = text.isNotEmpty()) } }
 
-        view.registerClickedIntent
+        view.signInClickedIntent
                 .autoDispose(view.scope())
                 .subscribe { newState { copy(cancel = true) }}
 

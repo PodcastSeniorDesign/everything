@@ -39,7 +39,10 @@ class RegisterActivity : MyThemedActivity(), RegisterView {
             navigator.startLoginActivity()
             finish()
         }
-        if (state.loggedIn) finish()
+        if (state.loggedIn) {
+            navigator.startFavoriteGenreActivity()
+            finish()
+        }
 
         binding.registerButton.isEnabled = state.emailFilled && state.passwordFilled
         binding.errorMessage.text = state.loginMessage

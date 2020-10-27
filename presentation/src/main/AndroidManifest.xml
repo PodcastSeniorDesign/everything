@@ -18,6 +18,7 @@
         <activity android:name=".feature.login.LoginActivity" />
         <activity android:name=".feature.main.explore.search.SearchActivity"/>
         <activity android:name=".feature.main.podcastInfo.PodcastInfoActivity" />
+        <activity android:name=".feature.favoritegenre.FavoriteGenreActivity" />
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@style/SplashScreenTheme">

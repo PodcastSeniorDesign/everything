@@ -128,7 +128,12 @@ class LoginActivity : MyThemedActivity(), LoginView {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("firebaseGoogle", "signInWithCredential:success")
-                        finish()
+                        if (task.result != null) {
+                            if (task.result?.additionalUserInfo?.isNewUser!!) {
+                                navigator.startFavoriteGenreActivity()
+                            }
+                            finish()
+                        }
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w("firebaseGoogle", "signInWithCredential:failure", task.exception)
@@ -144,6 +149,13 @@ class LoginActivity : MyThemedActivity(), LoginView {
                 .addOnSuccessListener {
                     Log.e("FB firebase success", it.user.toString())
                     finish()
+                }
+                .addOnCompleteListener { task ->
+                    if (task.result != null) {
+                        if (task.result?.additionalUserInfo?.isNewUser!!) {
+                            navigator.startFavoriteGenreActivity()
+                        }
+                    }
                 }
                 .addOnFailureListener { e ->
                     Log.e("FB firebase fail", e.toString())

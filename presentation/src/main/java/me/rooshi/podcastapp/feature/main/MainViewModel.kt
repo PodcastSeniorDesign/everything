@@ -24,7 +24,7 @@ class MainViewModel @ViewModelInject constructor(
 
         //TODO DELETE when done testing
         //TODO move the following non intents to an onNewIntentIntent
-        //userRepository.logOutUser()
+        userRepository.logOutUser()
 
         if (!userRepository.isUserLoggedIn()) {
             navigator.startLoginActivity()
