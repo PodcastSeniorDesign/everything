@@ -12,6 +12,7 @@ import io.reactivex.rxjava3.core.Observable
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.base.MyFragment
 import me.rooshi.podcastapp.common.base.MyThemedActivity
+import me.rooshi.podcastapp.common.util.extensions.dismissKeyboard
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.SearchActivityBinding
 import javax.inject.Inject
@@ -40,5 +41,9 @@ class SearchActivity constructor(
     override fun render(state: SearchState) {
         searchAdapter.data = state.results
         //Log.d("inside render", state.results.size.toString())
+    }
+
+    override fun closeKeyboard() {
+        dismissKeyboard()
     }
 }

@@ -28,6 +28,7 @@ import io.reactivex.rxjava3.core.Observable
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyThemedActivity
+import me.rooshi.podcastapp.common.util.extensions.dismissKeyboard
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.LoginActivityBinding
 import javax.inject.Inject
@@ -160,6 +161,10 @@ class LoginActivity : MyThemedActivity(), LoginView {
                 .addOnFailureListener { e ->
                     Log.e("FB firebase fail", e.toString())
                 }
+    }
+
+    override fun closeKeyboard() {
+        this.dismissKeyboard()
     }
 
 }

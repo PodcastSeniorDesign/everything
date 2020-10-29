@@ -7,4 +7,6 @@ import me.rooshi.podcastapp.common.base.MyView
 interface SearchView : MyView<SearchState> {
     val queryChangedIntent: Observable<CharSequence>
     val searchIntent: Observable<TextViewEditorActionEvent>
+
+    fun closeKeyboard()
 }

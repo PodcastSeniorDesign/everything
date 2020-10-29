@@ -12,4 +12,5 @@ interface LoginView : MyView<LoginState> {
     val signInClickedIntent: Observable<Unit>
     val registerClickedIntent: Observable<Unit>
 
+    fun closeKeyboard()
 }

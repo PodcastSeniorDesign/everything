@@ -8,4 +8,6 @@ interface RegisterView : MyView<RegisterState> {
     val passwordChangedIntent: Observable<CharSequence>
     val signInClickedIntent: Observable<Unit>
     val registerClickedIntent: Observable<Unit>
+
+    fun closeKeyboard()
 }

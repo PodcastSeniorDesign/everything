@@ -25,7 +25,6 @@ class LoginViewModel @ViewModelInject constructor(
     override fun bindView(view: LoginView) {
         super.bindView(view)
 
-
         view.emailChangedIntent
                 .observeOn(AndroidSchedulers.mainThread())
                 .autoDispose(view.scope())
@@ -53,6 +52,9 @@ class LoginViewModel @ViewModelInject constructor(
         //normal call
 
         view.signInClickedIntent
+                .doOnNext {
+                    view.closeKeyboard()
+                }
                 .withLatestFrom(view.emailChangedIntent, view.passwordChangedIntent) { _, email, password ->
                     listOf(email.toString(), password.toString())
                     //newState { copy(loginMessage = "withLatestFrom") }
@@ -61,7 +63,13 @@ class LoginViewModel @ViewModelInject constructor(
                     userRepository.logInUserEmail(listOf(it[0], it[1]))
                 }
                 .autoDispose(view.scope())
-                .subscribe { newState { copy(loginMessage = it, loggedIn = it == "logged in") } }
+                .subscribe {
+                    if (it == "logged in") {
+                        newState { copy(loginMessage = "", loggedIn = true) }
+                    } else {
+                        newState { copy(loginMessage = it, loggedIn = false) }
+                    }
+                }
 
     }
 

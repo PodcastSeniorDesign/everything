@@ -20,6 +20,9 @@ class SearchViewModel @ViewModelInject constructor(
                 .subscribe { newState { copy(searchTerm = it.toString()) } }
 
         view.searchIntent
+                .doOnNext {
+                    view.closeKeyboard()
+                }
                 .withLatestFrom(view.queryChangedIntent) { _, query ->
                     query
                 }
