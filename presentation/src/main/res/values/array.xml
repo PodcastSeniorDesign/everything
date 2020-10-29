@@ -4,4 +4,14 @@
         <item>@string/take_photo</item>
         <item>@string/choose_from_gallery</item>
     </array>
+    <array name="speed_dialog_options">
+        <item>"0.7"</item>
+        <item>"0.8"</item>
+        <item>"0.9"</item>
+        <item>"1.0"</item>
+        <item>"1.1"</item>
+        <item>"1.2"</item>
+        <item>"1.5"</item>
+        <item>"2.0"</item>
+    </array>
 </resources>

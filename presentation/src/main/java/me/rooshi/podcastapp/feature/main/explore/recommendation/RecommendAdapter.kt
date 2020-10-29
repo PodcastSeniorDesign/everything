@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class RecommendAdapter @Inject constructor(
         private val navigator: Navigator
-) : MyAdapter<RecommendItem, RecommendItemBinding>() {
+) : MyAdapter<List<RecommendItem>, RecommendItemBinding>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder<RecommendItemBinding> {

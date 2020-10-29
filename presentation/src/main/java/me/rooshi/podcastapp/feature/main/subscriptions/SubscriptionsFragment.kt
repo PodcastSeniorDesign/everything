@@ -5,29 +5,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import me.rooshi.podcastapp.R
+import me.rooshi.podcastapp.common.base.MyFragment
+import me.rooshi.podcastapp.common.util.extensions.viewBinding
+import me.rooshi.podcastapp.databinding.SubscriptionsFragmentBinding
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@AndroidEntryPoint
+class SubscriptionsFragment constructor(
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SubscriptionsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SubscriptionsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+) : MyFragment(R.layout.subscriptions_fragment), SubscriptionsView {
+
+    @Inject lateinit var subscriptionEpisodeAdapter: SubscriptionEpisodeAdapter
+
+    override val onNewIntentIntent: Subject<Unit> = PublishSubject.create()
+
+    private val binding by viewBinding(SubscriptionsFragmentBinding::bind)
+    private val viewModel : SubscriptionsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -36,23 +37,15 @@ class SubscriptionsFragment : Fragment() {
         return inflater.inflate(R.layout.subscriptions_fragment, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SubscriptionsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                SubscriptionsFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
+    override fun onStart() {
+        super.onStart()
+        viewModel.bindView(this)
+        binding.RV.adapter = subscriptionEpisodeAdapter
+        onNewIntentIntent.onNext(Unit)
     }
+
+    override fun render(state: SubscriptionsState) {
+        subscriptionEpisodeAdapter.data = state.subscriptionEpisodes
+    }
+
 }

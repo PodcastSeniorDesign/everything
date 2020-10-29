@@ -5,11 +5,11 @@ import androidx.hilt.lifecycle.ViewModelInject
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import io.reactivex.rxjava3.kotlin.withLatestFrom
-import me.rooshi.domain.repository.SearchRepository
+import me.rooshi.domain.repository.PodcastRepository
 import me.rooshi.podcastapp.common.base.MyViewModel
 
 class SearchViewModel @ViewModelInject constructor(
-    private val searchRepository: SearchRepository
+    private val podcastRepository: PodcastRepository
 ) : MyViewModel<SearchView, SearchState>(SearchState()) {
 
     override fun bindView(view: SearchView) {
@@ -24,7 +24,7 @@ class SearchViewModel @ViewModelInject constructor(
                     query
                 }
                 .switchMap {
-                    searchRepository.searchPodcasts(it.toString())
+                    podcastRepository.searchPodcasts(it.toString())
                 }
                 .autoDispose(view.scope())
                 .subscribe { list ->

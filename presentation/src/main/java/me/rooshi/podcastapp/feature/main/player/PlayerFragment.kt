@@ -1,5 +1,7 @@
 package me.rooshi.podcastapp.feature.main.player
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,8 @@ import com.jakewharton.rxbinding4.widget.changeEvents
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import me.rooshi.domain.repository.PlayerRepository
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.base.MyFragment
@@ -23,12 +27,16 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
 
     @Inject lateinit var playerRepository: PlayerRepository
 
+    //private val playbackSpeedDialog by lazy { PlaybackSpeedDialog() }
+
     //override val finishedLoadingIntent: Observable<Boolean> by lazy { playerController.initMediaPlayer() }
     override val playPauseIntent: Observable<Unit> by lazy { binding.playPause.clicks() }
     override val rewindIntent: Observable<Unit> by lazy { binding.rewind15.clicks() }
     override val forwardIntent: Observable<Unit> by lazy { binding.forward15.clicks() }
     override val timerIntent: Observable<Int> by lazy { playerController.timerIntent }
     override val seekIntent: Observable<SeekBarChangeEvent> by lazy { binding.seekBar.changeEvents() }
+    override val speedChangeClickIntent: Observable<Unit> by lazy { binding.playbackSpeed.clicks() }
+    override val speedChangeSubject: Subject<String> = PublishSubject.create()
 
     @Inject lateinit var playerController: PlayerController
 
@@ -76,6 +84,23 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
             binding.playPause.alpha = 0.6f
 
         }
+    }
+/*
+    override fun showPlaybackSpeedDialog() {
+        playbackSpeedDialog.show(parentFragmentManager, "asdf")
+    }
+
+ */
+
+    override fun showPlaybackSpeedDialog() {
+        AlertDialog.Builder(context)
+                .setTitle("Choose Playback Speed")
+                .setSingleChoiceItems(R.array.speed_dialog_options, -1,
+                        DialogInterface.OnClickListener { dialog, which ->
+                            val array = resources.getStringArray(R.array.speed_dialog_options)
+                            playerController.setPlaybackSpeed(array[which].toFloat())
+                        })
+                .show()
     }
 
     private fun changeMillisToText(millis: Int, length: Int): List<String> {

@@ -1,20 +1,17 @@
 package me.rooshi.data.repository
 
 import android.util.Log
-import android.widget.Toast
 import com.google.firebase.functions.FirebaseFunctions
 import com.squareup.moshi.Moshi
 import io.reactivex.rxjava3.core.Observable
-import me.rooshi.domain.model.Episode
-import me.rooshi.domain.model.Podcast
-import me.rooshi.domain.model.PodcastInfoResult
-import me.rooshi.domain.repository.SearchRepository
+import me.rooshi.domain.model.*
+import me.rooshi.domain.repository.PodcastRepository
 import javax.inject.Inject
 
-class SearchRepositoryImpl @Inject constructor(
+class PodcastRepositoryImpl @Inject constructor(
         private val firebaseFunctions: FirebaseFunctions,
         private val moshi: Moshi
-) : SearchRepository {
+) : PodcastRepository {
 
     companion object {
         //***EPISODE KEYS
@@ -96,7 +93,7 @@ class SearchRepositoryImpl @Inject constructor(
                         val result = task.data as HashMap<*,*>
                         val next = result["next"] as? Long
                         val list = parseGetEpisodesToList(result["episodes"] as ArrayList<*>)
-                        val ret = PodcastInfoResult(episodeList = list, nextCallInfo = next?: 0)
+                        val ret = PodcastInfoResult(episodeList = list, next = next?: 0)
                         emitter.onNext(ret)
                     }
                     .addOnFailureListener{
@@ -137,7 +134,7 @@ class SearchRepositoryImpl @Inject constructor(
                         val result = task.data as HashMap<*,*>
                         val next = result["next"] as? Long
                         val list = parseGetEpisodesToList(result["episodes"] as ArrayList<*>)
-                        val ret = PodcastInfoResult(episodeList = list, nextCallInfo = next?: 0)
+                        val ret = PodcastInfoResult(episodeList = list, next = next?: 0)
                         emitter.onNext(listOf(listOf()))
                     }
                     .addOnFailureListener{
@@ -193,5 +190,48 @@ class SearchRepositoryImpl @Inject constructor(
                         Log.e("isSubbed fail", it.toString())
                         emitter.onNext("fail")
                     }
-        }    }
+        }
+    }
+
+    override fun getSubscriptionFeed(): Observable<SubscriptionListResult> {
+        return Observable.create { emitter ->
+            firebaseFunctions.getHttpsCallable("users-getPodcastFeed")
+                    .call()
+                    .addOnSuccessListener { task ->
+                        Log.e("subscriptionFeed", "success" + task.data.toString())
+                        if (task.data != null) {
+                            val result = task.data as HashMap<*, *>
+                            val next = result["next"] as? Long
+                            val list = parseGetEpisodesToList(result["episodes"] as ArrayList<*>)
+                            val ret = SubscriptionListResult(episodes = list, next = next ?: 0)
+                            emitter.onNext(ret)
+                        }
+                    }
+                    .addOnFailureListener{
+                        Log.e("users-getPodcastFeed", it.localizedMessage.toString())
+                    }
+        }
+    }
+
+    override fun getRecommendedEpisodes(): Observable<RecommendationListResult> {
+        //NO CLOUD FUNCTION YET
+        return Observable.create { emitter ->
+            /*
+            firebaseFunctions.getHttpsCallable("users-getPodcastFeed")
+                    .call()
+                    .addOnSuccessListener { task ->
+                        Log.e("subscriptionFeed", task.data as String)
+                        val result = task.data as HashMap<*,*>
+                        val next = result["next"] as? Long
+                        val list = parseGetEpisodesToList(result["episodes"] as ArrayList<*>)
+                        val ret = SubscriptionListResult(episodes = list, next = next?: 0)
+                        emitter.onNext(RecommendationListResult())
+                    }
+                    .addOnFailureListener{
+                        Log.e("users-getPodcastFeed", it.localizedMessage.toString())
+                    }
+
+             */
+        }
+    }
 }

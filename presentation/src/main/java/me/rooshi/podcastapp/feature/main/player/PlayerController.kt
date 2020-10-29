@@ -12,10 +12,10 @@ import io.reactivex.rxjava3.subjects.Subject
 import me.rooshi.domain.model.Episode
 import java.io.IOException
 
-class PlayerController constructor(
-) {
+class PlayerController {
 
     private val mediaPlayer = MediaPlayer()
+    private var playing = Episode()
 
     val timerIntent : Subject<Int> = BehaviorSubject.create()
 
@@ -43,6 +43,7 @@ class PlayerController constructor(
 
 
     fun loadEpisode(episode: Episode) : Observable<Boolean> {
+        playing = episode
         return Observable.create { emitter ->
             emitter.onNext(false)
             try {
@@ -84,5 +85,11 @@ class PlayerController constructor(
 
     fun getDuration() : Int {
         return mediaPlayer.duration
+    }
+
+    fun setPlaybackSpeed(speed: Float) : Observable<Boolean> {
+        mediaPlayer.reset()
+        mediaPlayer.playbackParams.speed = speed
+        return loadEpisode(playing)
     }
 }

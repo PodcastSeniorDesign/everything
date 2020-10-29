@@ -4,14 +4,13 @@ import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
-import io.reactivex.rxjava3.kotlin.plusAssign
-import me.rooshi.domain.repository.SearchRepository
+import me.rooshi.domain.repository.PodcastRepository
 import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyViewModel
 
 class ExploreViewModel @ViewModelInject constructor(
     private val navigator: Navigator,
-    private val searchRepository: SearchRepository
+    private val podcastRepository: PodcastRepository
 ) : MyViewModel<ExploreView, ExploreState>(ExploreState()) {
 
     override fun bindView(view: ExploreView) {
@@ -23,7 +22,16 @@ class ExploreViewModel @ViewModelInject constructor(
 
         view.onNewIntentIntent
                 .switchMap {
-                    searchRepository.getTopByGenre()
+                    Log.e("onnewintentintent", "top genre called")
+                    podcastRepository.getTopByGenre()
+                }
+                .autoDispose(view.scope())
+                .subscribe()
+
+        view.onNewIntentIntent
+                .switchMap {
+                    Log.e("onnewintentintent", "recommend called")
+                    podcastRepository.getRecommendedEpisodes()
                 }
                 .autoDispose(view.scope())
                 .subscribe()
