@@ -87,9 +87,9 @@ class PlayerController {
         return mediaPlayer.duration
     }
 
-    fun setPlaybackSpeed(speed: Float) : Observable<Boolean> {
-        mediaPlayer.reset()
-        mediaPlayer.playbackParams.speed = speed
-        return loadEpisode(playing)
+    fun setPlaybackSpeed(speed: Float) {
+        val old = mediaPlayer.playbackParams
+        old.speed = speed
+        mediaPlayer.playbackParams = old
     }
 }

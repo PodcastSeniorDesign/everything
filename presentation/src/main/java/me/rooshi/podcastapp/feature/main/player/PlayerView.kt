@@ -13,7 +13,7 @@ interface PlayerView : MyView<PlayerState>{
     val timerIntent: Observable<Int>
     val seekIntent: Observable<SeekBarChangeEvent>
     val speedChangeClickIntent: Observable<Unit>
-    val speedChangeSubject: Subject<String>
+    val speedChangeSubject: Subject<Float>
 
     fun showPlaybackSpeedDialog()
 }

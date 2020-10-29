@@ -36,7 +36,7 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
     override val timerIntent: Observable<Int> by lazy { playerController.timerIntent }
     override val seekIntent: Observable<SeekBarChangeEvent> by lazy { binding.seekBar.changeEvents() }
     override val speedChangeClickIntent: Observable<Unit> by lazy { binding.playbackSpeed.clicks() }
-    override val speedChangeSubject: Subject<String> = PublishSubject.create()
+    override val speedChangeSubject: Subject<Float> = PublishSubject.create()
 
     @Inject lateinit var playerController: PlayerController
 
@@ -45,7 +45,6 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.player_fragment, container, false)
     }
 
@@ -63,7 +62,7 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
 
         binding.playPause.isEnabled = state.episodeLoaded
 
-        if (!state.episode.imageURL.isNullOrEmpty()) {
+        if (state.episode.imageURL.isNotEmpty()) {
             Picasso.get().load(state.episode.imageURL).into(binding.coverArtImageView)
         }
         binding.episodeName.text = state.episode.title
@@ -85,22 +84,10 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
 
         }
     }
-/*
-    override fun showPlaybackSpeedDialog() {
-        playbackSpeedDialog.show(parentFragmentManager, "asdf")
-    }
-
- */
 
     override fun showPlaybackSpeedDialog() {
-        AlertDialog.Builder(context)
-                .setTitle("Choose Playback Speed")
-                .setSingleChoiceItems(R.array.speed_dialog_options, -1,
-                        DialogInterface.OnClickListener { dialog, which ->
-                            val array = resources.getStringArray(R.array.speed_dialog_options)
-                            playerController.setPlaybackSpeed(array[which].toFloat())
-                        })
-                .show()
+        val dialog = PlaybackSpeedDialog(speedChangeSubject)
+        dialog.show(parentFragmentManager, "playbackSpeedDialog")
     }
 
     private fun changeMillisToText(millis: Int, length: Int): List<String> {

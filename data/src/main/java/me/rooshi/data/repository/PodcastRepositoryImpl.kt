@@ -198,7 +198,6 @@ class PodcastRepositoryImpl @Inject constructor(
             firebaseFunctions.getHttpsCallable("users-getPodcastFeed")
                     .call()
                     .addOnSuccessListener { task ->
-                        Log.e("subscriptionFeed", "success" + task.data.toString())
                         if (task.data != null) {
                             val result = task.data as HashMap<*, *>
                             val next = result["next"] as? Long
