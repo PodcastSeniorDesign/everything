@@ -4,15 +4,13 @@ import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.HttpsCallableResult
-import com.squareup.moshi.Moshi
 import io.reactivex.rxjava3.core.Observable
 import me.rooshi.domain.model.*
 import me.rooshi.domain.repository.PodcastRepository
 import javax.inject.Inject
 
 class PodcastRepositoryImpl @Inject constructor(
-        private val firebaseFunctions: FirebaseFunctions,
-        private val moshi: Moshi
+        private val firebaseFunctions: FirebaseFunctions
 ) : PodcastRepository {
 
     companion object {

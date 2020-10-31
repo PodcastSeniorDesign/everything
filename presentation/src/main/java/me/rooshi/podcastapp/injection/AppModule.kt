@@ -16,6 +16,7 @@ import dagger.hilt.android.components.ApplicationComponent
 import me.rooshi.data.repository.UserRepositoryImpl
 import me.rooshi.domain.repository.UserRepository
 import me.rooshi.podcastapp.feature.main.player.PlayerController
+import me.rooshi.podcastapp.feature.main.social.SocialPostAdapter
 import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
@@ -45,18 +46,16 @@ object AppModule {
         return PlayerController()
     }
 
-    @Provides
-    @Singleton
-    fun provideMoshi(): Moshi {
-        return Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
-    }
 
     @Provides
     @Singleton
     fun provideGson(): Gson {
         return Gson()
+    }
+
+    @Provides
+    fun provideSocialPostAdapter() : SocialPostAdapter {
+        return SocialPostAdapter()
     }
 
 }
