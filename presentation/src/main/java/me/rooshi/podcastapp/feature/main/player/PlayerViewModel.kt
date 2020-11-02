@@ -87,5 +87,18 @@ class PlayerViewModel @ViewModelInject constructor(
                         }
                     }
                 }
+
+        view.speedChangeClickIntent
+                .autoDispose(view.scope())
+                .subscribe {
+                    view.showPlaybackSpeedDialog()
+                }
+
+        view.speedChangeSubject
+                .autoDispose(view.scope())
+                .subscribe {
+                    playerController.setPlaybackSpeed(it)
+                }
+
     }
 }

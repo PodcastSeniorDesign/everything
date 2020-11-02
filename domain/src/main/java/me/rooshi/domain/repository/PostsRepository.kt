@@ -3,7 +3,7 @@ package me.rooshi.domain.repository
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import me.rooshi.domain.model.Post
+import me.rooshi.domain.model.SocialPost
 
 interface PostsRepository {
 
@@ -17,11 +17,11 @@ interface PostsRepository {
      */
 
     //i think this returns observable because ??
-    fun loadPosts() : Observable<List<Post>>
+    fun loadPosts() : Observable<List<SocialPost>>
 
-    fun loadPost(postId: String) : Single<Post>
+    fun loadPost(postId: String) : Single<SocialPost>
 
-    fun createPost(post: Post)
+    fun createPost(socialPost: SocialPost)
 
     fun deletePost(postId: String)
 

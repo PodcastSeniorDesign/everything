@@ -18,7 +18,7 @@
     <string name="search">Search Podcasts</string>
     <string name="recommended">Recommended for You</string>
     <string name="new_releases">New Releases</string>
-    <string name="rec_channels">Recommended Channels</string>
+    <string name="genre_name">Genre Name</string>
 
     <!--    Main Activity   -->
     <string name="social_tab_title">Social Feed</string>
@@ -46,6 +46,7 @@
     <string name="signed_in_fmt">Signed in as: %s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="top_episodes_by_genre">Top Episodes By Genre</string>
 
     <string name="bullet">\u2022</string>
 

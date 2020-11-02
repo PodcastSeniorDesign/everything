@@ -8,7 +8,7 @@ data class User(
         val username: String,
         val following: List<User>,
         val followers: List<User>,
-        val posts: List<Post>,
+        val socialPosts: List<SocialPost>,
         val subscriptions: List<Podcast>,
         val likedEpisodes: List<Episode>
 )

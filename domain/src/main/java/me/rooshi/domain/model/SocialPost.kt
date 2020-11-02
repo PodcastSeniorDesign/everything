@@ -7,11 +7,11 @@ package me.rooshi.domain.model
 //We don't need a like class, just a list of users who liked this post.
 // A reference to a liked post should also be put in the user model so they can see what posts they have liked.
 
-data class Post (val id: String,
-            val userId: String,
-            val date: Long,
-            val bodyText: String,
-            val likes: List<User>,
-            val shares: List<User>,
-            val comments: List<Post>,
-            val clip: Clip?)
+data class SocialPost (val id: String,
+                       val userId: String,
+                       val date: Long,
+                       val bodyText: String,
+                       val likes: List<User>,
+                       val shares: List<User>,
+                       val comments: List<SocialPost>,
+                       val clip: Clip?)

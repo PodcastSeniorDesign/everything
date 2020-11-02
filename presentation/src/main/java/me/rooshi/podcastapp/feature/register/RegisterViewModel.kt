@@ -25,11 +25,14 @@ class RegisterViewModel @ViewModelInject constructor(
                 .autoDispose(view.scope())
                 .subscribe { text -> newState { copy(passwordFilled = text.isNotEmpty()) } }
 
-        view.registerClickedIntent
+        view.signInClickedIntent
                 .autoDispose(view.scope())
                 .subscribe { newState { copy(cancel = true) }}
 
         view.registerClickedIntent
+                .doOnNext {
+                    view.closeKeyboard()
+                }
                 .withLatestFrom(view.emailChangedIntent, view.passwordChangedIntent) { _, email, password ->
                     listOf(email.toString(), password.toString())
                     //newState { copy(loginMessage = "withLatestFrom") }
@@ -38,7 +41,13 @@ class RegisterViewModel @ViewModelInject constructor(
                     userRepository.registerUserEmail(listOf("name", it[0], it[1]))
                 }
                 .autoDispose(view.scope())
-                .subscribe { newState { copy(loginMessage = it, loggedIn = it == "logged in") } }
+                .subscribe {
+                    if (it == "logged in") {
+                        newState { copy(loginMessage = "", loggedIn = true) }
+                    } else {
+                        newState { copy(loginMessage = it, loggedIn = false) }
+                    }
+                }
     }
 
 }

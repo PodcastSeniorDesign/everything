@@ -10,6 +10,7 @@ import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Observable
 import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyThemedActivity
+import me.rooshi.podcastapp.common.util.extensions.dismissKeyboard
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.RegisterActivityBinding
 import javax.inject.Inject
@@ -22,7 +23,6 @@ class RegisterActivity : MyThemedActivity(), RegisterView {
     override val passwordChangedIntent: @NonNull Observable<CharSequence> by lazy { binding.passwordTextEdit.textChanges() }
     override val signInClickedIntent: Observable<Unit> by lazy { binding.cancelButton.clicks() }
     override val registerClickedIntent: Observable<Unit> by lazy { binding.registerButton.clicks() }
-
 
     private val binding by viewBinding(RegisterActivityBinding::inflate)
     private val viewModel: RegisterViewModel by viewModels()
@@ -39,11 +39,18 @@ class RegisterActivity : MyThemedActivity(), RegisterView {
             navigator.startLoginActivity()
             finish()
         }
-        if (state.loggedIn) finish()
+        if (state.loggedIn) {
+            navigator.startFavoriteGenreActivity()
+            finish()
+        }
 
         binding.registerButton.isEnabled = state.emailFilled && state.passwordFilled
         binding.errorMessage.text = state.loginMessage
 
+    }
+
+    override fun closeKeyboard() {
+        dismissKeyboard()
     }
 
 }

@@ -28,6 +28,7 @@ import io.reactivex.rxjava3.core.Observable
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyThemedActivity
+import me.rooshi.podcastapp.common.util.extensions.dismissKeyboard
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.LoginActivityBinding
 import javax.inject.Inject
@@ -128,7 +129,12 @@ class LoginActivity : MyThemedActivity(), LoginView {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("firebaseGoogle", "signInWithCredential:success")
-                        finish()
+                        if (task.result != null) {
+                            if (task.result?.additionalUserInfo?.isNewUser!!) {
+                                navigator.startFavoriteGenreActivity()
+                            }
+                            finish()
+                        }
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w("firebaseGoogle", "signInWithCredential:failure", task.exception)
@@ -145,9 +151,20 @@ class LoginActivity : MyThemedActivity(), LoginView {
                     Log.e("FB firebase success", it.user.toString())
                     finish()
                 }
+                .addOnCompleteListener { task ->
+                    if (task.result != null) {
+                        if (task.result?.additionalUserInfo?.isNewUser!!) {
+                            navigator.startFavoriteGenreActivity()
+                        }
+                    }
+                }
                 .addOnFailureListener { e ->
                     Log.e("FB firebase fail", e.toString())
                 }
+    }
+
+    override fun closeKeyboard() {
+        this.dismissKeyboard()
     }
 
 }

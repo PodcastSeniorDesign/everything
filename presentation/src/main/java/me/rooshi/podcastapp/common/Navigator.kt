@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.rooshi.domain.model.Podcast
+import me.rooshi.podcastapp.feature.favoritegenre.FavoriteGenreActivity
 import me.rooshi.podcastapp.feature.login.LoginActivity
 import me.rooshi.podcastapp.feature.main.explore.search.SearchActivity
 import me.rooshi.podcastapp.feature.main.podcastInfo.PodcastInfoActivity
@@ -59,6 +60,11 @@ class Navigator @Inject constructor(
 
     fun startSearchActivity() {
         val intent = Intent(context, SearchActivity::class.java)
+        startActivitySingleInstance(intent)
+    }
+
+    fun startFavoriteGenreActivity() {
+        val intent = Intent(context, FavoriteGenreActivity::class.java)
         startActivitySingleInstance(intent)
     }
 

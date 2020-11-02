@@ -1,23 +1,20 @@
 package me.rooshi.podcastapp.feature.main.podcastInfo
 
 import android.util.Log
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.SavedStateHandle
 import androidx.recyclerview.widget.RecyclerView
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import com.google.gson.Gson
 import io.reactivex.rxjava3.kotlin.withLatestFrom
 import me.rooshi.domain.model.Podcast
-import me.rooshi.domain.repository.SearchRepository
+import me.rooshi.domain.repository.PodcastRepository
 import me.rooshi.podcastapp.common.base.MyViewModel
 import me.rooshi.podcastapp.feature.main.episodeList.EpisodeItem
-import me.rooshi.podcastapp.feature.main.explore.search.SearchItem
 
 class PodcastInfoViewModel @ViewModelInject constructor(
         private val gson: Gson,
-        private val searchRepository: SearchRepository
+        private val podcastRepository: PodcastRepository
 ) : MyViewModel<PodcastInfoView, PodcastInfoState>(PodcastInfoState()) {
 
     override fun bindView(view: PodcastInfoView) {
@@ -27,7 +24,7 @@ class PodcastInfoViewModel @ViewModelInject constructor(
                 .switchMap {intent ->
                     val podcast = gson.fromJson<Podcast>(intent.getStringExtra("podcast"), Podcast::class.java)
                     newState { copy(podcast = podcast) }
-                    searchRepository.getListOfEpisodes(podcast, 0)
+                    podcastRepository.getListOfEpisodes(podcast, 0)
                 }
                 .doOnNext {
                     infoResult ->
@@ -35,12 +32,12 @@ class PodcastInfoViewModel @ViewModelInject constructor(
                     for (e in infoResult.episodeList) {
                         itemList.add(EpisodeItem(e))
                     }
-                    newState { copy(episodes = itemList, nextCallInfo = infoResult.nextCallInfo) }
+                    newState { copy(episodes = itemList, nextCallInfo = infoResult.next) }
                 }
                 .withLatestFrom(state)
                 .switchMap {
                     Log.e("id before check", it.second.podcast.id)
-                    searchRepository.isSubscribed(it.second.podcast.id)
+                    podcastRepository.isSubscribed(it.second.podcast.id)
                 }
                 .withLatestFrom(state)
                 .autoDispose(view.scope())
@@ -61,7 +58,7 @@ class PodcastInfoViewModel @ViewModelInject constructor(
                 .switchMap {
                     Log.e("asdfsdf", "reached bottom scroll")
                     val state = it.second
-                    searchRepository.getListOfEpisodes(state.podcast, state.nextCallInfo)
+                    podcastRepository.getListOfEpisodes(state.podcast, state.nextCallInfo)
                 }
                 .withLatestFrom(state)
                 .autoDispose(view.scope())
@@ -71,16 +68,16 @@ class PodcastInfoViewModel @ViewModelInject constructor(
                         itemList.add(EpisodeItem(e))
                     }
 
-                    newState { copy(episodes = itemList, nextCallInfo = it.first.nextCallInfo) }
+                    newState { copy(episodes = itemList, nextCallInfo = it.first.next) }
                 }
 
         view.subscribeIntent
                 .withLatestFrom(state)
                 .switchMap {
                     if (it.second.podcast.subscribed) {
-                        searchRepository.unsubscribePodcast(it.second.podcast.id)
+                        podcastRepository.unsubscribePodcast(it.second.podcast.id)
                     } else {
-                        searchRepository.subscribePodcast(it.second.podcast.id)
+                        podcastRepository.subscribePodcast(it.second.podcast.id)
                     }
                 }
                 .withLatestFrom(state)
