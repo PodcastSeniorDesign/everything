@@ -60,24 +60,65 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
 
-            <ImageView
-                android:id="@+id/coverArtImageView"
+            <LinearLayout
+                android:id="@+id/playerSocialLayout"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="24dp"
-                android:src="@drawable/taz" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/coverArtImageView"
+                    android:layout_width="280dp"
+                    android:layout_height="280dp"
+                    android:layout_marginLeft="6dp"
+                    android:src="@drawable/taz" />
+
+                <LinearLayout
+                    android:id="@+id/episodeInfoLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical"
+                    android:paddingLeft="12dp">
+
+                    <ImageButton
+                        android:id="@+id/share"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackgroundBorderless"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_round_share_24"
+                        android:tint="#FFFFFF"
+                        tools:src="@drawable/ic_round_share_24" />
+
+                    <ImageButton
+                        android:id="@+id/likeEpisodeButton"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_weight="1"
+                        android:background="?android:selectableItemBackgroundBorderless"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_round_favorite_border_24"
+                        android:tint="#FFFFFF"
+                        tools:src="@drawable/ic_round_favorite_border_24" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/episodeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
                 android:ellipsize="marquee"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:paddingHorizontal="6dp"
@@ -88,70 +129,32 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/playerSocialLayout"
+            <TextView
+                android:id="@+id/podcastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:paddingHorizontal="6dp"
+                android:text="The Adventure Zone"
+                android:textAlignment="viewStart"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
 
-                <LinearLayout
-                    android:id="@+id/episodeInfoLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="6dp">
-
-                    <TextView
-                        android:id="@+id/podcastName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="marquee"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:singleLine="true"
-                        android:text="The Adventure Zone"
-                        android:textAlignment="viewStart"
-                        android:textColor="#FFFFFF"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/episodeDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="marquee"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:singleLine="true"
-                        android:text="December 3, 2014"
-                        android:textAlignment="viewStart"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <ImageButton
-                    android:id="@+id/share"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackgroundBorderless"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_round_share_24"
-                    android:tint="#FFFFFF"
-                    tools:src="@drawable/ic_round_share_24" />
-
-                <ImageButton
-                    android:id="@+id/likeEpisodeButton"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackgroundBorderless"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_round_favorite_border_24"
-                    android:tint="#FFFFFF"
-                    tools:src="@drawable/ic_round_favorite_border_24" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/episodeDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:paddingHorizontal="6dp"
+                android:text="December 3, 2014"
+                android:textAlignment="viewStart"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
 
             <SeekBar
                 android:id="@+id/seekBar"
@@ -165,7 +168,7 @@
                 android:id="@+id/scrubBarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="8dp"
                 android:orientation="horizontal"
                 android:paddingHorizontal="6dp">
 
@@ -206,9 +209,9 @@
                     android:layout_weight="1"
                     android:background="?android:selectableItemBackgroundBorderless"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_round_nights_stay_24"
+                    android:src="@drawable/ic_round_format_quote_24"
                     android:tint="#FFFFFF"
-                    tools:src="@drawable/ic_round_nights_stay_24" />
+                    tools:src="@drawable/ic_round_format_quote_24" />
 
                 <ImageButton
                     android:id="@+id/rewind15"

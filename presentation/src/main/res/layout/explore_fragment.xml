@@ -23,6 +23,8 @@
                 android:background="@drawable/button_border"
                 android:text="@string/search"
                 android:textColor="@color/primaryTextColor"
+                app:icon="@drawable/ic_round_search_24"
+                app:iconTint="@color/white"
                 />
 
             <TextView
