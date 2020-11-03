@@ -68,6 +68,7 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
         binding.episodeName.text = state.episode.title
         binding.podcastName.text = state.episode.podcast.title
         binding.episodeDate.text = state.episode.dateMilli.toString()
+        binding.previewName.text = state.episode.title
 
         if (state.episodeLoaded) {
             binding.seekBar.max = state.episode.lengthSeconds*1000

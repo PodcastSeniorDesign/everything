@@ -55,7 +55,7 @@ class PodcastInfoActivity constructor() : MyThemedActivity(), PodcastInfoView {
         binding.title.text = state.podcast.title
         binding.publisher.text = state.podcast.publisher
         binding.description.text = state.podcast.description
-        binding.numEpisodes.text = "${state.podcast.totalEpisodes} episodes:"
+        binding.numEpisodes.text = "${state.podcast.totalEpisodes} Episodes"
         episodeAdapter.data = state.episodes
         episodeAdapter.notifyDataSetChanged()
     }
