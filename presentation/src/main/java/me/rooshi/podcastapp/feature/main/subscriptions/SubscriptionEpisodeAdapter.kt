@@ -6,6 +6,7 @@ import me.rooshi.domain.repository.PlayerRepository
 import me.rooshi.podcastapp.common.base.MyAdapter
 import me.rooshi.podcastapp.common.base.MyViewHolder
 import me.rooshi.podcastapp.databinding.SubscriptionEpisodeItemBinding
+import org.jsoup.Jsoup
 import javax.inject.Inject
 
 class SubscriptionEpisodeAdapter @Inject constructor(
@@ -25,7 +26,7 @@ class SubscriptionEpisodeAdapter @Inject constructor(
         val result = getItem(position)
 
         holder.binding.title.text = result.episode.title
-        holder.binding.description.text = result.episode.description
+        holder.binding.description.text = Jsoup.parse(result.episode.description).text()
         Picasso.get().load(result.episode.thumbnailURL).into(holder.binding.coverArtImageView)
     }
 }
