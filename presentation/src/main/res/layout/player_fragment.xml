@@ -16,7 +16,7 @@
         android:id="@+id/swipeUpView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
+        android:layout_marginVertical="12dp"
         android:gravity="center"
         android:orientation="horizontal">
 

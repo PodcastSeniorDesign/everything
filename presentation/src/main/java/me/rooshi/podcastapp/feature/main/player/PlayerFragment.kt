@@ -20,6 +20,8 @@ import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.base.MyFragment
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.PlayerFragmentBinding
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -67,7 +69,10 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
         }
         binding.episodeName.text = state.episode.title
         binding.podcastName.text = state.episode.podcast.title
-        binding.episodeDate.text = state.episode.dateMilli.toString()
+
+        val format = SimpleDateFormat("MMMM d, yyyy")
+        val date = Date(state.episode.dateMilli)
+        binding.episodeDate.text = format.format(date)
         binding.previewName.text = state.episode.title
 
         if (state.episodeLoaded) {
