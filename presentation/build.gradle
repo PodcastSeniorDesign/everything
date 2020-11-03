@@ -120,6 +120,9 @@ dependencies {
     //Music player sliding up panel
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
+    //Jsoup for html parsing
+    implementation 'org.jsoup:jsoup:1.10.3'
+
     implementation project(':domain')
     implementation project(':data')
 
