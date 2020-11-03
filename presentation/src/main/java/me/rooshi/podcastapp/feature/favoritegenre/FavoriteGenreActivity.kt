@@ -1,18 +1,21 @@
 package me.rooshi.podcastapp.feature.favoritegenre
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.activity.viewModels
+import com.jakewharton.rxbinding4.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.core.Observable
 import me.rooshi.podcastapp.common.base.MyThemedActivity
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.FavoriteActivityBinding
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class FavoriteGenreActivity : MyThemedActivity(), FavoriteGenreView  {
 
-    @Inject lateinit var genreAdapter: GenreAdapter
+    private val genreAdapter = FavoriteGenreAdapter()
+
+    override val finishedIntent: Observable<Unit> by lazy { binding.finishedButton.clicks() }
+    override val favoriteGenreCheckedIntent: Observable<FavoriteGenreItem> = genreAdapter.favoriteGenreItemClick
 
     private val binding by viewBinding(FavoriteActivityBinding::inflate)
     private val viewModel: FavoriteGenreViewModel by viewModels()
@@ -27,6 +30,14 @@ class FavoriteGenreActivity : MyThemedActivity(), FavoriteGenreView  {
     }
 
     override fun render(state: FavoriteGenreState) {
+        if (state.finished) {
+            finish()
+        }
+
         genreAdapter.data = state.genres
+    }
+
+    override fun dataSetChanged() {
+        genreAdapter.notifyDataSetChanged()
     }
 }

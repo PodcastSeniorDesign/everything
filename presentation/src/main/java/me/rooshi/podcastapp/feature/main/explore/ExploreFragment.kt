@@ -1,6 +1,5 @@
 package me.rooshi.podcastapp.feature.main.explore
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +9,11 @@ import com.jakewharton.rxbinding4.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
-import me.rooshi.domain.model.Episode
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.base.MyFragment
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.ExploreFragmentBinding
-import me.rooshi.podcastapp.feature.favoritegenre.GenreAdapter
 import me.rooshi.podcastapp.feature.main.explore.recommendation.RecommendAdapter
-import me.rooshi.podcastapp.feature.main.explore.recommendation.RecommendItem
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -26,7 +22,7 @@ class ExploreFragment constructor(
 ) : MyFragment(R.layout.explore_fragment), ExploreView {
 
     @Inject lateinit var recommendAdapter: RecommendAdapter
-    @Inject lateinit var genreAdapter: GenreAdapter
+    //@Inject lateinit var genreAdapter: GenreAdapter
 
     override val searchIntent by lazy { binding.searchButton.clicks() }
     override val onNewIntentIntent: Subject<Unit> = PublishSubject.create()
@@ -48,7 +44,7 @@ class ExploreFragment constructor(
         super.onStart()
         viewModel.bindView(this)
         binding.recommendRV.adapter = recommendAdapter
-        binding.genreRV.adapter = genreAdapter
+        //binding.genreRV.adapter = genreAdapter
         onNewIntentIntent.onNext(Unit)
     }
 

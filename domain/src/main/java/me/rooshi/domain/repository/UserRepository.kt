@@ -17,4 +17,8 @@ interface UserRepository {
     fun logOutUser()
 
     fun getUser() : User?
+
+    fun setFavoriteGenre(genres: List<Int>) : Observable<String>
+
+    fun getAllUsers(): Observable<List<User>>
 }
