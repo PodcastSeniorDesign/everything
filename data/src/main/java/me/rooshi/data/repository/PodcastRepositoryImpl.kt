@@ -255,25 +255,38 @@ class PodcastRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getRecommendedEpisodes(): Observable<RecommendationListResult> {
-        //NO CLOUD FUNCTION YET
+    override fun getRecommendedEpisodes(): Observable<List<Podcast>> {
         return Observable.create { emitter ->
-            /*
-            firebaseFunctions.getHttpsCallable("users-getPodcastFeed")
+            firebaseFunctions.getHttpsCallable("users-getRecommendationsforUser")
                     .call()
                     .addOnSuccessListener { task ->
-                        Log.e("subscriptionFeed", task.data as String)
-                        val result = task.data as HashMap<*,*>
-                        val next = result["next"] as? Long
-                        val list = parseGetEpisodesToList(result["episodes"] as ArrayList<*>)
-                        val ret = SubscriptionListResult(episodes = list, next = next?: 0)
-                        emitter.onNext(RecommendationListResult())
+                        val result = task.data as ArrayList<*>
+                        Log.e("recommendations: ", result.toString());
+                        emitter.onNext(parseRecEpisodesToList(result))
                     }
                     .addOnFailureListener{
-                        Log.e("users-getPodcastFeed", it.localizedMessage.toString())
+                        Log.e("users-getRecommendat", it.localizedMessage.toString())
                     }
-
-             */
         }
     }
+
+    private fun parseRecEpisodesToList(list: ArrayList<*>) : List<Podcast> {
+        val outList = mutableListOf<Podcast>()
+        for (podcast in list) {
+            val p = Podcast()
+            val map = podcast as HashMap<*, *>
+            p.imageURL = map[imageURLKey] .toString()
+            p.thumbnailURL = map[thumbnailURLKey] .toString()
+            p.description = map["description"] .toString()
+            p.totalEpisodes = map[totalEpisodesKey] as Int
+//            p.websiteURL = map[websiteKey] .toString()
+            p.title = map["title"].toString()
+            p.publisher = map["publisher"] .toString()
+            p.id = map[idKey] .toString()
+
+            outList.add(p)
+        }
+        return outList
+    }
+
 }

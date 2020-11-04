@@ -75,7 +75,7 @@ class MainActivity : MyThemedActivity(), MainView {
     }
 
     private fun setFragmentContainer(item: MenuItem) : Boolean {
-        if (switchCount%3 == 0) refreshFragments()
+        if (switchCount%2 == 0) refreshFragments()
         when (item.itemId) {
             R.id.bottom_nav_social -> {
                 supportFragmentManager.beginTransaction()
@@ -102,7 +102,6 @@ class MainActivity : MyThemedActivity(), MainView {
         switchCount++
         return true
     }
-
 
     override fun render(state: MainState) {
         if (state.hasError) {
