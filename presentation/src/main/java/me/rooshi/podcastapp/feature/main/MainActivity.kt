@@ -64,6 +64,7 @@ class MainActivity : MyThemedActivity(), MainView {
 
     override fun refreshFragments() {
         supportFragmentManager.beginTransaction().remove(last!!)
+        supportFragmentManager.beginTransaction().remove(playerFragment)
 
         exploreFragment = ExploreFragment()
         subscriptionsFragment = SubscriptionsFragment()
