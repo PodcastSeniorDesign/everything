@@ -31,6 +31,11 @@ class NewPostActivity constructor() : MyThemedActivity(), NewPostView  {
         onNewIntentIntent.onNext(Unit)
     }
 
+    override fun onResume() {
+        super.onResume()
+        onNewIntentIntent.onNext(Unit)
+    }
+
     override fun render(state: NewPostState) {
         if (state.finished) {
             finish()

@@ -50,10 +50,7 @@ class PlayerController {
                 mediaPlayer.stop()
                 mediaPlayer.reset()
 
-                if (episode.audioURL != null) {
-                    mediaPlayer.setDataSource(episode.audioURL)
-                }
-
+                mediaPlayer.setDataSource(episode.audioURL)
 
                 mediaPlayer.setOnPreparedListener {
                     emitter.onNext(true)
