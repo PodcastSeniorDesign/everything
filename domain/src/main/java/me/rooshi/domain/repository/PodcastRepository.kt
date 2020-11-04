@@ -11,5 +11,5 @@ interface PodcastRepository {
     fun unsubscribePodcast(id: String) : Observable<String>
     fun isSubscribed(id: String) : Observable<String>
     fun getSubscriptionFeed(next: HashMap<*,*>?) : Observable<SubscriptionListResult>
-    fun getRecommendedEpisodes(): Observable<RecommendationListResult>
+    fun getRecommendedEpisodes(): Observable<List<Podcast>>
 }

@@ -8,6 +8,7 @@ import me.rooshi.domain.repository.PlayerRepository
 import me.rooshi.domain.repository.PodcastRepository
 import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyViewModel
+import me.rooshi.podcastapp.feature.main.explore.recommendation.RecommendItem
 import me.rooshi.podcastapp.feature.main.player.PlayerController
 
 class ExploreViewModel @ViewModelInject constructor(
@@ -41,7 +42,13 @@ class ExploreViewModel @ViewModelInject constructor(
                     podcastRepository.getRecommendedEpisodes()
                 }
                 .autoDispose(view.scope())
-                .subscribe()
+                .subscribe {
+                    val list = mutableListOf<RecommendItem>()
+                    for (i in it) {
+                        list.add(RecommendItem(podcast = i))
+                    }
+                    newState { copy(recommendationData = list) }
+                }
 
         view.topClickIntent
                 .autoDispose(view.scope())

@@ -46,7 +46,7 @@ class AddFriendActivity constructor() : MyThemedActivity(), AddFriendView  {
         }
 
         addFriendAdapter.data = state.users
-        addFriendAdapter.notifyDataSetChanged()
+        //addFriendAdapter.notifyDataSetChanged()
     }
 
     override fun checkFriendship(item: AddFriendItem) {

@@ -144,7 +144,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun isFriend(id: String): Observable<Pair<String, Boolean>> {
         return Observable.create {emitter ->
-            emitter.onNext(Pair(id, false))
+            //emitter.onNext(Pair(id, false))
             firebaseFunctions.getHttpsCallable("social-doesFollow")
                     .call(id)
                     .addOnSuccessListener {
