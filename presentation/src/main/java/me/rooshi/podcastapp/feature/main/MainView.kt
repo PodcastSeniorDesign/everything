@@ -11,6 +11,8 @@ interface MainView : MyView<MainState> {
     val castIntent: Observable<Unit>
     val profileIntent: Observable<Unit>
     //val bottomNavigationIntent: Observable<MenuItem>
+
+    fun refreshFragments()
 }
 
 //enum class BottomNavItem { SOCIAL, SUBSCRIPTIONS, EXPLORE }

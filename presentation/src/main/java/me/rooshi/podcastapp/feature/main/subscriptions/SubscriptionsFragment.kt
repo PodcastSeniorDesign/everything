@@ -1,6 +1,7 @@
 package me.rooshi.podcastapp.feature.main.subscriptions
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,24 +38,32 @@ class SubscriptionsFragment constructor(
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        Log.e("sub", "oncreate view")
         return inflater.inflate(R.layout.subscriptions_fragment, container, false)
     }
 
     override fun onResume() {
         super.onResume()
         onNewIntentIntent.onNext(Unit)
+        binding.RV.adapter = subscriptionEpisodeAdapter
+        Log.e("sub", "onresume view")
     }
 
     override fun onStart() {
         super.onStart()
         viewModel.bindView(this)
-        binding.RV.adapter = subscriptionEpisodeAdapter
         onNewIntentIntent.onNext(Unit)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.RV.adapter = subscriptionEpisodeAdapter
+        Log.e("sub", "onviewcreated view")
     }
 
     override fun render(state: SubscriptionsState) {
         subscriptionEpisodeAdapter.data = state.subscriptionEpisodes
-        subscriptionEpisodeAdapter.notifyDataSetChanged()
+        //subscriptionEpisodeAdapter.notifyDataSetChanged()
     }
 
 }

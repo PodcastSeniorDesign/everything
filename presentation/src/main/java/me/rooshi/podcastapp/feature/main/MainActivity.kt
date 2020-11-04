@@ -8,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.rooshi.podcastapp.feature.main.player.PlayerFragment
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.Navigator
+import me.rooshi.podcastapp.common.base.MyFragment
 import me.rooshi.podcastapp.common.base.MyThemedActivity
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.MainActivityBinding
@@ -26,10 +27,12 @@ class MainActivity : MyThemedActivity(), MainView {
     //@Inject lateinit var myFragmentFactory: MyFragmentFactory
 
     //need to inject these. on second thought if i use fragmentfactory I might not be able to
-    private val exploreFragment = ExploreFragment()
-    private val subscriptionsFragment = SubscriptionsFragment()
-    private val socialFragment = SocialFragment()
-    private val playerFragment = PlayerFragment()
+    private var exploreFragment = ExploreFragment()
+    private var subscriptionsFragment = SubscriptionsFragment()
+    private var socialFragment = SocialFragment()
+    private var playerFragment = PlayerFragment()
+
+    private var last: MyFragment? = null
 
     override val castIntent by lazy { binding.cast.clicks() }
     override val profileIntent by lazy { binding.profileImage.clicks() }
@@ -46,31 +49,50 @@ class MainActivity : MyThemedActivity(), MainView {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         supportFragmentManager.beginTransaction()
-                .replace(R.id.playerContainerView, playerFragment, "player")
+                .add(R.id.playerContainerView, playerFragment, "player")
                 .commit()
 
         supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, socialFragment, "social")
+                .add(R.id.fragmentContainerView, socialFragment, "social")
                 .commit()
+        last = socialFragment
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             setFragmentContainer(item)
         }
     }
 
+    override fun refreshFragments() {
+        supportFragmentManager.beginTransaction().remove(last!!)
+
+        exploreFragment = ExploreFragment()
+        subscriptionsFragment = SubscriptionsFragment()
+        socialFragment = SocialFragment()
+        playerFragment = PlayerFragment()
+    }
+
     private fun setFragmentContainer(item: MenuItem) : Boolean {
         when (item.itemId) {
-            R.id.bottom_nav_social -> supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainerView, socialFragment, "social")
-                    .commit()
+            R.id.bottom_nav_social -> {
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainerView, socialFragment, "social")
+                        .commit()
+                last = socialFragment
+            }
 
-            R.id.bottom_nav_subscriptions -> supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainerView, subscriptionsFragment, "subscriptions")
-                    .commit()
+            R.id.bottom_nav_subscriptions -> {
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainerView, subscriptionsFragment, "subscriptions")
+                        .commit()
+                last = subscriptionsFragment
+            }
 
-            R.id.bottom_nav_explore -> supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainerView, exploreFragment, "explore")
-                    .commit()
+            R.id.bottom_nav_explore -> {
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainerView, exploreFragment, "explore")
+                        .commit()
+                last = exploreFragment
+            }
             else -> return false
         }
         return true
