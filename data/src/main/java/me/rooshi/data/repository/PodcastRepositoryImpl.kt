@@ -147,25 +147,21 @@ class PodcastRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun parseTopEpisodesToList(list: ArrayList<*>) : List<Episode> {
-        val outList = mutableListOf<Episode>()
-        for (episode in list) {
-            val e = Episode()
-            val map = episode as HashMap<*, *>
-            e.imageURL = map[imageURLKey].toString()
-            e.thumbnailURL = map[thumbnailURLKey] .toString()
-
-            //need to parse for html
-            e.description = map[episodeDescriptionKey].toString()
-
+    private fun parseTopEpisodesToList(list: ArrayList<*>) : List<Podcast> {
+        val outList = mutableListOf<Podcast>()
+        for (podcast in list) {
+            val p = Podcast()
+            val map = podcast as HashMap<*, *>
+            p.imageURL = map[imageURLKey] .toString()
+            p.thumbnailURL = map[thumbnailURLKey] .toString()
+            p.description = map["description"] .toString()
+            p.totalEpisodes = map[totalEpisodesKey] as Int
 //            p.websiteURL = map[websiteKey] .toString()
-            e.title = map[episodeTitleKey].toString()
-            e.id = map[idKey].toString()
-            //e.lengthSeconds = map[lengthKey] as Int
-            e.audioURL = map[audioURLKey].toString()
-            //e.dateMilli = map[publishedDateKey] as Long
+            p.title = map["title"].toString()
+            p.publisher = map["publisher"] .toString()
+            p.id = map[idKey] .toString()
 
-            outList.add(e)
+            outList.add(p)
         }
         return outList
     }

@@ -53,7 +53,7 @@ class ExploreViewModel @ViewModelInject constructor(
         view.topClickIntent
                 .autoDispose(view.scope())
                 .subscribe {
-                    playerRepository.changeEpisode(it)
+                    navigator.showPodcast(it)
                 }
     }
 }

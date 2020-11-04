@@ -10,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import me.rooshi.domain.model.Episode
+import me.rooshi.domain.model.Podcast
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.base.MyFragment
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
@@ -29,7 +30,7 @@ class ExploreFragment constructor(
     override val searchIntent by lazy { binding.searchButton.clicks() }
     override val onNewIntentIntent: Subject<Unit> = PublishSubject.create()
 
-    override val topClickIntent: Subject<Episode> = genreAdapter.clickIntent
+    override val topClickIntent: Subject<Podcast> = genreAdapter.clickIntent
 
     private val binding by viewBinding(ExploreFragmentBinding::bind)
     private val viewModel : ExploreViewModel by viewModels()

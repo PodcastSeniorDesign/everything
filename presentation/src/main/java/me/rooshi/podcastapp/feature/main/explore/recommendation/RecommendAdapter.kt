@@ -29,6 +29,7 @@ class RecommendAdapter @Inject constructor(
         val result = getItem(position)
 
         holder.binding.title.text = result.podcast.title
+        holder.binding.podcast.text = ""
         Picasso.get().load(result.podcast.thumbnailURL).into(holder.binding.imageView3)
     }
 
