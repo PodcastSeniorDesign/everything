@@ -106,6 +106,7 @@ class UserRepositoryImpl @Inject constructor(
             p.phoneNumber = map["phoneNumber"].toString()
             p.displayName = map["displayName"].toString()
             p.providerId = map["providerId"].toString()
+            p.email = map["email"].toString()
             outList.add(p)
         }
         return outList
