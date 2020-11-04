@@ -7,6 +7,8 @@ import me.rooshi.podcastapp.common.base.MyAdapter
 import me.rooshi.podcastapp.common.base.MyViewHolder
 import me.rooshi.podcastapp.databinding.SubscriptionEpisodeItemBinding
 import org.jsoup.Jsoup
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class SubscriptionEpisodeAdapter @Inject constructor(
@@ -27,6 +29,10 @@ class SubscriptionEpisodeAdapter @Inject constructor(
 
         holder.binding.title.text = result.episode.title
         holder.binding.description.text = Jsoup.parse(result.episode.description).text()
+
+        val format = SimpleDateFormat("MMMM d, yyyy")
+        val date = Date(result.episode.dateMilli)
+        holder.binding.date.text = format.format(date)
         Picasso.get().load(result.episode.thumbnailURL).into(holder.binding.coverArtImageView)
     }
 }
