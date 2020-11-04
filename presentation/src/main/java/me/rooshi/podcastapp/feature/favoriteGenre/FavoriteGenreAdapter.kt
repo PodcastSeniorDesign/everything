@@ -1,4 +1,4 @@
-package me.rooshi.podcastapp.feature.favoritegenre
+package me.rooshi.podcastapp.feature.favoriteGenre
 
 import android.view.ViewGroup
 import io.reactivex.rxjava3.subjects.PublishSubject

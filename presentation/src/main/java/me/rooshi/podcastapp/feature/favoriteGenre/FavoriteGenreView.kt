@@ -1,4 +1,4 @@
-package me.rooshi.podcastapp.feature.favoritegenre
+package me.rooshi.podcastapp.feature.favoriteGenre
 
 import io.reactivex.rxjava3.core.Observable
 import me.rooshi.podcastapp.common.base.MyView

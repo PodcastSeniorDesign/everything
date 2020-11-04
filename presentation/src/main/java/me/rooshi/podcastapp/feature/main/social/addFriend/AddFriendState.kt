@@ -5,5 +5,6 @@ import me.rooshi.podcastapp.R
 
 data class AddFriendState(
         val users: List<AddFriendItem> = listOf(),
-        val finished: Boolean = false
+        val finished: Boolean = false,
+        val notCheckedFriendship: Boolean = true
 )

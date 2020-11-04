@@ -1,4 +1,4 @@
-package me.rooshi.podcastapp.feature.favoritegenre
+package me.rooshi.podcastapp.feature.favoriteGenre
 
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject

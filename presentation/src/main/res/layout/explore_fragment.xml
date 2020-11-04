@@ -60,7 +60,9 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:listitem="@layout/genre_row_item"
+                />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

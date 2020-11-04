@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.google.gson.Gson
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.rooshi.domain.model.Podcast
-import me.rooshi.podcastapp.feature.favoritegenre.FavoriteGenreActivity
+import me.rooshi.podcastapp.feature.favoriteGenre.FavoriteGenreActivity
 import me.rooshi.podcastapp.feature.login.LoginActivity
 import me.rooshi.podcastapp.feature.main.explore.search.SearchActivity
 import me.rooshi.podcastapp.feature.main.podcastInfo.PodcastInfoActivity
 import me.rooshi.podcastapp.feature.main.social.addFriend.AddFriendActivity
+import me.rooshi.podcastapp.feature.main.social.newPost.NewPostActivity
 import me.rooshi.podcastapp.feature.register.RegisterActivity
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -79,10 +79,15 @@ class Navigator @Inject constructor(
         startActivitySingleInstance(intent)
     }
 
-    fun showAddFriendsList() {
+    fun showAddFriendsActivity() {
         Log.e("addfreiend", "nav")
 
         val intent = Intent(context, AddFriendActivity::class.java)
+        startActivitySingleInstance(intent)
+    }
+
+    fun showNewPostActivity() {
+        val intent = Intent(context, NewPostActivity::class.java)
         startActivitySingleInstance(intent)
     }
 

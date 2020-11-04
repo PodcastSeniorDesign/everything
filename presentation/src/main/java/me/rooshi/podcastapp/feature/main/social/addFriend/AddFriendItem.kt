@@ -5,5 +5,5 @@ import me.rooshi.domain.model.User
 
 data class AddFriendItem(
         val user: User,
-        var clicked: Boolean = false
+        var status: Boolean = false
 )

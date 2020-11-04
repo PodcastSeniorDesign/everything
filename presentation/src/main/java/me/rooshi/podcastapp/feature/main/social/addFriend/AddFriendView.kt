@@ -7,5 +7,8 @@ import me.rooshi.podcastapp.common.base.MyView
 interface AddFriendView : MyView<AddFriendState> {
     val onNewIntentIntent: Subject<Unit>
     val finishedIntent: Observable<Unit>
-    val addFriendCheckedIntent: Observable<AddFriendItem>
+    val toggleFriendshipIntent: Observable<AddFriendItem>
+    val isFriendIntent: Observable<AddFriendItem>
+
+    fun checkFriendship(item: AddFriendItem)
 }

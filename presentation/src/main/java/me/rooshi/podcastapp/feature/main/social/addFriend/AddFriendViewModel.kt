@@ -19,26 +19,69 @@ class AddFriendViewModel @ViewModelInject constructor(
                 .switchMap {
                     userRepository.getAllUsers()
                 }
-                .autoDispose(view.scope())
-                .subscribe {
+                .doOnNext {
                     val itemList = mutableListOf<AddFriendItem>()
                     for (i in it) {
-                        itemList.add(AddFriendItem(i))
+                        val item = AddFriendItem(i)
+                        itemList.add(item)
                     }
                     newState { copy(users = itemList) }
                 }
-
-        view.addFriendCheckedIntent
                 .withLatestFrom(state)
+                .doOnNext {
+                    //for (i in it.second.users) {
+                    //view.checkFriendship(i)
+                    //}
+                }
                 .autoDispose(view.scope())
                 .subscribe {
 
+                }
+
+        view.toggleFriendshipIntent
+                .withLatestFrom(state)
+                .switchMap {
+                    if (it.first.status) {
+                        //unfriend
+                        userRepository.unFriend(it.first.user.id)
+                    } else {
+                        //friend
+                        userRepository.addFriend(it.first.user.id)
+                    }
+                }
+                .withLatestFrom(state)
+                .autoDispose(view.scope())
+                .subscribe {
+                    val users = it.second.users
+                    for (u in users) {
+                        if (u.user.id == it.first.first) {
+                            u.status = it.first.second == "following"
+                        }
+                    }
+                    newState { copy(users = users) }
+                }
+
+        view.isFriendIntent
+                .switchMap {
+                    Log.e("isfriendintent", "called")
+                    userRepository.isFriend(it.user.id)
+                }
+                .withLatestFrom(state)
+                .autoDispose(view.scope())
+                .subscribe {
+                    for (item in it.second.users) {
+                        if (item.user.id == it.first.first) {
+                            item.status = it.first.second
+                            Log.e("subscribe", it.first.second.toString())
+                        }
+                    }
+                    newState { copy(users = it.second.users, notCheckedFriendship = false) }
                 }
 
         view.finishedIntent
                 .autoDispose(view.scope())
                 .subscribe {
-
+                    newState { copy(finished = true) }
                 }
     }
 

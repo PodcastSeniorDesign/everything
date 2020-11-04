@@ -15,6 +15,8 @@ class SocialPostAdapter @Inject constructor() : MyAdapter<SocialPostItem, Social
 
     override fun onBindViewHolder(holder: MyViewHolder<SocialPostItemBinding>, position: Int) {
         val result = getItem(position)
+        holder.binding.postText.text = result.post.bodyText
+        holder.binding.userText.text = result.post.userId + " has made a post"
     }
 
 }

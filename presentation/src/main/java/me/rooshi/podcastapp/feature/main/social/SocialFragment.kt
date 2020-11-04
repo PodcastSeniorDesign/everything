@@ -10,6 +10,8 @@ import androidx.fragment.app.viewModels
 import com.jakewharton.rxbinding4.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.base.MyFragment
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
@@ -23,8 +25,9 @@ class SocialFragment @Inject constructor(
 
     @Inject lateinit var socialPostAdapter: SocialPostAdapter
 
+    override val onNewIntentIntent: Subject<Unit> = PublishSubject.create()
     override val addFriendIntent: Observable<Unit> by lazy { binding.friendFAB.clicks() }
-    override val createPostIntent: Observable<Unit> by lazy { binding.postFAB.clicks() }
+    override val newPostIntent: Observable<Unit> by lazy { binding.postFAB.clicks() }
 
     private val binding by viewBinding(SocialFragmentBinding::bind)
     private val viewModel: SocialViewModel by viewModels()
@@ -42,15 +45,12 @@ class SocialFragment @Inject constructor(
         super.onStart()
         viewModel.bindView(this)
         binding.RV.adapter = socialPostAdapter
+        onNewIntentIntent.onNext(Unit)
     }
 
     override fun render(state: SocialState) {
         socialPostAdapter.data = state.posts
         socialPostAdapter.notifyDataSetChanged()
-    }
-
-    fun test(view: View) {
-        Log.e("asdf", "clicked")
     }
 
 }
