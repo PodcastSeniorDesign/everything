@@ -125,22 +125,49 @@ class PodcastRepositoryImpl @Inject constructor(
         return outList
     }
 
-    override fun getTopByGenre() : Observable<List<List<Episode>>> {
+    override fun getTopByGenre() : Observable<List<GenreRowItem>> {
         return Observable.create { emitter ->
             firebaseFunctions.getHttpsCallable("podcasts-getTopByGenre")
                     .call()
                     .addOnSuccessListener { task ->
-                        Log.e("get top by genre", task.data as String)
                         val result = task.data as HashMap<*,*>
-                        val next = result["next"] as? Long
-                        val list = parseGetEpisodesToList(result["episodes"] as ArrayList<*>)
-                        val ret = PodcastInfoResult(episodeList = list, next = next?: 0)
-                        emitter.onNext(listOf(listOf()))
+                        val ret = mutableListOf<GenreRowItem>()
+                        for ((key, value) in result) {
+                            val newItem = GenreRowItem()
+                            newItem.genre = key.toString()
+                            newItem.episodes = parseTopEpisodesToList(value as ArrayList<*>)
+
+                            ret.add(newItem)
+                        }
+                        emitter.onNext(ret)
                     }
                     .addOnFailureListener{
                         Log.e("podcasts-topByGenre", it.localizedMessage.toString())
                     }
         }
+    }
+
+    private fun parseTopEpisodesToList(list: ArrayList<*>) : List<Episode> {
+        val outList = mutableListOf<Episode>()
+        for (episode in list) {
+            val e = Episode()
+            val map = episode as HashMap<*, *>
+            e.imageURL = map[imageURLKey].toString()
+            e.thumbnailURL = map[thumbnailURLKey] .toString()
+
+            //need to parse for html
+            e.description = map[episodeDescriptionKey].toString()
+
+//            p.websiteURL = map[websiteKey] .toString()
+            e.title = map[episodeTitleKey].toString()
+            e.id = map[idKey].toString()
+            //e.lengthSeconds = map[lengthKey] as Int
+            e.audioURL = map[audioURLKey].toString()
+            //e.dateMilli = map[publishedDateKey] as Long
+
+            outList.add(e)
+        }
+        return outList
     }
 
     override fun subscribePodcast(id: String) : Observable<String> {

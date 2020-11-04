@@ -1,6 +1,5 @@
 package me.rooshi.podcastapp.feature.main.explore
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +14,8 @@ import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.base.MyFragment
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.ExploreFragmentBinding
-import me.rooshi.podcastapp.feature.favoritegenre.GenreAdapter
 import me.rooshi.podcastapp.feature.main.explore.recommendation.RecommendAdapter
-import me.rooshi.podcastapp.feature.main.explore.recommendation.RecommendItem
+import me.rooshi.podcastapp.feature.main.explore.topGenre.GenreRowAdapter
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -26,10 +24,12 @@ class ExploreFragment constructor(
 ) : MyFragment(R.layout.explore_fragment), ExploreView {
 
     @Inject lateinit var recommendAdapter: RecommendAdapter
-    @Inject lateinit var genreAdapter: GenreAdapter
+    private val genreAdapter = GenreRowAdapter()
 
     override val searchIntent by lazy { binding.searchButton.clicks() }
     override val onNewIntentIntent: Subject<Unit> = PublishSubject.create()
+
+    override val topClickIntent: Subject<Episode> = genreAdapter.clickIntent
 
     private val binding by viewBinding(ExploreFragmentBinding::bind)
     private val viewModel : ExploreViewModel by viewModels()
@@ -54,5 +54,6 @@ class ExploreFragment constructor(
 
     override fun render(state: ExploreState) {
         recommendAdapter.data = state.recommendationData
+        genreAdapter.data = state.topData
     }
 }

@@ -4,11 +4,10 @@ package me.rooshi.domain.model
 //IF YOU FIND YOURSELF NEEDING TO GET SOME DATA THATS NOT IN THIS CLASS, THEN YOU NEED TO CREATE
 //      A METHOD IN A REPOSITORY OR CREATE A NEW REPOSITORY
 data class User(
-        val id: String,
-        val username: String,
-        val following: List<User>,
-        val followers: List<User>,
-        val socialPosts: List<SocialPost>,
-        val subscriptions: List<Podcast>,
-        val likedEpisodes: List<Episode>
+        var id: String = "",
+        var email: String = "",
+        var photoURL: String = "",
+        var phoneNumber: String = "",
+        var displayName: String = "",
+        var providerId: String = ""
 )

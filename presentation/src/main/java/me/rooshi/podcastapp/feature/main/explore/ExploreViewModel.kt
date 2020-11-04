@@ -4,13 +4,16 @@ import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
+import me.rooshi.domain.repository.PlayerRepository
 import me.rooshi.domain.repository.PodcastRepository
 import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyViewModel
+import me.rooshi.podcastapp.feature.main.player.PlayerController
 
 class ExploreViewModel @ViewModelInject constructor(
     private val navigator: Navigator,
-    private val podcastRepository: PodcastRepository
+    private val podcastRepository: PodcastRepository,
+    private val playerRepository: PlayerRepository
 ) : MyViewModel<ExploreView, ExploreState>(ExploreState()) {
 
     override fun bindView(view: ExploreView) {
@@ -26,7 +29,9 @@ class ExploreViewModel @ViewModelInject constructor(
                     podcastRepository.getTopByGenre()
                 }
                 .autoDispose(view.scope())
-                .subscribe()
+                .subscribe {
+                    newState { copy(topData = it) }
+                }
 
         view.onNewIntentIntent
                 .switchMap {
@@ -35,5 +40,11 @@ class ExploreViewModel @ViewModelInject constructor(
                 }
                 .autoDispose(view.scope())
                 .subscribe()
+
+        view.topClickIntent
+                .autoDispose(view.scope())
+                .subscribe {
+                    playerRepository.changeEpisode(it)
+                }
     }
 }
