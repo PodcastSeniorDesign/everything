@@ -21,7 +21,9 @@ class ExploreViewModel @ViewModelInject constructor(
 
         view.searchIntent
                 .autoDispose(view.scope())
-                .subscribe { navigator.startSearchActivity() }
+                .subscribe {
+                    Log.e("search bar clicked", "now lol")
+                    navigator.startSearchActivity() }
 
         view.onNewIntentIntent
                 .switchMap {
