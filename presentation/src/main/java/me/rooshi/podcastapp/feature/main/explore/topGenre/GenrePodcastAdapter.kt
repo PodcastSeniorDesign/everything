@@ -6,6 +6,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import me.rooshi.domain.model.Episode
+import me.rooshi.domain.model.Podcast
 import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyAdapter
 import me.rooshi.podcastapp.common.base.MyViewHolder
@@ -13,9 +14,9 @@ import me.rooshi.podcastapp.databinding.RecommendItemBinding
 import me.rooshi.podcastapp.feature.main.player.PlayerController
 import javax.inject.Inject
 
-class GenreEpisodeAdapter constructor(
-        private val subject: Subject<Episode>
-): MyAdapter<Episode, RecommendItemBinding>() {
+class GenrePodcastAdapter constructor(
+        private val subject: Subject<Podcast>
+): MyAdapter<Podcast, RecommendItemBinding>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder<RecommendItemBinding> {
         return MyViewHolder(parent, RecommendItemBinding::inflate).apply {
@@ -32,6 +33,7 @@ class GenreEpisodeAdapter constructor(
         holder.binding.title.text = result.title
         holder.binding.podcast.text = ""
         Picasso.get().load(result.thumbnailURL).into(holder.binding.imageView3)
+
 
     }
 }
