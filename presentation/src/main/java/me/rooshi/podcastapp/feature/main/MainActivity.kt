@@ -34,6 +34,8 @@ class MainActivity : MyThemedActivity(), MainView {
 
     private var last: MyFragment? = null
 
+    private var switchCount: Int = 0
+
     override val castIntent by lazy { binding.cast.clicks() }
     override val profileIntent by lazy { binding.profileImage.clicks() }
 
@@ -73,6 +75,7 @@ class MainActivity : MyThemedActivity(), MainView {
     }
 
     private fun setFragmentContainer(item: MenuItem) : Boolean {
+        if (switchCount%3 == 0) refreshFragments()
         when (item.itemId) {
             R.id.bottom_nav_social -> {
                 supportFragmentManager.beginTransaction()
@@ -96,6 +99,7 @@ class MainActivity : MyThemedActivity(), MainView {
             }
             else -> return false
         }
+        switchCount++
         return true
     }
 
