@@ -38,6 +38,7 @@ class MainViewModel @ViewModelInject constructor(
                 .autoDispose(view.scope())
                 .subscribe {
                     userRepository.logOutUser()
+                    view.refreshFragments()
                     navigator.startLoginActivity()
                 }
     }

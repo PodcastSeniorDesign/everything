@@ -52,6 +52,11 @@ class ExploreFragment constructor(
         onNewIntentIntent.onNext(Unit)
     }
 
+    override fun onResume() {
+        super.onResume()
+        onNewIntentIntent.onNext(Unit)
+    }
+
     override fun render(state: ExploreState) {
         recommendAdapter.data = state.recommendationData
         genreAdapter.data = state.topData

@@ -19,7 +19,7 @@ class SubscriptionsViewModel @ViewModelInject constructor(
 
         view.onNewIntentIntent
                 .switchMap {
-                    Log.e("newintent", "feed called")
+                    Log.e("newintent", "sub feed called")
                     podcastRepository.getSubscriptionFeed(null)
                 }
                 .doOnNext { subscriptionListResult ->
@@ -38,14 +38,14 @@ class SubscriptionsViewModel @ViewModelInject constructor(
                 }
                 .withLatestFrom(state)
                 .switchMap {
-                    Log.e("feed", "reached bottom scroll")
+                    Log.e("sub feed", "reached bottom scroll")
                     val state = it.second
                     podcastRepository.getSubscriptionFeed(state.next)
                 }
                 .withLatestFrom(state)
                 .autoDispose(view.scope())
                 .subscribe {
-                    Log.e("bottom scroll", "add")
+                    Log.e("sub bottom scroll", "add")
                     val itemList = it.second.subscriptionEpisodes
                     for (e in it.first.episodes) {
                         itemList.add(SubscriptionEpisodeItem(e))
