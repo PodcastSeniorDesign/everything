@@ -27,7 +27,14 @@ class AddFriendAdapter : MyAdapter<AddFriendItem, AddFriendItemBinding>() {
     override fun onBindViewHolder(holder: MyViewHolder<AddFriendItemBinding>, position: Int) {
         val result = getItem(position)
 
-        holder.binding.textView.text = result.user.email
+        holder.binding.email.text = result.user.email
+
+        if (result.user.displayName == "null") {
+            holder.binding.name.text = result.user.id
+        } else {
+            holder.binding.name.text = result.user.displayName
+        }
+
         if (result.status) {
             holder.binding.friendButton.text = "Unfriend"
         } else {
