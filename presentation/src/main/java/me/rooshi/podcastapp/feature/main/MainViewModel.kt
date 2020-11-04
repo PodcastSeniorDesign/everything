@@ -36,6 +36,9 @@ class MainViewModel @ViewModelInject constructor(
 
         view.profileIntent
                 .autoDispose(view.scope())
-                .subscribe { Log.w("Profile INTENT", "replace with settings intent") }
+                .subscribe {
+                    userRepository.logOutUser()
+                    navigator.startLoginActivity()
+                }
     }
 }

@@ -40,6 +40,11 @@ class SubscriptionsFragment constructor(
         return inflater.inflate(R.layout.subscriptions_fragment, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        onNewIntentIntent.onNext(Unit)
+    }
+
     override fun onStart() {
         super.onStart()
         viewModel.bindView(this)
