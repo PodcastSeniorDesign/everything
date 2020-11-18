@@ -1,15 +1,20 @@
 package me.rooshi.podcastapp.feature.main.social
 
 import android.view.ViewGroup
+import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyAdapter
 import me.rooshi.podcastapp.common.base.MyViewHolder
 import me.rooshi.podcastapp.databinding.SocialPostItemBinding
 import javax.inject.Inject
 
-class SocialPostAdapter @Inject constructor() : MyAdapter<SocialPostItem, SocialPostItemBinding>() {
+class SocialPostAdapter @Inject constructor(
+        private val navigator: Navigator
+) : MyAdapter<SocialPostItem, SocialPostItemBinding>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder<SocialPostItemBinding> {
         return MyViewHolder(parent, SocialPostItemBinding::inflate).apply {
-
+            binding.button3.setOnClickListener {
+                navigator.showNewCommentActivity(getItem(adapterPosition).post)
+            }
         }
     }
 

@@ -5,23 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_weight="1"
     android:orientation="vertical">
-
-
-    <ImageButton
-        android:id="@+id/likeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="-8dp"
-        android:backgroundTint="#00FFFFFF"
-        android:tint="@color/colorAccent"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/dateText"
-        app:layout_constraintEnd_toStartOf="@+id/likeCountView"
-        app:layout_constraintTop_toTopOf="@+id/dateText"
-        app:srcCompat="@drawable/ic_favorite_black_24dp" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -60,39 +46,37 @@
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
 
-    <TextView
-        android:id="@+id/likeCountView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="999"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/likeButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/likeButton" />
-
-    <TextView
-        android:id="@+id/dateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textField"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-light"
-        android:text="02/02/2002"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postText" />
+        android:hint="Write your comment..."
+        app:counterEnabled="true"
+        app:layout_constraintTop_toBottomOf="@+id/postText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            android:imeOptions="actionSend"
+            android:inputType="textLongMessage"
+            android:singleLine="false" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Comment"
-        app:layout_constraintBottom_toBottomOf="@+id/dateText"
-        app:layout_constraintEnd_toStartOf="@+id/likeButton"
-        app:layout_constraintTop_toTopOf="@+id/dateText" />
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:text="Comment!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textField" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
