@@ -35,8 +35,6 @@ class SocialFragment @Inject constructor(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +48,7 @@ class SocialFragment @Inject constructor(
         binding.RV.adapter = socialPostAdapter
         onNewIntentIntent.onNext(Unit)
 
+        binding.swipeContainer.isRefreshing = true
         binding.swipeContainer.setOnRefreshListener {
             onNewIntentIntent.onNext(Unit)
         }
@@ -61,11 +60,16 @@ class SocialFragment @Inject constructor(
     }
 
     override fun startedLoading() {
-        binding.swipeContainer.isRefreshing = false
+        binding.swipeContainer.isRefreshing = true
     }
 
     override fun finishedLoading() {
         binding.swipeContainer.isRefreshing = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        onNewIntentIntent.onNext(Unit)
     }
 
 }
