@@ -77,6 +77,10 @@ class MainActivity : MyThemedActivity(), MainView {
     }
 
     private fun setFragmentContainer(item: MenuItem) : Boolean {
+        if (binding.slidingPanelLayout.panelState == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            binding.slidingPanelLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        }
+
         //2 if presenting
         //5 or so if testing
         if (switchCount%5 == 0) refreshFragments()
