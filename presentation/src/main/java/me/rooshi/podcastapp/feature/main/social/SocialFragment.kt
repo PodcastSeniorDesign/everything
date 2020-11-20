@@ -48,7 +48,6 @@ class SocialFragment @Inject constructor(
         binding.RV.adapter = socialPostAdapter
         onNewIntentIntent.onNext(Unit)
 
-        binding.swipeContainer.isRefreshing = true
         binding.swipeContainer.setOnRefreshListener {
             onNewIntentIntent.onNext(Unit)
         }

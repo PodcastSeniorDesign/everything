@@ -8,5 +8,7 @@ interface SearchView : MyView<SearchState> {
     val queryChangedIntent: Observable<CharSequence>
     val searchIntent: Observable<TextViewEditorActionEvent>
 
+    fun startedLoading()
+    fun finishedLoading()
     fun closeKeyboard()
 }
