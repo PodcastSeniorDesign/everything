@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import com.jakewharton.rxbinding4.view.clicks
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import dagger.hilt.android.AndroidEntryPoint
 import me.rooshi.podcastapp.feature.main.player.PlayerFragment
 import me.rooshi.podcastapp.R
@@ -110,6 +111,15 @@ class MainActivity : MyThemedActivity(), MainView {
         if (state.hasError) {
             finish()
             return
+        }
+
+    }
+
+    override fun onBackPressed() {
+        if (binding.slidingPanelLayout.panelState == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            binding.slidingPanelLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        } else {
+            super.onBackPressed()
         }
 
     }

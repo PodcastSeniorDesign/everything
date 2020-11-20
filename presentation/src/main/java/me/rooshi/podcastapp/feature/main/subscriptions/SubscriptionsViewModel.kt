@@ -42,6 +42,9 @@ class SubscriptionsViewModel @ViewModelInject constructor(
                 .filter {event ->
                     !event.view.canScrollVertically(RecyclerView.FOCUS_DOWN)
                 }
+                .doOnNext {
+                    view.startedLoading()
+                }
                 .withLatestFrom(state)
                 .switchMap {
                     Log.e("sub feed", "reached bottom scroll")
@@ -58,6 +61,7 @@ class SubscriptionsViewModel @ViewModelInject constructor(
                     }
 
                     newState { copy(subscriptionEpisodes = itemList, next = it.first.next) }
+                    view.finishedLoading()
                 }
     }
 

@@ -78,7 +78,7 @@
                     android:layout_width="280dp"
                     android:layout_height="280dp"
                     android:layout_marginLeft="6dp"
-                    android:src="@drawable/taz" />
+                    android:src="@color/primaryDarkColor" />
 
                 <LinearLayout
                     android:id="@+id/episodeInfoLayout"
@@ -123,7 +123,7 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:paddingHorizontal="6dp"
                 android:singleLine="true"
-                android:text="Here There Be Gerblins: Chapter One"
+                android:text="Nothing Playing..."
                 android:textAlignment="viewStart"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
@@ -142,7 +142,7 @@
                     android:marqueeRepeatLimit="marquee_forever"
                     android:singleLine="true"
                     android:paddingHorizontal="6dp"
-                    android:text="The Adventure Zone"
+                    android:text=""
                     android:textAlignment="viewStart"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp" />
@@ -169,7 +169,7 @@
                     android:marqueeRepeatLimit="marquee_forever"
                     android:singleLine="true"
                     android:paddingHorizontal="6dp"
-                    android:text="December 3, 2014"
+                    android:text=""
                     android:textAlignment="viewStart"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp" />
