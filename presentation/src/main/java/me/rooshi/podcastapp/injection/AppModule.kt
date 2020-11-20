@@ -53,9 +53,4 @@ object AppModule {
         return Gson()
     }
 
-    @Provides
-    fun provideSocialPostAdapter() : SocialPostAdapter {
-        return SocialPostAdapter()
-    }
-
 }

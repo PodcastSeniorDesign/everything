@@ -182,6 +182,14 @@ class UserRepositoryImpl @Inject constructor(
             val map = i as Map<*, *>
             p.bodyText = map["bodyText"].toString()
             p.userId = map["userId"].toString()
+            p.user = map["user"].toString()
+            p.id = map["post_id"].toString()
+            p.likes = (map["likes"] as ArrayList<*>).size
+
+            val comments = map["comments"] as ArrayList<*>
+            for (c in comments) {
+                p.comments.add(Comment(user = "null", text = c.toString()))
+            }
 
             ret.add(p)
         }
@@ -192,6 +200,18 @@ class UserRepositoryImpl @Inject constructor(
         firebaseFunctions.getHttpsCallable("social-newPost")
                 .call(text)
 
+    }
+
+    override fun createComment(postId: String, text: String) {
+        val data = mapOf(
+                "post" to postId,
+                "comment" to text
+        )
+        firebaseFunctions.getHttpsCallable("social-newComment")
+                .call(data)
+                .addOnFailureListener {
+                    Log.e("createcomment fail", it.localizedMessage.toString())
+                }
     }
 
 }

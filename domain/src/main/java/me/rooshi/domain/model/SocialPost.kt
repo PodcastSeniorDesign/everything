@@ -10,10 +10,11 @@ package me.rooshi.domain.model
 data class SocialPost (
         var id: String = "",
         var userId: String = "",
+        var user: String = "",
         var date: Long = 0,
         var bodyText: String = "",
-        var comments: List<User> = listOf(),
+        var comments: MutableList<Comment> = mutableListOf<Comment>(),
         var shares: List<User> = listOf(),
-        var likes: List<User> = listOf(),
+        var likes: Int = 0,
         var clip: Clip? = null
 )

@@ -34,4 +34,7 @@ interface UserRepository {
 
     fun createPost(text: String)
 
+    fun createComment(postId: String, text: String)
+
+
 }

@@ -10,6 +10,15 @@
     android:orientation="vertical">
 
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comment"
+        app:layout_constraintBottom_toBottomOf="@+id/dateText"
+        app:layout_constraintEnd_toStartOf="@+id/likeButton"
+        app:layout_constraintTop_toTopOf="@+id/dateText" />
+
     <ImageButton
         android:id="@+id/likeButton"
         android:layout_width="wrap_content"
@@ -32,20 +41,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/googleg_color" />
-
-    <TextView
-        android:id="@+id/postText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="sans-serif-light"
-        android:text="post text goes here"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/userText"
@@ -85,14 +80,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/postText" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/postText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Comment"
-        app:layout_constraintBottom_toBottomOf="@+id/dateText"
-        app:layout_constraintEnd_toStartOf="@+id/likeButton"
-        app:layout_constraintTop_toTopOf="@+id/dateText" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="sans-serif-light"
+        android:text="post text goes here"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

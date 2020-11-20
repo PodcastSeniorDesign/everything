@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jakewharton.rxbinding4.view.clicks
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
@@ -34,6 +35,8 @@ class SocialFragment @Inject constructor(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +49,10 @@ class SocialFragment @Inject constructor(
         viewModel.bindView(this)
         binding.RV.adapter = socialPostAdapter
         onNewIntentIntent.onNext(Unit)
+
+        binding.swipeContainer.setOnRefreshListener {
+            onNewIntentIntent.onNext(Unit)
+        }
     }
 
     override fun render(state: SocialState) {

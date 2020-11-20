@@ -72,10 +72,13 @@ class MainActivity : MyThemedActivity(), MainView {
         subscriptionsFragment = SubscriptionsFragment()
         socialFragment = SocialFragment()
         playerFragment = PlayerFragment()
+
     }
 
     private fun setFragmentContainer(item: MenuItem) : Boolean {
-        if (switchCount%2 == 0) refreshFragments()
+        //2 if presenting
+        //5 or so if testing
+        if (switchCount%5 == 0) refreshFragments()
         when (item.itemId) {
             R.id.bottom_nav_social -> {
                 supportFragmentManager.beginTransaction()
