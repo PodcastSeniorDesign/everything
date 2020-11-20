@@ -10,4 +10,7 @@ interface ExploreView : MyView<ExploreState> {
     val searchIntent: Observable<Unit>
     val onNewIntentIntent: Subject<Unit>
     val topClickIntent: Subject<Podcast>
+
+    fun startedLoading()
+    fun finishedLoading()
 }

@@ -8,4 +8,7 @@ interface SocialView : MyView<SocialState> {
     val onNewIntentIntent: Subject<Unit>
     val addFriendIntent: Observable<Unit>
     val newPostIntent: Observable<Unit>
+
+    fun startedLoading()
+    fun finishedLoading()
 }

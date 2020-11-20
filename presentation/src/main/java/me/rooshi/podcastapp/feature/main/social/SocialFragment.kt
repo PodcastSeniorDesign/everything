@@ -60,4 +60,12 @@ class SocialFragment @Inject constructor(
         socialPostAdapter.notifyDataSetChanged()
     }
 
+    override fun startedLoading() {
+        binding.swipeContainer.isRefreshing = false
+    }
+
+    override fun finishedLoading() {
+        binding.swipeContainer.isRefreshing = false
+    }
+
 }

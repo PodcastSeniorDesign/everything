@@ -27,6 +27,10 @@ class ExploreViewModel @ViewModelInject constructor(
                     navigator.startSearchActivity() }
 
         view.onNewIntentIntent
+                .doOnNext {
+                    view.startedLoading()
+                    newState { copy(recommendationData = listOf()) }
+                }
                 .switchMap {
                     Log.e("onnewintentintent", "top genre called")
                     podcastRepository.getTopByGenre()
@@ -34,9 +38,14 @@ class ExploreViewModel @ViewModelInject constructor(
                 .autoDispose(view.scope())
                 .subscribe {
                     newState { copy(topData = it) }
+                    view.finishedLoading()
                 }
 
         view.onNewIntentIntent
+                .doOnNext {
+                    view.startedLoading()
+                    newState { copy(topData = listOf()) }
+                }
                 .switchMap {
                     Log.e("onnewintentintent", "recommend called")
                     podcastRepository.getRecommendedEpisodes()
@@ -48,6 +57,7 @@ class ExploreViewModel @ViewModelInject constructor(
                         list.add(RecommendItem(podcast = i))
                     }
                     newState { copy(recommendationData = list) }
+                    view.finishedLoading()
                 }
 
         view.topClickIntent
