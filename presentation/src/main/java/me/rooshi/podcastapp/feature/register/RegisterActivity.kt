@@ -49,6 +49,11 @@ class RegisterActivity : MyThemedActivity(), RegisterView {
 
     }
 
+    override fun onBackPressed() {
+        navigator.startLoginActivity()
+        finish()
+    }
+
     override fun closeKeyboard() {
         dismissKeyboard()
     }
