@@ -163,6 +163,10 @@ class LoginActivity : MyThemedActivity(), LoginView {
                 }
     }
 
+    override fun onBackPressed() {
+        finishAffinity()
+    }
+
     override fun closeKeyboard() {
         this.dismissKeyboard()
     }

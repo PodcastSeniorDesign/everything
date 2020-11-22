@@ -21,6 +21,9 @@ class PodcastInfoViewModel @ViewModelInject constructor(
         super.bindView(view)
 
         view.onNewIntentIntent
+                .doOnNext {
+                    view.startedLoading()
+                }
                 .switchMap {intent ->
                     val podcast = gson.fromJson<Podcast>(intent.getStringExtra("podcast"), Podcast::class.java)
                     newState { copy(podcast = podcast) }
@@ -48,11 +51,15 @@ class PodcastInfoViewModel @ViewModelInject constructor(
                         podcast.subscribed = true
                     }
                     newState { copy(podcast = podcast) }
+                    view.finishedLoading()
                 }
 
         view.bottomScrollReachedIntent
                 .filter {event ->
                     !event.view.canScrollVertically(RecyclerView.FOCUS_DOWN)
+                }
+                .doOnNext {
+                    view.startedLoading()
                 }
                 .withLatestFrom(state)
                 .switchMap {
@@ -69,6 +76,7 @@ class PodcastInfoViewModel @ViewModelInject constructor(
                     }
 
                     newState { copy(episodes = itemList, nextCallInfo = it.first.next) }
+                    view.finishedLoading()
                 }
 
         view.subscribeIntent

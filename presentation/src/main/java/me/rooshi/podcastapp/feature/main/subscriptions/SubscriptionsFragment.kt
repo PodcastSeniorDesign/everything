@@ -53,6 +53,10 @@ class SubscriptionsFragment constructor(
         super.onStart()
         viewModel.bindView(this)
         onNewIntentIntent.onNext(Unit)
+
+        binding.swipeContainer.setOnRefreshListener {
+            onNewIntentIntent.onNext(Unit)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,6 +68,14 @@ class SubscriptionsFragment constructor(
     override fun render(state: SubscriptionsState) {
         subscriptionEpisodeAdapter.data = state.subscriptionEpisodes
         //subscriptionEpisodeAdapter.notifyDataSetChanged()
+    }
+
+    override fun startedLoading() {
+        binding.swipeContainer.isRefreshing = false
+    }
+
+    override fun finishedLoading() {
+        binding.swipeContainer.isRefreshing = false
     }
 
 }

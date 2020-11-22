@@ -60,4 +60,12 @@ class PodcastInfoActivity constructor() : MyThemedActivity(), PodcastInfoView {
         episodeAdapter.notifyDataSetChanged()
     }
 
+    override fun startedLoading() {
+        binding.swipeContainer.isRefreshing = true
+    }
+
+    override fun finishedLoading() {
+        binding.swipeContainer.isRefreshing = false
+    }
+
 }

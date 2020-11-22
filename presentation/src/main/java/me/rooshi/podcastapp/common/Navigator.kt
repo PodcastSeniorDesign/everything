@@ -6,11 +6,13 @@ import android.util.Log
 import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.rooshi.domain.model.Podcast
+import me.rooshi.domain.model.SocialPost
 import me.rooshi.podcastapp.feature.favoriteGenre.FavoriteGenreActivity
 import me.rooshi.podcastapp.feature.login.LoginActivity
 import me.rooshi.podcastapp.feature.main.explore.search.SearchActivity
 import me.rooshi.podcastapp.feature.main.podcastInfo.PodcastInfoActivity
 import me.rooshi.podcastapp.feature.main.social.addFriend.AddFriendActivity
+import me.rooshi.podcastapp.feature.main.social.newComment.NewCommentActivity
 import me.rooshi.podcastapp.feature.main.social.newPost.NewPostActivity
 import me.rooshi.podcastapp.feature.register.RegisterActivity
 import javax.inject.Inject
@@ -88,6 +90,15 @@ class Navigator @Inject constructor(
 
     fun showNewPostActivity() {
         val intent = Intent(context, NewPostActivity::class.java)
+        startActivitySingleInstance(intent)
+    }
+
+    fun showNewCommentActivity(post: SocialPost) {
+        val serPost = gson.toJson(post)
+
+        val intent = Intent(context, NewCommentActivity::class.java)
+        intent.putExtra("post", serPost)
+
         startActivitySingleInstance(intent)
     }
 

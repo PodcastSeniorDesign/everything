@@ -8,4 +8,7 @@ import me.rooshi.podcastapp.common.base.MyView
 interface SubscriptionsView : MyView<SubscriptionsState> {
     val onNewIntentIntent: Subject<Unit>
     val bottomScrollReachedIntent: Observable<ViewScrollChangeEvent>
+
+    fun startedLoading()
+    fun finishedLoading()
 }

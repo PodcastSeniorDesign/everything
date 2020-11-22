@@ -63,6 +63,7 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
         }
 
         binding.playPause.isEnabled = state.episodeLoaded
+        binding.playbackSpeed.isEnabled = state.episodeLoaded
 
         if (state.episode.imageURL.isNotEmpty()) {
             Picasso.get().load(state.episode.imageURL).into(binding.coverArtImageView)
@@ -72,7 +73,11 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
 
         val format = SimpleDateFormat("MMMM d, yyyy")
         val date = Date(state.episode.dateMilli)
-        binding.episodeDate.text = format.format(date)
+        if (state.episode.dateMilli != 0L) {
+            binding.episodeDate.text = format.format(date)
+        } else {
+            binding.episodeDate.text = ""
+        }
         binding.previewName.text = state.episode.title
 
         if (state.episodeLoaded) {

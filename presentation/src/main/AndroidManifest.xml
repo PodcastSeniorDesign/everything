@@ -21,7 +21,7 @@
         <activity android:name=".feature.favoriteGenre.FavoriteGenreActivity" />
         <activity android:name=".feature.main.social.addFriend.AddFriendActivity" />
         <activity android:name=".feature.main.social.newPost.NewPostActivity" />
-
+        <activity android:name=".feature.main.social.newComment.NewCommentActivity" />
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@style/SplashScreenTheme">

@@ -18,6 +18,10 @@ class SubscriptionsViewModel @ViewModelInject constructor(
         super.bindView(view)
 
         view.onNewIntentIntent
+                .doOnNext {
+                    view.startedLoading()
+                    newState { copy(subscriptionEpisodes = mutableListOf()) }
+                }
                 .switchMap {
                     Log.e("newintent", "sub feed called")
                     podcastRepository.getSubscriptionFeed(null)
@@ -30,11 +34,16 @@ class SubscriptionsViewModel @ViewModelInject constructor(
                     newState { copy(subscriptionEpisodes = itemList, next = subscriptionListResult.next) }
                 }
                 .autoDispose(view.scope())
-                .subscribe()
+                .subscribe {
+                    view.finishedLoading()
+                }
 
         view.bottomScrollReachedIntent
                 .filter {event ->
                     !event.view.canScrollVertically(RecyclerView.FOCUS_DOWN)
+                }
+                .doOnNext {
+                    view.startedLoading()
                 }
                 .withLatestFrom(state)
                 .switchMap {
@@ -52,6 +61,7 @@ class SubscriptionsViewModel @ViewModelInject constructor(
                     }
 
                     newState { copy(subscriptionEpisodes = itemList, next = it.first.next) }
+                    view.finishedLoading()
                 }
     }
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import com.jakewharton.rxbinding4.view.clicks
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import dagger.hilt.android.AndroidEntryPoint
 import me.rooshi.podcastapp.feature.main.player.PlayerFragment
 import me.rooshi.podcastapp.R
@@ -72,10 +73,17 @@ class MainActivity : MyThemedActivity(), MainView {
         subscriptionsFragment = SubscriptionsFragment()
         socialFragment = SocialFragment()
         playerFragment = PlayerFragment()
+
     }
 
     private fun setFragmentContainer(item: MenuItem) : Boolean {
-        if (switchCount%2 == 0) refreshFragments()
+        if (binding.slidingPanelLayout.panelState == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            binding.slidingPanelLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        }
+
+        //2 if presenting
+        //5 or so if testing
+        if (switchCount%5 == 0) refreshFragments()
         when (item.itemId) {
             R.id.bottom_nav_social -> {
                 supportFragmentManager.beginTransaction()
@@ -107,6 +115,15 @@ class MainActivity : MyThemedActivity(), MainView {
         if (state.hasError) {
             finish()
             return
+        }
+
+    }
+
+    override fun onBackPressed() {
+        if (binding.slidingPanelLayout.panelState == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            binding.slidingPanelLayout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        } else {
+            super.onBackPressed()
         }
 
     }

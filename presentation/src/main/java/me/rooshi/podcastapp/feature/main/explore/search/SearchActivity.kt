@@ -38,9 +38,24 @@ class SearchActivity constructor(
         binding.searchRV.adapter = searchAdapter
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        binding.swipeContainer.isRefreshing = true
+
+    }
+
     override fun render(state: SearchState) {
         searchAdapter.data = state.results
         //Log.d("inside render", state.results.size.toString())
+    }
+
+    override fun startedLoading() {
+        binding.swipeContainer.isRefreshing = true
+    }
+
+    override fun finishedLoading() {
+        binding.swipeContainer.isRefreshing = false
     }
 
     override fun closeKeyboard() {

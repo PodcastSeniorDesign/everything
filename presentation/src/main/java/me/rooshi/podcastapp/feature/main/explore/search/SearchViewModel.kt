@@ -22,6 +22,7 @@ class SearchViewModel @ViewModelInject constructor(
         view.searchIntent
                 .doOnNext {
                     view.closeKeyboard()
+                    view.startedLoading()
                 }
                 .withLatestFrom(view.queryChangedIntent) { _, query ->
                     query
@@ -38,7 +39,7 @@ class SearchViewModel @ViewModelInject constructor(
                         itemList.add(SearchItem(p))
                     }
                     newState { copy(results = itemList) }
-
+                    view.finishedLoading()
                 }
     }
 }

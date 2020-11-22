@@ -17,6 +17,10 @@ class SocialViewModel @ViewModelInject constructor(
         super.bindView(view)
 
         view.onNewIntentIntent
+                .doOnNext {
+                    view.startedLoading()
+                    newState { copy(posts = listOf()) }
+                }
                 .switchMap {
                     Log.e("newintent", "feed called")
                     userRepository.getSocialFeed()
@@ -29,7 +33,9 @@ class SocialViewModel @ViewModelInject constructor(
                     newState { copy(posts = itemList) }
                 }
                 .autoDispose(view.scope())
-                .subscribe()
+                .subscribe {
+                    view.finishedLoading()
+                }
 
         view.newPostIntent
                 .autoDispose(view.scope())

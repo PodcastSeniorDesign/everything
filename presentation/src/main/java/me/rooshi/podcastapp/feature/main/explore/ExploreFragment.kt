@@ -51,6 +51,10 @@ class ExploreFragment constructor(
         binding.recommendRV.adapter = recommendAdapter
         binding.genreRV.adapter = genreAdapter
         onNewIntentIntent.onNext(Unit)
+
+        binding.swipeContainer.setOnRefreshListener {
+            onNewIntentIntent.onNext(Unit)
+        }
     }
 
     override fun onResume() {
@@ -61,5 +65,13 @@ class ExploreFragment constructor(
     override fun render(state: ExploreState) {
         recommendAdapter.data = state.recommendationData
         genreAdapter.data = state.topData
+    }
+
+    override fun startedLoading() {
+        binding.swipeContainer.isRefreshing = false
+    }
+
+    override fun finishedLoading() {
+        binding.swipeContainer.isRefreshing = false
     }
 }
