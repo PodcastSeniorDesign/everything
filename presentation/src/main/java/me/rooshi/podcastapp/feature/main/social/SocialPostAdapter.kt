@@ -19,10 +19,6 @@ class SocialPostAdapter @Inject constructor() : MyAdapter<SocialPostItem, Social
         val result = getItem(position)
         holder.binding.post.text = result.post.bodyText
         holder.binding.user.text = "${result.post.userId}:"
-
-        val format = SimpleDateFormat("MMMM d, yyyy")
-        val date = Date(result.post.date)
-        holder.binding.date.text = format.format(date)
     }
 
 }
