@@ -2,106 +2,110 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        xmlns:sothree="http://schemas.android.com/apk/res-auto"
         android:id="@+id/sliding_panel_layout"
         android:gravity="bottom"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        sothree:umanoPanelHeight="64dp"
+        sothree:umanoShadowHeight="8dp"
+        sothree:umanoInitialState="hidden"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="@+id/coordinatorLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/coordinatorLayout" />
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:animateLayoutChanges="true"
+                android:background="?attr/colorPrimary"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:contentInsetEnd="16dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/cast"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="8dp"
+                        android:backgroundTint="#00FFFFFF"
+                        android:padding="0dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_cast_white_24dp" />
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/raleway_bold"
+                        android:text="@string/waveform_lower"
+                        android:textColor="#FFFFFF"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/profile_image"
+                        app:layout_constraintStart_toEndOf="@+id/cast"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="8dp"
+                        android:backgroundTint="#00FFFFFF"
+                        android:padding="0dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+                        app:civ_border_color="#ffffff"
+                        app:civ_border_width="2dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/playerContainerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center|top"
             />
 
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:animateLayoutChanges="true"
-        android:background="?attr/colorPrimary"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:contentInsetEnd="16dp"
-        app:contentInsetStartWithNavigation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/cast"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="8dp"
-                android:backgroundTint="#00FFFFFF"
-                android:padding="0dp"
-                android:scaleType="centerCrop"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_cast_white_24dp" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/raleway_bold"
-                android:text="@string/waveform_lower"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/profile_image"
-                app:layout_constraintStart_toEndOf="@+id/cast"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="8dp"
-                android:backgroundTint="#00FFFFFF"
-                android:padding="0dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/com_facebook_profile_picture_blank_portrait"
-                app:civ_border_color="#ffffff"
-                app:civ_border_width="2dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.appcompat.widget.Toolbar>
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

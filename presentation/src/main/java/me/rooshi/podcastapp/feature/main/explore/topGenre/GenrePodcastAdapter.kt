@@ -31,7 +31,6 @@ class GenrePodcastAdapter constructor(
         val result = getItem(position)
 
         holder.binding.title.text = result.title
-        holder.binding.podcast.text = ""
         Picasso.get().load(result.thumbnailURL).into(holder.binding.imageView3)
 
 

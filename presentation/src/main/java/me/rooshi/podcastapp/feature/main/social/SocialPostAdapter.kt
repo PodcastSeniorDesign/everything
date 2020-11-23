@@ -25,10 +25,13 @@ class SocialPostAdapter @Inject constructor(
         val result = getItem(position)
 
         holder.binding.post.text = result.post.bodyText
-        holder.binding.user.text = "${result.post.userId}:"
-
-        holder.binding.postText.text = result.post.bodyText
-        holder.binding.userText.text = result.post.userId + " has made a post"
+        holder.binding.user.text = "${result.post.userId}"
+        holder.binding.likeCountView.text = "${result.post.likes} Likes"
+        if (result.post.comments.size == 1) {
+            holder.binding.commentCount.text = "1 Reply"
+        } else {
+            holder.binding.commentCount.text = "${result.post.comments.size} Replies"
+        }
 
         (holder.binding.RV.adapter as CommentAdapter).data = result.post.comments
     }

@@ -5,34 +5,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feature.main.social.SocialFragment">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/RV"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"
+        <TextView
+            android:id="@+id/textView5"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="16dp"
+            android:text="Social Feed"
+            android:fontFamily="@font/raleway_bold"
+            android:textAppearance="?attr/textAppearanceHeadline5" />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RV"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
         >
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/postFAB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="16dp"
             android:clickable="true"
+            app:backgroundTint="@color/primaryColor"
             android:src="@android:drawable/stat_notify_chat"
             android:focusable="true" />
 
@@ -40,9 +57,11 @@
             android:id="@+id/friendFAB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="16dp"
             android:clickable="true"
             android:focusable="true"
+            app:backgroundTint="@color/primaryAccent"
             android:src="@drawable/add_profile_picture"
             app:layout_anchorGravity="top" />
 

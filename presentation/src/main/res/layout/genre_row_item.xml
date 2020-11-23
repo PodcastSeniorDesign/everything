@@ -6,8 +6,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginBottom="32dp"
+    android:layout_marginBottom="24dp"
     android:layout_weight="1"
     android:orientation="vertical">
 
@@ -16,10 +15,9 @@
         android:id="@+id/genreName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text='"user" has made a post'
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:layout_marginBottom="8dp"
+        android:text="Genre"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/epRV"

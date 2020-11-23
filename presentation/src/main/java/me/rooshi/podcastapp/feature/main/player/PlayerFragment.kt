@@ -6,10 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.marginLeft
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.widget.SeekBarChangeEvent
 import com.jakewharton.rxbinding4.widget.changeEvents
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
@@ -18,8 +21,10 @@ import io.reactivex.rxjava3.subjects.Subject
 import me.rooshi.domain.repository.PlayerRepository
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.base.MyFragment
+import me.rooshi.podcastapp.common.util.extensions.setVisible
 import me.rooshi.podcastapp.common.util.extensions.viewBinding
 import me.rooshi.podcastapp.databinding.PlayerFragmentBinding
+import me.rooshi.podcastapp.feature.main.MainViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -64,12 +69,13 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
 
         binding.playPause.isEnabled = state.episodeLoaded
         binding.playbackSpeed.isEnabled = state.episodeLoaded
+        binding.coverArtImageView.layoutParams.height = binding.coverArtImageView.width
 
         if (state.episode.imageURL.isNotEmpty()) {
             Picasso.get().load(state.episode.imageURL).into(binding.coverArtImageView)
         }
         binding.episodeName.text = state.episode.title
-        binding.podcastName.text = state.episode.podcast.title
+        binding.podcastName.text = "Podcast"
 
         val format = SimpleDateFormat("MMMM d, yyyy")
         val date = Date(state.episode.dateMilli)
@@ -82,6 +88,9 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
 
         if (state.episodeLoaded) {
             binding.seekBar.max = state.episode.lengthSeconds*1000
+            if (activity?.findViewById<SlidingUpPanelLayout>(R.id.sliding_panel_layout)?.panelState == SlidingUpPanelLayout.PanelState.HIDDEN) {
+                activity?.findViewById<SlidingUpPanelLayout>(R.id.sliding_panel_layout)?.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
+            }
 
             val timersTimes = changeMillisToText(state.timer, state.episode.lengthSeconds*1000)
             binding.currentTime.text = timersTimes[0]
@@ -90,7 +99,6 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
             binding.playPause.alpha = 1f
 
         } else {
-
             binding.playPause.alpha = 0.6f
 
         }
