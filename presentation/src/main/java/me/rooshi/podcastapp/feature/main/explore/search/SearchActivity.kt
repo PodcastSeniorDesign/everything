@@ -41,7 +41,7 @@ class SearchActivity constructor(
     override fun onStart() {
         super.onStart()
 
-        binding.swipeContainer.isRefreshing = true
+        //binding.swipeContainer.isRefreshing = true
 
     }
 

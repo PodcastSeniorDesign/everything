@@ -71,7 +71,7 @@ class SubscriptionsFragment constructor(
     }
 
     override fun startedLoading() {
-        binding.swipeContainer.isRefreshing = false
+        binding.swipeContainer.isRefreshing = true
     }
 
     override fun finishedLoading() {
