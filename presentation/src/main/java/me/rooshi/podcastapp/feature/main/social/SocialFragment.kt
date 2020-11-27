@@ -29,6 +29,7 @@ class SocialFragment @Inject constructor(
     override val onNewIntentIntent: Subject<Unit> = PublishSubject.create()
     override val addFriendIntent: Observable<Unit> by lazy { binding.friendFAB.clicks() }
     override val newPostIntent: Observable<Unit> by lazy { binding.postFAB.clicks() }
+    override val likeChangedIntent: Subject<Unit> by lazy { socialPostAdapter.likedChangeIntent }
 
     private val binding by viewBinding(SocialFragmentBinding::bind)
     private val viewModel: SocialViewModel by viewModels()
@@ -69,6 +70,10 @@ class SocialFragment @Inject constructor(
     override fun onResume() {
         super.onResume()
         onNewIntentIntent.onNext(Unit)
+    }
+
+    override fun NDC() {
+        socialPostAdapter.notifyDataSetChanged()
     }
 
 }

@@ -48,5 +48,10 @@ class SocialViewModel @ViewModelInject constructor(
                 .subscribe {
                     navigator.showAddFriendsActivity()
                 }
+
+        view.likeChangedIntent
+                .subscribe {
+                    view.NDC()
+                }
     }
 }

@@ -1,12 +1,15 @@
 package me.rooshi.podcastapp.feature.main.social
 
 import android.view.ViewGroup
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import me.rooshi.domain.repository.UserRepository
 import me.rooshi.podcastapp.R
 import me.rooshi.podcastapp.common.Navigator
 import me.rooshi.podcastapp.common.base.MyAdapter
 import me.rooshi.podcastapp.common.base.MyViewHolder
 import me.rooshi.podcastapp.databinding.SocialPostItemBinding
+import me.rooshi.podcastapp.feature.main.social.addFriend.AddFriendItem
 import me.rooshi.podcastapp.feature.main.social.newComment.CommentAdapter
 import javax.inject.Inject
 
@@ -14,6 +17,9 @@ class SocialPostAdapter @Inject constructor(
         private val navigator: Navigator,
         private val userRepository: UserRepository
 ) : MyAdapter<SocialPostItem, SocialPostItemBinding>() {
+
+    val likedChangeIntent: Subject<Unit> = PublishSubject.create()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder<SocialPostItemBinding> {
         return MyViewHolder(parent, SocialPostItemBinding::inflate).apply {
             binding.RV.adapter = CommentAdapter()
@@ -21,9 +27,12 @@ class SocialPostAdapter @Inject constructor(
             binding.likeButton.setOnClickListener {
                 if (getItem(adapterPosition).post.likes.contains(userRepository.getUser().id)) {
                     userRepository.unlikePost(getItem(adapterPosition).post.id)
+                    getItem(adapterPosition).post.likes.remove(userRepository.getUser().id)
                 } else {
                     userRepository.likePost(getItem(adapterPosition).post.id)
+                    getItem(adapterPosition).post.likes.add(userRepository.getUser().id)
                 }
+                likedChangeIntent.onNext(Unit)
             }
 
             binding.commentButton.setOnClickListener {
