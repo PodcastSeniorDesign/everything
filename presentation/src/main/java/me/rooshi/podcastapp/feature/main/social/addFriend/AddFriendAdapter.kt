@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 class AddFriendAdapter : MyAdapter<AddFriendItem, AddFriendItemBinding>() {
 
-    val isFriendIntent: Subject<AddFriendItem> = PublishSubject.create()
     val toggleFriendItemClick: Subject<AddFriendItem> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder<AddFriendItemBinding> {
@@ -40,7 +39,6 @@ class AddFriendAdapter : MyAdapter<AddFriendItem, AddFriendItemBinding>() {
         } else {
             holder.binding.friendButton.text = "Friend"
         }
-        //holder.binding.imageView2.setImageResource(result.user.)
     }
 
 }

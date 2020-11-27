@@ -59,24 +59,26 @@ class AddFriendViewModel @ViewModelInject constructor(
                         }
                     }
                     newState { copy(users = users) }
+                    view.NDC()
                 }
 
         view.isFriendIntent
-                .switchMap {
-                    Log.e("isfriendintent", "called")
+                .flatMap {
                     userRepository.isFriend(it.user.id)
                 }
                 .withLatestFrom(state)
-                .autoDispose(view.scope())
-                .subscribe {
+                .doOnNext {
                     for (item in it.second.users) {
                         if (item.user.id == it.first.first) {
                             item.status = it.first.second
-                            Log.e("subscribe", it.first.second.toString())
                         }
                     }
+
                     newState { copy(users = it.second.users, notCheckedFriendship = false) }
+                    view.NDC()
                 }
+                .autoDispose(view.scope())
+                .subscribe()
 
         view.finishedIntent
                 .autoDispose(view.scope())

@@ -11,4 +11,5 @@ interface AddFriendView : MyView<AddFriendState> {
     val isFriendIntent: Observable<AddFriendItem>
 
     fun checkFriendship(item: AddFriendItem)
+    fun NDC()
 }
