@@ -88,9 +88,11 @@ class PlayerFragment : MyFragment(R.layout.player_fragment), PlayerView {
 
         if (state.episodeLoaded) {
             binding.seekBar.max = state.episode.lengthSeconds*1000
+            /*
             if (activity?.findViewById<SlidingUpPanelLayout>(R.id.sliding_panel_layout)?.panelState == SlidingUpPanelLayout.PanelState.HIDDEN) {
                 activity?.findViewById<SlidingUpPanelLayout>(R.id.sliding_panel_layout)?.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
             }
+             */
 
             val timersTimes = changeMillisToText(state.timer, state.episode.lengthSeconds*1000)
             binding.currentTime.text = timersTimes[0]

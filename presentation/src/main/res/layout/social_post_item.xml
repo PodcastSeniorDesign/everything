@@ -82,27 +82,32 @@
 
                 <ImageButton
                     android:id="@+id/likeButton"
+                    app:srcCompat="@drawable/ic_favorite_border_24"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_marginEnd="4dp"
-                    android:backgroundTint="#00FFFFFF"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="8dp"
+                    android:backgroundTint="#00FF0000"
+                    android:cropToPadding="false"
+                    android:scaleType="center"
+                    android:scaleX="1.25"
+                    android:scaleY="1.25"
                     android:tint="@color/colorAccent"
                     android:visibility="visible"
-                    android:layout_gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_favorite_border_24" />
+                     />
 
                 <TextView
                     android:id="@+id/likeCountView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:text="999"
+                    android:text="0"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/commentButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Comment"

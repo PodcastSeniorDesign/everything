@@ -130,16 +130,21 @@ class PodcastRepositoryImpl @Inject constructor(
             firebaseFunctions.getHttpsCallable("podcasts-getTopByGenre")
                     .call()
                     .addOnSuccessListener { task ->
-                        val result = task.data as HashMap<*,*>
-                        val ret = mutableListOf<GenreRowItem>()
-                        for ((key, value) in result) {
-                            val newItem = GenreRowItem()
-                            newItem.genre = key.toString()
-                            newItem.episodes = parseTopEpisodesToList(value as ArrayList<*>)
-
-                            ret.add(newItem)
+                        if (task.data != null) {
+                            val result = task.data as HashMap<*, *>
+                            val ret = mutableListOf<GenreRowItem>()
+                            for ((key, value) in result) {
+                                val newItem = GenreRowItem()
+                                newItem.genre = key.toString()
+                                newItem.episodes = parseTopEpisodesToList(value)
+                                if (newItem.episodes.isNotEmpty()) {
+                                    ret.add(newItem)
+                                }
+                            }
+                            emitter.onNext(ret)
+                        } else {
+                            emitter.onNext(listOf())
                         }
-                        emitter.onNext(ret)
                     }
                     .addOnFailureListener{
                         Log.e("podcasts-topByGenre", it.localizedMessage.toString())
@@ -147,21 +152,24 @@ class PodcastRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun parseTopEpisodesToList(list: ArrayList<*>) : List<Podcast> {
+    private fun parseTopEpisodesToList(value: Any?) : List<Podcast> {
         val outList = mutableListOf<Podcast>()
-        for (podcast in list) {
-            val p = Podcast()
-            val map = podcast as HashMap<*, *>
-            p.imageURL = map[imageURLKey] .toString()
-            p.thumbnailURL = map[thumbnailURLKey] .toString()
-            p.description = map["description"] .toString()
-            p.totalEpisodes = map[totalEpisodesKey] as Int
+        if (value != null) {
+            val list = value as ArrayList<*>
+                for (podcast in list) {
+                    val p = Podcast()
+                    val map = podcast as HashMap<*, *>
+                    p.imageURL = map[imageURLKey].toString()
+                    p.thumbnailURL = map[thumbnailURLKey].toString()
+                    p.description = map["description"].toString()
+                    p.totalEpisodes = map[totalEpisodesKey] as Int
 //            p.websiteURL = map[websiteKey] .toString()
-            p.title = map["title"].toString()
-            p.publisher = map["publisher"] .toString()
-            p.id = map[idKey] .toString()
+                    p.title = map["title"].toString()
+                    p.publisher = map["publisher"].toString()
+                    p.id = map[idKey].toString()
 
-            outList.add(p)
+                    outList.add(p)
+                }
         }
         return outList
     }

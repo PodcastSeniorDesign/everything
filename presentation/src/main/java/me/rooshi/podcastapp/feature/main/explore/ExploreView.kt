@@ -13,4 +13,5 @@ interface ExploreView : MyView<ExploreState> {
 
     fun startedLoading()
     fun finishedLoading()
+    fun toast(message: String)
 }

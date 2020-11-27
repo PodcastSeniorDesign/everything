@@ -15,6 +15,6 @@ data class SocialPost (
         var bodyText: String = "",
         var comments: MutableList<Comment> = mutableListOf<Comment>(),
         var shares: List<User> = listOf(),
-        var likes: Int = 0,
+        var likes: List<String> = listOf(),
         var clip: Clip? = null
 )

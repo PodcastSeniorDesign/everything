@@ -18,7 +18,7 @@ interface UserRepository {
 
     fun logOutUser()
 
-    fun getUser() : User?
+    fun getUser() : User
 
     fun setFavoriteGenre(genres: List<Int>) : Observable<String>
 
@@ -35,6 +35,9 @@ interface UserRepository {
     fun createPost(text: String)
 
     fun createComment(postId: String, text: String)
+
+    fun likePost(postId: String)
+    fun unlikePost(postId: String)
 
 
 }

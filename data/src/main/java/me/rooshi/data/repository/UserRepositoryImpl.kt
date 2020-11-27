@@ -55,11 +55,14 @@ class UserRepositoryImpl @Inject constructor(
         firebaseAuth.signOut()
     }
 
-    //somehow convert a firebase user to waveform user
-    //need to save the info too
-    override fun getUser(): User? {
-        //return firebaseAuth.currentUser
-        TODO()
+    override fun getUser(): User {
+        val user = User()
+        val fbUser = firebaseAuth.currentUser
+        if (fbUser != null) {
+            user.email = fbUser.email.toString()
+            user.id = fbUser.uid
+        }
+        return user
     }
 
     override fun setFavoriteGenre(genres: List<Int>) : Observable<String> {
@@ -182,9 +185,10 @@ class UserRepositoryImpl @Inject constructor(
             val map = i as Map<*, *>
             p.bodyText = map["bodyText"].toString()
             p.userId = map["userId"].toString()
-            p.user = map["user"].toString()
+            p.user = map["email"].toString()
             p.id = map["post_id"].toString()
-            p.likes = (map["likes"] as ArrayList<*>).size
+
+            p.likes = (map["likes"] as ArrayList<String>)
 
             val comments = map["comments"] as ArrayList<*>
             for (c in comments) {
@@ -211,6 +215,22 @@ class UserRepositoryImpl @Inject constructor(
                 .call(data)
                 .addOnFailureListener {
                     Log.e("createcomment fail", it.localizedMessage.toString())
+                }
+    }
+
+    override fun likePost(postId: String) {
+        firebaseFunctions.getHttpsCallable("social-likePost")
+                .call(postId)
+                .addOnFailureListener {
+                    Log.e("likePost fail", it.localizedMessage.toString())
+                }
+    }
+
+    override fun unlikePost(postId: String) {
+        firebaseFunctions.getHttpsCallable("social-unlikePost")
+                .call(postId)
+                .addOnFailureListener {
+                    Log.e("unlikePost fail", it.localizedMessage.toString())
                 }
     }
 

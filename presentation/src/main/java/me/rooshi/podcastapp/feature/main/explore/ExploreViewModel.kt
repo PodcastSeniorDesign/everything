@@ -37,6 +37,9 @@ class ExploreViewModel @ViewModelInject constructor(
                 }
                 .autoDispose(view.scope())
                 .subscribe {
+                    if (it.isEmpty()) {
+                        view.toast("API credits may be used up")
+                    }
                     newState { copy(topData = it) }
                     view.finishedLoading()
                 }
