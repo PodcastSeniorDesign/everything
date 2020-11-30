@@ -190,7 +190,8 @@ class UserRepositoryImpl @Inject constructor(
 
             val comments = map["comments"] as ArrayList<*>
             for (c in comments) {
-                p.comments.add(Comment(user = "null", text = c.toString()))
+                val comment = c as HashMap<*,*>
+                p.comments.add(Comment(user = comment["userEmail"].toString(), text = comment["bodyText"].toString()))
             }
 
             ret.add(p)
